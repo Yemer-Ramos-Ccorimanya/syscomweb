@@ -2,15 +2,7 @@
 
 ¡Bienvenido al backend del Sistema de Alquiler de Vestidos! Este proyecto utiliza Django para gestionar la lógica del servidor y la base de datos, proporcionando una infraestructura sólida para la plataforma de alquiler de vestidos.
 
-## Backend - Django
-
-- **Gestión del Catálogo:** Administración eficiente de la base de datos para manejar la variedad de vestidos disponibles.
-
-- **Procesamiento de Pagos Seguro:** Integración de pasarelas de pago para transacciones seguras y sin complicaciones.
-
-- **Sistema de Reseñas y Calificaciones:** Implementación de un sistema que fomenta la retroalimentación y construye confianza en la comunidad.
-
-## Configuración del Proyecto (Django)
+## Configuración del Proyecto
 
 ### Clonar y Configurar el Entorno
 
