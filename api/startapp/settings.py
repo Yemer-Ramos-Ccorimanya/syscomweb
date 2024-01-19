@@ -48,7 +48,9 @@ THIRD_PARTY_APPS = [
 
 PROJECT_APPS = [
     'account',
+    'alquileres',
     'inventarios',
+    'terminales',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
