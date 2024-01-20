@@ -37,6 +37,7 @@ THIRD_PARTY_APPS = [
 PROJECT_APPS = [
     'account',
     'alquileres',
+    'clientes',
     'inventarios',
     'terminales',
 ]
