@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Categoria, Atributo, Catalogo, AtributoCatalogo
+from .models import Categoria, Atributo, Producto, AtributoProducto
 
 
 @admin.register(Categoria)
@@ -14,13 +14,13 @@ class AtributoAdmin(admin.ModelAdmin):
     search_fields = ['nombre']
 
 
-@admin.register(Catalogo)
-class CatalogoAdmin(admin.ModelAdmin):
+@admin.register(Producto)
+class ProductoAdmin(admin.ModelAdmin):
     list_display = ['id', 'nombre', 'estado']
     search_fields = ['nombre']
 
 
-@admin.register(AtributoCatalogo)
+@admin.register(AtributoProducto)
 class AtributoCatalogoAdmin(admin.ModelAdmin):
     list_display = ['id', 'valor_atributo', 'get_nombre_atributo']
     search_fields = ['valor_atributo']

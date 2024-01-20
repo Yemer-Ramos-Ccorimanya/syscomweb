@@ -6,8 +6,8 @@ from clientes.models import Cliente
 
 class Alquiler(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    empresa_id = models.ForeignKey(Empresa, on_delete=models.CASCADE)
-    cliente_id = models.ForeignKey(Cliente, on_delete=models.SET_NULL, null=True, blank=True)
+    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
+    cliente = models.ForeignKey(Cliente, on_delete=models.SET_NULL, null=True, blank=True)
     monto_total = models.DecimalField(max_digits=15, decimal_places=4, null=True)
     descuento = models.DecimalField(max_digits=15, decimal_places=4, null=True)
     fecha_alquiler = models.DateField(null=True)
