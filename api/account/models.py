@@ -23,3 +23,25 @@ class Sucursal(models.Model):
     telefono_contacto = models.CharField(max_length=256, null=True)
     correo_contacto = models.CharField(max_length=256, null=True)
     almacen = models.UUIDField(null=True)
+
+
+class Terminal(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
+    sucursal = models.ForeignKey(Sucursal, on_delete=models.SET_NULL)
+    nombre = models.CharField(max_length=256, null=True)
+
+
+class SerieComprobante(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
+    serie = models.CharField(max_length=256, null=True)
+    tipo_comprobante = models.CharField(max_length=128, null=True)
+    correlativo = models.IntegerField(default=0)
+    estado = models.BooleanField(default=True)
+
+
+class SerieTerminal(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    terminal = models.ForeignKey(Terminal, on_delete=models.CASCADE)
+    serie_comprobante = models.ForeignKey(SerieComprobante, on_delete=models.CASCADE)
