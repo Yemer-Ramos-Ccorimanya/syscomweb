@@ -28,7 +28,7 @@ class Sucursal(models.Model):
 class Terminal(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
-    sucursal = models.ForeignKey(Sucursal, on_delete=models.SET_NULL)
+    sucursal = models.ForeignKey(Sucursal, on_delete=models.SET_NULL, null=True)
     nombre = models.CharField(max_length=256, null=True)
 
 
