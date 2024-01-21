@@ -3,6 +3,25 @@ from django.db import models
 from account.models import Empresa
 
 
+class Almacen(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
+    nombre = models.CharField(max_length=256, null=True)
+    direccion = models.CharField(max_length=256, null=True)
+    telefono = models.CharField(max_length=256, null=True)
+    descripcion = models.CharField(max_length=256, null=True)
+
+
+class CatalogoSku(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
+    nombre = models.CharField(max_length=256, null=True)
+    codigo_sku = models.CharField(max_length=256, null=True)
+    unidad_medida = models.CharField(max_length=256, null=True)
+    descripcion = models.CharField(max_length=256, null=True)
+    estado = models.BooleanField(default=True)
+
+
 class Categoria(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
