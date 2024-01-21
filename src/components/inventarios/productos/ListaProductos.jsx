@@ -2,6 +2,7 @@ import { Button, Card, Form, InputGroup } from "react-bootstrap"
 import { MainContainer } from "../../common/MainContainer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons"
+import { Link } from "react-router-dom"
 
 export const ListaProductos = () => {
   return (
@@ -21,10 +22,10 @@ export const ListaProductos = () => {
               </InputGroup>
             </div>
             <div className="col-auto">
-              <Button variant="success">
+              <Link to="/inventarios/productos/agregar" className="btn btn-success" variant="success">
                 <FontAwesomeIcon icon={faPlus} className="me-1" />
                 <span>Nuevo Producto</span>
-              </Button>
+              </Link>
             </div>
           </Form>
           <div className="table-responsive">

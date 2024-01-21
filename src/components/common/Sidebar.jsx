@@ -12,7 +12,7 @@ const SidebarWrapper = styled.div`
   font-weight: 300;
   min-width: 270px;
   max-width: 300px;
-  height: calc(100vh - 80px);
+  min-height: calc(100vh - 80px);
 `
 
 const Menu = styled.ul`
