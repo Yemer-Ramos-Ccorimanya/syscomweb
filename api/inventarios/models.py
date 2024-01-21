@@ -74,8 +74,29 @@ class AtributoProducto(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.SET_NULL, null=True, blank=True)
     nombre = models.CharField(max_length=256, null=True)
 
+    
 
-class ProductoTerminal(models.Model):
+class ValorAtributoProducto(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    producto = models.ForeignKey(Producto, on_delete=models.SET_NULL, null=True, blank=True)
-    nombre = models.CharField(max_length=256, null=True)
+    Atributo_producto = models.ForeignKey(AtributoProducto, on_delete=models.SET_NULL, null=True, blank=True)
+    valor = models.CharField(max_length=256, null=True)
+
+class VariacionAtributoProducto(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    Atributo_producto = models.ForeignKey(AtributoProducto, on_delete=models.SET_NULL, null=True, blank=True)
+    Valor_atributo_producto = models.ForeignKey(ValorAtributoProducto, on_delete=models.SET_NULL, null=True, blank=True)
+    precio_unitario= models.CharField(max_length=256, null=True)
+    codigo_barra = models.CharField(max_length=64, null=True)
+
+class VariacionAtributoProductoSku(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    Variacion_atributo_producto = models.ForeignKey(ValorAtributoProducto, on_delete=models.SET_NULL, null=True, blank=True)
+    catalogo_sku=  models.ForeignKey(CatalogoSku, on_delete=models.SET_NULL, null=True, blank=True)
+    cantidad_descontada = models.CharField(max_length=256, null=True)
+
+class VariacionAtributoProductoTerminal(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    Variacion_atributo_producto = models.ForeignKey(ValorAtributoProducto, on_delete=models.SET_NULL, null=True, blank=True)
+    catalogo_sku=  models.ForeignKey(CataogoSku, on_delete=models.SET_NULL, null=True, blank=True)
+    cantidad_descontada = models.CharField(max_length=256, null=True)
+    
