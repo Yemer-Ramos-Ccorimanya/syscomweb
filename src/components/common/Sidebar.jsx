@@ -22,7 +22,7 @@ const Menu = styled.ul`
 `
 
 const MenuItem = styled.li`
-  margin-bottom: 6px;
+  margin-bottom: 10px;
 `
 
 const MenuItemText = styled.span`
