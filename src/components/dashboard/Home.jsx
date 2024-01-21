@@ -1,5 +1,9 @@
+import { MainContainer } from "../common/MainContainer"
+
 export const Home = () => {
     return (
-        <h1>Hola munod</h1>
+      <MainContainer>
+        <h1>home</h1>
+      </MainContainer>
     )
 }
