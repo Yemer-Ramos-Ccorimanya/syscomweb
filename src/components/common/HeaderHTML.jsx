@@ -4,6 +4,9 @@ import Navbar from 'react-bootstrap/Navbar';
 import logo from "../../assets/logo.png"
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faCircleUser } from '@fortawesome/free-regular-svg-icons';
 
 export const HeaderHTML = () => {
   return (
@@ -21,7 +24,11 @@ export const HeaderHTML = () => {
                 <span className="text-primary text-uppercase">Empresa de la tienda de ropa KYLOS'S</span>
               </div>
             </Nav.Link>
-            <Button variant="danger">
+            <Nav.Link>
+            <FontAwesomeIcon icon={faCircleUser} style={{fontSize: "3rem"}}/>
+            </Nav.Link>
+            <Button variant="danger" className="px-3">
+              <FontAwesomeIcon icon={faRightFromBracket} className="me-1"/>
               <span className="text-uppercase">Cerrar Sessión</span>
             </Button>
           </Nav>
