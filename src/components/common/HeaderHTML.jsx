@@ -10,7 +10,7 @@ import { faCircleUser } from '@fortawesome/free-regular-svg-icons';
 
 export const HeaderHTML = () => {
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar expand="lg" className="bg-body-tertiary shadow-sm">
       <Container fluid={true}>
         <Link to={"/"} className="navbar-brand">
           <img src={logo} />
