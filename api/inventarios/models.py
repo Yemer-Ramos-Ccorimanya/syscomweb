@@ -3,28 +3,56 @@ from django.db import models
 from account.models import Empresa
 
 
+class Almacen(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
+    nombre = models.CharField(max_length=256, null=True)
+    direccion = models.CharField(max_length=256, null=True)
+    telefono = models.CharField(max_length=256, null=True)
+    descripcion = models.CharField(max_length=256, null=True)
+
+
+class CatalogoSku(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
+    nombre = models.CharField(max_length=256, null=True)
+    codigo_sku = models.CharField(max_length=256, null=True)
+    unidad_medida = models.CharField(max_length=256, null=True)
+    descripcion = models.CharField(max_length=256, null=True)
+    estado = models.BooleanField(default=True)
+
+class CatalogoSkuAlmacen(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
+    catalogo_sku = models.ForeignKey(CatalogoSku, on_delete=models.CASCADE)
+    almacen = models.ForeignKey(Almacen, on_delete=models.CASCADE)
+    costo_unitario = models.DecimalField(max_digits=15, decimal_places=4, null=True)
+    stock_minimo = models.IntegerField(default=0)
+    punto_reposicion = models.IntegerField(default=0)
+
+
+class CatalogoSkuStock(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
+
+
 class Categoria(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
     nombre = models.CharField(max_length=256, null=True)
+
 
 class SubCategoria(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     categoria= models.ForeignKey(Categoria, on_delete=models.CASCADE)
     nombre = models.CharField(max_length=256, null=True)
 
+
 class Atributo(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
     nombre = models.CharField(max_length=256, null=True)
 
-"""
-GESTION_INVENTARIO_PRODUCTO = [
-    ('DISPONIBLE', 'Disponible'),
-    ('ALQUILADO', 'Alquilado'),
-    ('EN_MANTENIMIENTO', 'En Mantenimiento'),
-]
-"""
 
 class Producto(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
