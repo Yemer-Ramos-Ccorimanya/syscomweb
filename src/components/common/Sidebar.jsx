@@ -7,11 +7,12 @@ import styled from 'styled-components'
 import styles from './Sidebar.module.css'
 
 const SidebarWrapper = styled.div`
-font-size: 1.3rem;
-font-weight: 300;
+  font-size: 1.3rem;
+  font-weight: 300;
   min-width: 220px;
   max-width: 300px;
 `
+
 const Menu = styled.ul`
   padding-left: 0;
   list-style: none;
@@ -28,7 +29,7 @@ const MenuItemText = styled.span`
 
 export const Sidebar = () => {
   return (
-    <SidebarWrapper>
+    <SidebarWrapper className="d-none d-lg-block">
       <div className="d-flex justify-content-center pt-3">
         <Button variant="primary" className="px-4">
           <MenuItemText>Venta Rápida</MenuItemText>

@@ -17,6 +17,16 @@ export const HeaderHTML = () => {
         </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="d-lg-none me-auto">
+            <Nav.Link href="#home">Inicio</Nav.Link>
+            <Nav.Link href="#link">Catálogo</Nav.Link>
+            <Nav.Link href="#link">Clientes</Nav.Link>
+            <Nav.Link href="#link">Reservas</Nav.Link>
+            <Nav.Link href="#link">Alquilers</Nav.Link>
+            <Nav.Link href="#link">Punto de Venta</Nav.Link>
+            <Nav.Link href="#link">Reportes</Nav.Link>
+            <Nav.Link href="#link">Configuración</Nav.Link>
+          </Nav>
           <Nav className="ms-auto">
             <Nav.Link href="#home">
               <div className="d-flex flex-column align-items-end">
@@ -24,13 +34,15 @@ export const HeaderHTML = () => {
                 <span className="text-primary text-uppercase">Empresa de la tienda de ropa KYLOS'S</span>
               </div>
             </Nav.Link>
-            <Nav.Link>
-            <FontAwesomeIcon icon={faCircleUser} style={{fontSize: "3rem"}}/>
+            <Nav.Link className="d-none d-lg-block">
+              <FontAwesomeIcon icon={faCircleUser} style={{ fontSize: "3rem" }} />
             </Nav.Link>
-            <Button variant="danger" className="px-3">
-              <FontAwesomeIcon icon={faRightFromBracket} className="me-1"/>
-              <span className="text-uppercase">Cerrar Sessión</span>
-            </Button>
+            <div className="d-flex align-items-center">
+              <Button variant="danger" className="px-3">
+                <FontAwesomeIcon icon={faRightFromBracket} className="me-1" />
+                <span className="text-uppercase">Cerrar Sessión</span>
+              </Button>
+            </div>
           </Nav>
         </Navbar.Collapse>
       </Container>
