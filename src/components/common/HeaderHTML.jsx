@@ -19,7 +19,7 @@ export const HeaderHTML = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="d-lg-none me-auto">
             <Nav.Link href="#home" className="text-uppercase">Inicio</Nav.Link>
-            <Nav.Link to={"/inventarios/productos"} className="text-uppercase">Catálogo</Nav.Link>
+            <Nav.Link to={"/inventarios/productos"} className="text-uppercase">Productos</Nav.Link>
             <Nav.Link href="#link" className="text-uppercase">Clientes</Nav.Link>
             <Nav.Link href="#link" className="text-uppercase">Reservas</Nav.Link>
             <Nav.Link href="#link" className="text-uppercase">Alquilers</Nav.Link>

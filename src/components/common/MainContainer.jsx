@@ -8,7 +8,7 @@ export const MainContainer = ({ children }) => {
       <HeaderHTML />
       <div className="d-flex">
         <Sidebar />
-        <main>
+        <main className="w-100 p-3">
           {children}
         </main>
       </div>
