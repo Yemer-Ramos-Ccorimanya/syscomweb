@@ -1,0 +1,16 @@
+.link {
+  color: black;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.link:hover {
+  font-weight: 400;
+}
+
+.icon {
+  color: #AC8746;
+  width: 20px;
+  height: auto;
+}

@@ -4,6 +4,9 @@ export const Home = () => {
     return (
       <MainContainer>
         <h1>home</h1>
+        <div>
+          hollllll
+        </div>
       </MainContainer>
     )
 }
