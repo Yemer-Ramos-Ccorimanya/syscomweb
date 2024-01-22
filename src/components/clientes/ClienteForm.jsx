@@ -1,14 +1,14 @@
 import { Button, Card, Form, InputGroup } from "react-bootstrap"
-import { MainContainer } from "../../common/MainContainer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCircleXmark, faFloppyDisk, faMagnifyingGlass, faPlus, faTrashAlt } from "@fortawesome/free-solid-svg-icons"
+import { MainContainer } from "../common/MainContainer"
 
 export const ClienteForm = () => {
   return (
     <MainContainer>
       <div className="row">
         <div className="col-11 offset-1">
-          <h5>Añadir nuevo producto</h5>
+          <h5>Añadir nuevo cliente</h5>
         </div>
       </div>
       <div className="row mb-3">

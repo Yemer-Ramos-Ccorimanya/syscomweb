@@ -1,5 +1,5 @@
-import { Button, Card, Form, InputGroup } from "react-bootstrap"
-import { MainContainer } from "../../common/MainContainer"
+import { Card, Form, InputGroup } from "react-bootstrap"
+import { MainContainer } from "../common/MainContainer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons"
 import { Link } from "react-router-dom"
@@ -22,7 +22,7 @@ export const ListaCliente = () => {
               </InputGroup>
             </div>
             <div className="col-auto">
-              <Link to="/inventarios/productos/agregar" className="btn btn-success" variant="success">
+              <Link to="/clientes/agregar" className="btn btn-success" variant="success">
                 <FontAwesomeIcon icon={faPlus} className="me-1" />
                 <span>Nuevo Producto</span>
               </Link>
@@ -45,7 +45,6 @@ export const ListaCliente = () => {
           </div>
         </Card.Body>
       </Card>
-
     </MainContainer>
   )
 }

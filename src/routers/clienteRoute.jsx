@@ -1,12 +1,12 @@
 import { Route, Routes } from "react-router-dom"
-import { ListaCliente } from "../components/cliente/ListaCliente"
-import { ClienteForm } from "../components/cliente/ClienteForm"
+import { ListaCliente } from "../components/clientes/ListaCliente"
+import { ClienteForm } from "../components/clientes/ClienteForm"
 
-export const clienteRoute = () => {
+export const ClienteRoute = () => {
   return (
     <Routes>
       <Route path="/" element={<ListaCliente />} />
-      <Route path="/" element={<ClienteForm />} />
+      <Route path="/agregar" element={<ClienteForm />} />
     </Routes>
   )
 }
