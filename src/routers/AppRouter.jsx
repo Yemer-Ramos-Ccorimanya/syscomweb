@@ -3,6 +3,7 @@ import Login from "../components/auth/login.component"
 import SignUp from "../components/auth/signup.component"
 import { Dashboard } from "./Dashboard"
 import { InventarioRoute } from "./InventarioRoute"
+import { clienteRoute } from "./clienteRoute"
 
 export const AppRouter = () => {
   return (
@@ -10,12 +11,11 @@ export const AppRouter = () => {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<SignUp />} />
-        <Route path="/inventarios/*" element={
-          <InventarioRoute />
-        } />
-        <Route path="/*" element={
-          <Dashboard />
-        } />
+        <Route path="/inventarios/*" element={<InventarioRoute />} />
+        <Route path="/*" element={<Dashboard />} />
+        
+        <Route path="/*" element={<clienteRoute />} />
+
       </Routes>
     </BrowserRouter>
   )
