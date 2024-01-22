@@ -7,7 +7,7 @@ import { Link } from "react-router-dom"
 export const ListaCliente = () => {
   return (
     <MainContainer>
-      <h5>Productos</h5>
+      <h5>Clientes</h5>
       <Card >
         <Card.Body>
           <Form className="row row-cols-auto g-2">
@@ -24,7 +24,7 @@ export const ListaCliente = () => {
             <div className="col-auto">
               <Link to="/clientes/agregar" className="btn btn-success" variant="success">
                 <FontAwesomeIcon icon={faPlus} className="me-1" />
-                <span>Nuevo Producto</span>
+                <span>Nuevo Cliente</span>
               </Link>
             </div>
           </Form>
@@ -32,10 +32,10 @@ export const ListaCliente = () => {
             <table className="table">
               <thead>
                 <tr className="text-uppercase">
-                  <th>Nombre</th>
-                  <th>Categoría</th>
-                  <th>Precio</th>
-                  <th>Estado</th>
+                  <th>D.N.I</th>
+                  <th>Nombre Completo</th>
+                  <th>Celular</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
