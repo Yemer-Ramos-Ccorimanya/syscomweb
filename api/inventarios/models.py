@@ -1,6 +1,6 @@
 import uuid
 from django.db import models
-from account.models import Empresa
+from account.models import Empresa, Terminal
 
 
 class Almacen(models.Model):
@@ -37,7 +37,10 @@ class CatalogoSkuStock(models.Model):
     empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
     catalogo_sku = models.ForeignKey(CatalogoSku, on_delete=models.SET_NULL, null=True)
     almacen = models.ForeignKey(Almacen, on_delete=models.SET_NULL, null=True)
-    # cantidad_entrada = models.flo
+    cantidad_entrada = models.IntegerField(default=0, null=True)
+    cantidad_salida = models.IntegerField(default=0, null=True)
+    fecha_registro = models.DateField(auto_now=True, null=True)
+    comentario = models.CharField(max_length=256, null=True)
 
 
 class Categoria(models.Model):
@@ -95,7 +98,7 @@ class VariacionAtributoProducto(models.Model):
 
 class VariacionAtributoProductoSku(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    Variacion_atributo_producto = models.ForeignKey(ValorAtributoProducto, on_delete=models.SET_NULL, null=True, blank=True)
+    variacion_atributo_producto = models.ForeignKey(ValorAtributoProducto, on_delete=models.SET_NULL, null=True, blank=True)
     catalogo_sku=  models.ForeignKey(CatalogoSku, on_delete=models.SET_NULL, null=True, blank=True)
     cantidad_descontada = models.CharField(max_length=256, null=True)
 
@@ -105,4 +108,17 @@ class VariacionAtributoProductoTerminal(models.Model):
     variacion_atributo_producto = models.ForeignKey(ValorAtributoProducto, on_delete=models.SET_NULL, null=True, blank=True)
     catalogo_sku=  models.ForeignKey(CatalogoSku, on_delete=models.SET_NULL, null=True, blank=True)
     cantidad_descontada = models.CharField(max_length=256, null=True)
-    
+
+
+class ProductoTerminal(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    producto = models.ForeignKey(Producto, on_delete=models.SET_NULL, null=True, blank=True)
+    terminal = models.ForeignKey(Terminal, on_delete=models.SET_NULL, null=True, blank=True)
+    precio_unitario = models.DecimalField(max_digits=15, decimal_places=4, null=True)
+
+
+class ProductoSku(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    producto = models.ForeignKey(Producto, on_delete=models.SET_NULL, null=True, blank=True)
+    catalogo_sku = models.ForeignKey(CatalogoSku, on_delete=models.SET_NULL, null=True, blank=True)
+    cantidad_descontada = models.IntegerField(default=0)
