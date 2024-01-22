@@ -1,76 +1,77 @@
 from django.contrib import admin
-from .models import Categoria, Atributo, Producto, AtributoProducto, Almacen, CatalogoSku,CatalogoSkuAlmacen,CatalogoSkuStock,SubCategoria,VariacionAtributoProducto,VariacionAtributoProductoSku,VariacionAtributoProductoTerminal
-
+from .models import (
+    Almacen, CatalogoSku, CatalogoSkuAlmacen, CatalogoSkuStock,
+    Categoria, SubCategoria, Producto, AtributoProducto,
+    ValorAtributoProducto, VariacionAtributoProducto,
+    VariacionAtributoProductoSku, VariacionAtributoProductoTerminal,
+    ProductoTerminal, ProductoSku
+)
 
 @admin.register(Almacen)
 class AlmacenAdmin(admin.ModelAdmin):
-    list_display = ['id', 'nombre', 'telefono', ' direccion', 'descripcion'] 
-    search_fields = ['nombre']
+    list_display = ('id', 'empresa', 'nombre', 'direccion', 'telefono', 'descripcion')
 
 
 @admin.register(CatalogoSku)
-class AlmacenAdmin(admin.ModelAdmin):
-    list_display = ['id', 'codigo_sku', ' unidad_medida', 'descripcion','estado'] 
-    search_fields = ['nombre']
+class CatalogoSkuAdmin(admin.ModelAdmin):
+    list_display = ('id', 'empresa', 'nombre', 'codigo_sku', 'unidad_medida', 'descripcion', 'estado')
+
 
 @admin.register(CatalogoSkuAlmacen)
-class AlmacenAdmin(admin.ModelAdmin):
-    list_display = ['id', ' costo_unitario', 'stock_minimo','punto_reposicion'] 
-    search_fields = ['almacen']
+class CatalogoSkuAlmacenAdmin(admin.ModelAdmin):
+    list_display = ('id', 'empresa', 'catalogo_sku', 'almacen', 'costo_unitario', 'stock_minimo', 'punto_reposicion')
+
 
 @admin.register(CatalogoSkuStock)
-class AlmacenAdmin(admin.ModelAdmin):
-    list_display = ['id', ' catalogo_sku','empresa'] 
-    search_fields = ['almacen']
+class CatalogoSkuStockAdmin(admin.ModelAdmin):
+    list_display = ('id', 'empresa', 'catalogo_sku', 'almacen', 'cantidad_entrada', 'cantidad_salida', 'fecha_registro', 'comentario')
+
 
 @admin.register(Categoria)
 class CategoriaAdmin(admin.ModelAdmin):
-    list_display = ['id', 'nombre']
-    search_fields = ['nombre']
+    list_display = ('id', 'empresa', 'nombre')
+
 
 @admin.register(SubCategoria)
-class AlmacenAdmin(admin.ModelAdmin):
-    list_display = ['id', 'nombre'] 
-    search_fields = ['nombre']
-
-@admin.register(Atributo)
-class AtributoAdmin(admin.ModelAdmin):
-    list_display = ['id', 'nombre']
-    search_fields = ['nombre']
+class SubCategoriaAdmin(admin.ModelAdmin):
+    list_display = ('id', 'categoria', 'nombre')
 
 
 @admin.register(Producto)
 class ProductoAdmin(admin.ModelAdmin):
-    list_display = ['id', 'nombre', 'precio_unitario','categoria','Sub_categoria','tipo_producto']
-    search_fields = ['nombre']
+    list_display = ('id', 'empresa', 'nombre', 'categoria', 'sub_categoria', 'descripcion', 'precio_unitario', 'unidad_medida', 'impuesto', 'codigo_barra', 'tipo_producto', 'gestion_inventario')
+
 
 @admin.register(AtributoProducto)
-class ProductoAdmin(admin.ModelAdmin):
-    list_display = ['id', 'nombre']
-    search_fields = ['nombre']
+class AtributoProductoAdmin(admin.ModelAdmin):
+    list_display = ('id', 'producto', 'nombre')
+
+
+@admin.register(ValorAtributoProducto)
+class ValorAtributoProductoAdmin(admin.ModelAdmin):
+    list_display = ('id', 'atributo_producto', 'valor')
+
 
 @admin.register(VariacionAtributoProducto)
-class ProductoAdmin(admin.ModelAdmin):
-    list_display = ['id', 'precio_unitario']
-    search_fields = ['codigo_barra']
+class VariacionAtributoProductoAdmin(admin.ModelAdmin):
+    list_display = ('id', 'producto', 'atributo_producto', 'valor_atributo_producto', 'precio_unitario', 'codigo_barra')
+
 
 @admin.register(VariacionAtributoProductoSku)
-class ProductoAdmin(admin.ModelAdmin):
-    list_display = ['id', 'cantidad_descontada']
-    search_fields = ['catalogo_sku']
+class VariacionAtributoProductoSkuAdmin(admin.ModelAdmin):
+    list_display = ('id', 'variacion_atributo_producto', 'catalogo_sku', 'cantidad_descontada')
+
 
 @admin.register(VariacionAtributoProductoTerminal)
-class ProductoAdmin(admin.ModelAdmin):
-    list_display = ['id', 'precio']
-    search_fields = ['terminal']    
+class VariacionAtributoProductoTerminalAdmin(admin.ModelAdmin):
+    list_display = ('id', 'variacion_atributo_producto', 'terminal', 'precio_unitario')
 
-""" @admin.register(AtributoProducto)
-class AtributoCatalogoAdmin(admin.ModelAdmin):
-    list_display = ['id', 'valor_atributo', 'get_nombre_atributo']
-    search_fields = ['valor_atributo']
 
-    def get_nombre_atributo(self, obj):
-        return obj.atributo_id.nombre if obj.atributo_id else None
+@admin.register(ProductoTerminal)
+class ProductoTerminalAdmin(admin.ModelAdmin):
+    list_display = ('id', 'producto', 'terminal', 'precio_unitario')
 
-    get_nombre_atributo.short_description = 'Nombre del Atributo'
-    get_nombre_atributo.admin_order_field = 'atributo_id__nombre' """
+
+@admin.register(ProductoSku)
+class ProductoSkuAdmin(admin.ModelAdmin):
+    list_display = ('id', 'producto', 'catalogo_sku', 'cantidad_descontada')
