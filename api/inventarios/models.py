@@ -1,6 +1,6 @@
 import uuid
 from django.db import models
-from account.models import Empresa
+from account.models import Empresa, Terminal
 
 
 class Almacen(models.Model):
@@ -103,6 +103,6 @@ class VariacionAtributoProductoSku(models.Model):
 class VariacionAtributoProductoTerminal(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     variacion_atributo_producto = models.ForeignKey(ValorAtributoProducto, on_delete=models.SET_NULL, null=True, blank=True)
-    catalogo_sku=  models.ForeignKey(CatalogoSku, on_delete=models.SET_NULL, null=True, blank=True)
-    cantidad_descontada = models.CharField(max_length=256, null=True)
+    terminal=  models.ForeignKey(Terminal, on_delete=models.SET_NULL, null=True, blank=True)
+    precio= models.CharField(max_length=256, null=True)
     
