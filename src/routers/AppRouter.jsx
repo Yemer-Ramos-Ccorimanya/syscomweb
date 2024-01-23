@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import Login from "../components/auth/login.component"
-import SignUp from "../components/auth/signup.component"
+import {Login} from "../components/auth/Login"
+import { Registro } from "../components/auth/Registro"
 import { Dashboard } from "./Dashboard"
 import { InventarioRoute } from "./InventarioRoute"
 import { ClienteRoute } from "./clienteRoute"
@@ -10,7 +10,7 @@ export const AppRouter = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/registro" element={<SignUp />} />
+        <Route path="/registro" element={<Registro />} />
         <Route path="/inventarios/*" element={<InventarioRoute />} />               
         <Route path="/clientes/*" element={<ClienteRoute />} />
         <Route path="/*" element={<Dashboard />} />
