@@ -1,8 +1,8 @@
-import { faCartShopping, faChartColumn, faGear, faHomeAlt, faTags, faUserGroup, faVest } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
-import styles from './Sidebar.module.css'
+import { faCartShopping, faChartColumn, faGear, faHomeAlt, faTags, faUserGroup, faVest } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { Link } from "react-router-dom"
+import styled from "styled-components"
+import styles from "./Sidebar.module.css"
 
 const SidebarWrapper = styled.div`
   background-color: white;  
