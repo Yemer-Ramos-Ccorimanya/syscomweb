@@ -1,7 +1,5 @@
-import { faBookmark } from '@fortawesome/free-regular-svg-icons'
-import { faBookBookmark, faBox, faCartShopping, faChartColumn, faFilePen, faGear, faHomeAlt, faUserGroup } from '@fortawesome/free-solid-svg-icons'
+import { faCartShopping, faChartColumn, faGear, faHomeAlt, faTags, faUserGroup, faVest } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import styles from './Sidebar.module.css'
@@ -41,7 +39,7 @@ export const Sidebar = () => {
         </MenuItem>
         <MenuItem>
           <Link to={"/inventarios/productos"} className={styles.link}>
-            <FontAwesomeIcon icon={faBox} className={styles.icon} />
+            <FontAwesomeIcon icon={faTags} className={styles.icon} />
             <MenuItemText>Productos</MenuItemText>
           </Link>
         </MenuItem>
@@ -51,15 +49,15 @@ export const Sidebar = () => {
             <MenuItemText>Clientes</MenuItemText>
           </Link>
         </MenuItem>
-        <MenuItem>
+        {/* <MenuItem>
           <Link to={"/"} className={styles.link}>
             <FontAwesomeIcon icon={faFilePen} className={styles.icon} />
             <MenuItemText>Reservas</MenuItemText>
           </Link>
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem>
-          <Link to={"/"} className={styles.link}>
-            <FontAwesomeIcon icon={faBookBookmark} className={styles.icon} />
+          <Link to={"/alquileres"} className={styles.link}>
+            <FontAwesomeIcon icon={faVest} className={styles.icon} />
             <MenuItemText>Alquileres</MenuItemText>
           </Link>
         </MenuItem>
