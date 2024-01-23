@@ -1,10 +1,10 @@
-import { Button, Form } from "react-bootstrap"
+import { Button } from "react-bootstrap"
 import styled from "styled-components"
 
 const SidebarWrapper = styled.div`
   background: white;
   min-width: 150px;
-  max-width: 250px;
+  max-width: 220px;
   min-height: calc(100vh - 80px);
   padding: 15px;
 `

@@ -8,8 +8,8 @@ const SidebarWrapper = styled.div`
   background-color: white;  
   font-size: 1.3rem;
   font-weight: 300;
-  min-width: 270px;
-  max-width: 300px;
+  min-width: 250px;
+  max-width: 270px;
   min-height: calc(100vh - 80px);
 `
 

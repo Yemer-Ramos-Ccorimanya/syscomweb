@@ -28,7 +28,7 @@ export const TerminalVenta = () => {
                     <div className="col-5">
                       <Button variant="outline-secondary">
                         <FontAwesomeIcon icon={faCirclePlus} className="me-1" />
-                        <span>Agregar Item Libre</span>
+                        <span>Agregar Item</span>
                       </Button>
                     </div>
                   </Form>

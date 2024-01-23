@@ -10,7 +10,7 @@ export const AlquilerForm = () => {
       <div className="d-flex justify-content-between">
         <div className="w-100 p-3">
           <div className="row mb-3">
-            <div className="col-5 offset-1">
+            <div className="col-6">
               <Card>
                 <Card.Body>
                 <Form.Group>
@@ -38,7 +38,7 @@ export const AlquilerForm = () => {
                 </Card.Body>
               </Card>
             </div>
-            <div className="col-5">
+            <div className="col-6">
               <Card>
                 <Card.Body>                  
                   <div className="row text-uppercase">
@@ -56,7 +56,7 @@ export const AlquilerForm = () => {
             </div>
           </div>
           <div className="row mb-3">
-            <div className="col-10 offset-1">
+            <div className="col-12">
               <Card>
                 <Card.Body>
                   <Form className="row row-cols-auto g-2">
