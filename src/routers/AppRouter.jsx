@@ -5,6 +5,7 @@ import { Dashboard } from "./Dashboard"
 import { InventarioRoute } from "./InventarioRoute"
 import { ClienteRoute } from "./clienteRoute"
 import { AlquilerRoute } from "./AlquilerRoute"
+import { PuntodeVentaRoute } from "./PuntodeVentaRoute"
 
 export const AppRouter = () => {
   return (
@@ -15,6 +16,7 @@ export const AppRouter = () => {
         <Route path="/inventarios/*" element={<InventarioRoute />} />
         <Route path="/clientes/*" element={<ClienteRoute />} />
         <Route path="/alquileres/*" element={<AlquilerRoute />} />
+        <Route path="/PuntodeVenta/*" element={<PuntodeVentaRoute />} />
         <Route path="/*" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>

@@ -62,7 +62,7 @@ export const Sidebar = () => {
           </Link>
         </MenuItem>
         <MenuItem>
-          <Link to={"/"} className={styles.link}>
+          <Link to={"/PuntodeVenta"} className={styles.link}>
             <FontAwesomeIcon icon={faCartShopping} className={styles.icon} />
             <MenuItemText>Punto de Venta</MenuItemText>
           </Link>
