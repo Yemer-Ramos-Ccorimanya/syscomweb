@@ -33,9 +33,10 @@ export const ListaCliente = () => {
               <thead>
                 <tr className="text-uppercase">
                   <th>D.N.I</th>
-                  <th>Nombre Completo</th>
-                  <th>Celular</th>
-                  <th></th>
+                  <th>Nombre</th>
+                  <th>Apellido</th>
+                  <th>Dirección</th>
+                  <th>Número</th>
                 </tr>
               </thead>
               <tbody>
