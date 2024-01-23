@@ -13,6 +13,19 @@ export const AlquilerForm = () => {
             <div className="col-5 offset-1">
               <Card>
                 <Card.Body>
+                <Form.Group>
+                    <div className="d-flex justify-content-center">
+                      <Form.Check
+                        type="radio"
+                        label="Alquiler"
+                        id="alquiler" name="tipo_documento"
+                        className="me-3" defaultChecked />
+                      <Form.Check
+                        type="radio"
+                        label="Reserva"
+                        id="reserva" name="tipo_documento" />
+                    </div>
+                  </Form.Group>
                   <Form.Group>
                     <Form.Label>Seleccione un cliente</Form.Label>
                     <InputGroup>
@@ -27,27 +40,14 @@ export const AlquilerForm = () => {
             </div>
             <div className="col-5">
               <Card>
-                <Card.Body>
-                  <Form.Group className="mb-1">
-                    <div className="d-flex justify-content-center">
-                      <Form.Check
-                        type="radio"
-                        label="Alquiler"
-                        id="alquiler" name="tipo_documento"
-                        className="me-3" defaultChecked />
-                      <Form.Check
-                        type="radio"
-                        label="Reserva"
-                        id="reserva" name="tipo_documento" />
-                    </div>
-                  </Form.Group>
-                  <div className="row fw-semibold">
-                    <Form.Label className="col-form-label col-2 text-end">Desde</Form.Label>
-                    <div className="col-4">
+                <Card.Body>                  
+                  <div className="row text-uppercase">
+                    <Form.Label className="col-form-label col-3 text-end">Desde</Form.Label>
+                    <div className="col-8 mb-3">
                       <Form.Control type="date" />
                     </div>
-                    <Form.Label className="col-form-label col-2 text-end">Hasta</Form.Label>
-                    <div className="col-4">
+                    <Form.Label className="col-form-label col-3 text-end">Hasta</Form.Label>
+                    <div className="col-8">
                       <Form.Control type="date" />
                     </div>
                   </div>
