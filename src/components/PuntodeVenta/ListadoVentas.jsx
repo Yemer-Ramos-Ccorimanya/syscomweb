@@ -14,7 +14,7 @@ export const ListadoVentas = () => {
         <Button variant="outline-dark" className="me-2">Ayer</Button>
         <Button variant="outline-dark" className="me-2">Últimos 7 días</Button>
         <Button variant="outline-dark" className="me-2">Últimos 30 días</Button>
-        <Link to="/clientes/agregar" className="btn btn-success" variant="success">
+        <Link to="/PuntodeVenta/1/terminal" className="btn btn-success" variant="success">
           <FontAwesomeIcon icon={faPlus} className="me-1" />
           <span>Apertura de Caja</span>
         </Link>
