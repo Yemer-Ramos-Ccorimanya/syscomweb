@@ -36,7 +36,7 @@ export const Registro = () => {
         localStorage.setItem("RefreshToken", result.refresh)
         window.location.href = "/"
       } catch (error) {
-        setError("Error al registrar el usuario")
+        setError("Error al registrar el usuario!")
       }
     },
   })
