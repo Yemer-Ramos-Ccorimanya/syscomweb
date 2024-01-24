@@ -8,8 +8,8 @@ const SidebarWrapper = styled.div`
   background-color: white;  
   font-size: 1.3rem;
   font-weight: 300;
-  min-width: 270px;
-  max-width: 300px;
+  min-width: 250px;
+  max-width: 270px;
   min-height: calc(100vh - 80px);
 `
 
@@ -62,7 +62,7 @@ export const Sidebar = () => {
           </Link>
         </MenuItem>
         <MenuItem>
-          <Link to={"/"} className={styles.link}>
+          <Link to={"/PuntodeVenta"} className={styles.link}>
             <FontAwesomeIcon icon={faCartShopping} className={styles.icon} />
             <MenuItemText>Punto de Venta</MenuItemText>
           </Link>

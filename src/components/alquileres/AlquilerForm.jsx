@@ -10,25 +10,10 @@ export const AlquilerForm = () => {
       <div className="d-flex justify-content-between">
         <div className="w-100 p-3">
           <div className="row mb-3">
-            <div className="col-5 offset-1">
+            <div className="col-6">
               <Card>
                 <Card.Body>
-                  <Form.Group>
-                    <Form.Label>Seleccione un cliente</Form.Label>
-                    <InputGroup>
-                      <InputGroup.Text>
-                        <FontAwesomeIcon icon={faUserAlt} className="mx-2" />
-                      </InputGroup.Text>
-                      <Form.Select />
-                    </InputGroup>
-                  </Form.Group>
-                </Card.Body>
-              </Card>
-            </div>
-            <div className="col-5">
-              <Card>
-                <Card.Body>
-                  <Form.Group className="mb-1">
+                <Form.Group>
                     <div className="d-flex justify-content-center">
                       <Form.Check
                         type="radio"
@@ -41,13 +26,28 @@ export const AlquilerForm = () => {
                         id="reserva" name="tipo_documento" />
                     </div>
                   </Form.Group>
-                  <div className="row fw-semibold">
-                    <Form.Label className="col-form-label col-2 text-end">Desde</Form.Label>
-                    <div className="col-4">
+                  <Form.Group>
+                    <Form.Label>Seleccione un cliente</Form.Label>
+                    <InputGroup>
+                      <InputGroup.Text>
+                        <FontAwesomeIcon icon={faUserAlt} className="mx-2" />
+                      </InputGroup.Text>
+                      <Form.Select />
+                    </InputGroup>
+                  </Form.Group>
+                </Card.Body>
+              </Card>
+            </div>
+            <div className="col-6">
+              <Card>
+                <Card.Body>                  
+                  <div className="row text-uppercase">
+                    <Form.Label className="col-form-label col-3 text-end">Desde</Form.Label>
+                    <div className="col-8 mb-3">
                       <Form.Control type="date" />
                     </div>
-                    <Form.Label className="col-form-label col-2 text-end">Hasta</Form.Label>
-                    <div className="col-4">
+                    <Form.Label className="col-form-label col-3 text-end">Hasta</Form.Label>
+                    <div className="col-8">
                       <Form.Control type="date" />
                     </div>
                   </div>
@@ -56,7 +56,7 @@ export const AlquilerForm = () => {
             </div>
           </div>
           <div className="row mb-3">
-            <div className="col-10 offset-1">
+            <div className="col-12">
               <Card>
                 <Card.Body>
                   <Form className="row row-cols-auto g-2">
