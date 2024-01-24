@@ -1,5 +1,6 @@
 import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
 import logo from "../../assets/logo.png"
+import { Link } from "react-router-dom";
 export const Login = () => {
   return (
     <div>
@@ -15,8 +16,8 @@ export const Login = () => {
                   </p>
                   <Form>
                     <Form.Group className="mb-3 me-5" controlId="formBasicEmail">
-                      <Form.Label className="text-center ms-5">Ingrese su correo</Form.Label>
-                      <Form.Control className="ms-3" type="email" placeholder="Ingrese su correo" style={{ borderRadius: '20px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', height: '50px' }} />
+                      <Form.Label className="text-center ms-5">Nombre usuario</Form.Label>
+                      <Form.Control className="ms-3" type="text" placeholder="Ingrese su usuario" style={{ borderRadius: '20px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', height: '50px' }} />
                     </Form.Group>
                     <Form.Group className="mb-3 me-5" controlId="formBasicPassword">
                       <Form.Label className="ms-5">Contraseña</Form.Label>
@@ -32,7 +33,7 @@ export const Login = () => {
                     </Form.Group>
                   </Form>
                   <div className="d-grid">
-                    <Button variant="success" type="submit" className="btn-lg mx-auto m-1">Crear una cuenta</Button>
+                    <Link to="/registro" className="btn btn-success btn-lg mx-auto m-1">Crear una cuenta</Link>
                   </div>
                 </div>
               </Card.Body>
