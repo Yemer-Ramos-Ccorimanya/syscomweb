@@ -1,21 +1,31 @@
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
+import Container from "react-bootstrap/Container"
+import Nav from "react-bootstrap/Nav"
+import Navbar from "react-bootstrap/Navbar"
 import logo from "../../assets/logo.png"
-import { Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
-import { faCircleUser } from '@fortawesome/free-regular-svg-icons';
+import {Button} from "react-bootstrap"
+import {Link, useNavigate} from "react-router-dom"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import {faRightFromBracket} from "@fortawesome/free-solid-svg-icons"
+import {faCircleUser} from "@fortawesome/free-regular-svg-icons"
 
 export const HeaderHTML = () => {
+  const navigate = useNavigate()
+  
+  const handleLogout = () => {
+    if (localStorage.getItem("AuthToken"))
+      localStorage.removeItem("AuthToken")
+    if (localStorage.getItem("RefreshToken"))
+      localStorage.removeItem("RefreshToken")
+    navigate("/login")
+  }
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary shadow-sm">
       <Container fluid={true}>
         <Link to={"/"} className="navbar-brand">
-          <img src={logo} />
+          <img src={logo}/>
         </Link>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Toggle aria-controls="basic-navbar-nav"/>
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="d-lg-none me-auto">
             <Nav.Link href="#home" className="text-uppercase">Inicio</Nav.Link>
@@ -35,11 +45,11 @@ export const HeaderHTML = () => {
               </div>
             </Nav.Link>
             <Nav.Link className="d-none d-lg-block">
-              <FontAwesomeIcon icon={faCircleUser} style={{ fontSize: "3rem" }} />
+              <FontAwesomeIcon icon={faCircleUser} style={{fontSize: "3rem"}}/>
             </Nav.Link>
             <div className="d-flex align-items-center justify-content-end">
-              <Button variant="danger" className="px-3">
-                <FontAwesomeIcon icon={faRightFromBracket} className="me-1" />
+              <Button variant="danger" onClick={handleLogout} className="px-3">
+                <FontAwesomeIcon icon={faRightFromBracket} className="me-1"/>
                 <span className="text-uppercase">Cerrar Sessión</span>
               </Button>
             </div>
@@ -47,5 +57,5 @@ export const HeaderHTML = () => {
         </Navbar.Collapse>
       </Container>
     </Navbar>
-  );
+  )
 }
