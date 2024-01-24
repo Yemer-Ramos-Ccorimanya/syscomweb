@@ -1,4 +1,4 @@
-import { faCartShopping, faChartColumn, faGear, faHomeAlt, faTags, faUserGroup, faVest } from "@fortawesome/free-solid-svg-icons"
+import { faCartShopping, faChartColumn, faGear, faHomeAlt, faTags, faUserGroup, faVest,faCartFlatbed} from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
@@ -65,6 +65,13 @@ export const Sidebar = () => {
           <Link to={"/PuntodeVenta"} className={styles.link}>
             <FontAwesomeIcon icon={faCartShopping} className={styles.icon} />
             <MenuItemText>Punto de Venta</MenuItemText>
+          </Link>
+        </MenuItem>
+        {/* inventario */}
+        <MenuItem>
+          <Link to={"/"} className={styles.link}>
+            <FontAwesomeIcon icon={faCartFlatbed} className={styles.icon} />
+            <MenuItemText>Inventario</MenuItemText>
           </Link>
         </MenuItem>
         <MenuItem>
