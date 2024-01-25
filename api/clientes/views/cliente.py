@@ -22,16 +22,14 @@ class ClienteListCreateView(APIView):
                             status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request):
-        serializer = ClienteSerializer(data=request.data)
-        if serializer.is_valid():
-            empresa_por_defecto = get_empresa_por_defecto(request.user)
+        data = request.data
+        empresa_por_defecto = get_empresa_por_defecto(request.user)
+        data["empresa"] = empresa_por_defecto.id
 
-            if empresa_por_defecto:
-                serializer.save(empresa=empresa_por_defecto)
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            else:
-                return Response({'detail': 'No se ha definido una empresa por defecto para este usuario.'},
-                                status=status.HTTP_400_BAD_REQUEST)
+        serializer = ClienteSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -62,6 +60,7 @@ class ClienteDetailView(APIView):
     def put(self, request, pk):
         cliente = self.get_cliente(pk, request.user)
         if cliente:
+            request.data["empresa"] = cliente.empresa_id
             serializer = ClienteSerializer(cliente, data=request.data)
             if serializer.is_valid():
                 serializer.save()
