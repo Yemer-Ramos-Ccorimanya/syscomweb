@@ -1,14 +1,21 @@
 import uuid
+from django.contrib.auth.models import User
 from django.db import models
 
 
 class Empresa(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     ruc = models.CharField(max_length=15, null=True)
     rzn_social = models.CharField(max_length=256, null=True)
     direccion = models.CharField(max_length=256, null=True)
     celular = models.CharField(max_length=15, null=True)
-    sucursal_por_defecto = models.UUIDField(null=True)
+    sucursal_por_defecto = models.UUIDField(null=True, blank=True)
+
+
+class EmpresaPorDefecto(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    empresa = models.ForeignKey(Empresa, on_delete=models.SET_NULL, null=True, blank=True)
 
 
 class Sucursal(models.Model):
@@ -21,7 +28,7 @@ class Sucursal(models.Model):
     nombre_contacto = models.CharField(max_length=256, null=True)
     telefono_contacto = models.CharField(max_length=256, null=True)
     correo_contacto = models.CharField(max_length=256, null=True)
-    almacen = models.UUIDField(null=True)
+    almacen = models.UUIDField(null=True, blank=True)
 
 
 class Terminal(models.Model):
