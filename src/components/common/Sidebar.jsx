@@ -69,7 +69,7 @@ export const Sidebar = () => {
         </MenuItem>
         {/* inventario */}
         <MenuItem>
-          <Link to={"/"} className={styles.link}>
+          <Link to={"/inventarios"} className={styles.link}>
             <FontAwesomeIcon icon={faCartFlatbed} className={styles.icon} />
             <MenuItemText>Inventario</MenuItemText>
           </Link>
