@@ -2,21 +2,43 @@ import { Card, Form, InputGroup } from "react-bootstrap"
 import { MainContainer } from "../common/MainContainer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons"
+import { getClientesHook } from "../../hooks/clientes.hook"
 import { Link } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { useFormik } from "formik"
 
 export const ListaCliente = () => {
+  const [clientes, setClientes] = useState({})
+
+  useEffect(() => {
+    getClientesHook().then(result => setClientes(result));
+  }, [])
+
+  const formik = useFormik({
+    initialValues: {
+      query: ""
+    },
+    onSubmit: values => {
+      getClientesHook(values.query).then(result => setClientes(result))
+    }
+  })
+
+
   return (
     <MainContainer>
       <h5>Clientes</h5>
       <Card >
         <Card.Body>
-          <Form className="row row-cols-auto g-2">
+          <Form onSubmit={formik.handleSubmit} className="row row-cols-auto g-2">
             <div className="col-auto col-md-5">
               <InputGroup className="mb-3">
                 <InputGroup.Text>
                   <FontAwesomeIcon icon={faMagnifyingGlass} className="mx-2" />
                 </InputGroup.Text>
                 <Form.Control
+                  name="query"
+                  value={formik.values.query}
+                  onChange={formik.handleChange}
                   placeholder="Nombres Completo / Razón Social"
                 />
               </InputGroup>
@@ -39,7 +61,16 @@ export const ListaCliente = () => {
                 </tr>
               </thead>
               <tbody>
-
+                {
+                  clientes && clientes.results?.map(item => (
+                    <tr key={item.id}>
+                      <td>{item.dni}</td>
+                      <td>{item.dni}</td>
+                      <td>{item.address}</td>
+                      <td>{item.celular}</td>
+                    </tr>
+                  ))
+                }
               </tbody>
             </table>
           </div>
