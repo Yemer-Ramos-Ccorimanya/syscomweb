@@ -1,20 +1,10 @@
-import { Card, Form, InputGroup, Button, Modal } from "react-bootstrap"
+import { Card, Form, InputGroup, Button, Modal, Dropdown } from "react-bootstrap"
 import { MainContainer } from "../../common/MainContainer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faLayerGroup, faList, faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons"
+import {faLayerGroup, faList, faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons"
 import { Link } from "react-router-dom"
-import { useState } from "react"
-
 
 export const ListaProductos = () => {
-  const [showCategoryModal, setShowCategoryModal] = useState(false);
-  const [showSubcategoryModal, setShowSubcategoryModal] = useState(false);
-
-  const handleShowCategory = () => setShowCategoryModal(true);
-  const handleCloseCategory = () => setShowCategoryModal(false);
-
-  const handleShowSubcategory = () => setShowSubcategoryModal(true);
-  const handleCloseSubcategory = () => setShowSubcategoryModal(false);
   return (
     <MainContainer>
       <h5>Productos</h5>
@@ -38,56 +28,20 @@ export const ListaProductos = () => {
               </Link>
             </div>
             <div className="col-auto">
-              <Button variant="primary" onClick={handleShowCategory}>
-                <FontAwesomeIcon icon={faList} className="me-1" />
-                <span>Agregar Categoría</span>
-              </Button>
-              <Button variant="warning" onClick={handleShowSubcategory} className="ms-2">
+              <Dropdown>
+                <Dropdown.Toggle variant="warning" id="dropdown-basic">
                 <FontAwesomeIcon icon={faLayerGroup} className="me-1" />
-                <span>Agregar Subcategoría</span>
-              </Button>
-
-              {/* Category Modal */}
-              <Modal show={showCategoryModal} onHide={handleCloseCategory}>
-                <Modal.Header closeButton>
-                  <Modal.Title>Agregar Categoría</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <Form.Group className="mb-3" controlId="formCategoryName">
-                    <Form.Label>Nombre de la Categoría</Form.Label>
-                    <Form.Control type="text" placeholder="Ingrese el nombre de la categoría" />
-                  </Form.Group>
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button variant="secondary" onClick={handleCloseCategory}>
-                    Cancelar
-                  </Button>
-                  <Button variant="primary" onClick={handleCloseCategory}>
-                    Agregar
-                  </Button>
-                </Modal.Footer>
-              </Modal>
-
-              {/* Subcategory Modal */}
-              <Modal show={showSubcategoryModal} onHide={handleCloseSubcategory}>
-                <Modal.Header closeButton>
-                  <Modal.Title>Agregar Subcategoría</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <Form.Group className="mb-3" controlId="formSubcategoryName">
-                    <Form.Label>Nombre de la Subcategoría</Form.Label>
-                    <Form.Control type="text" placeholder="Ingrese el nombre de la subcategoría" />
-                  </Form.Group>
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button variant="secondary" onClick={handleCloseSubcategory}>
-                    Cancelar
-                  </Button>
-                  <Button variant="primary" onClick={handleCloseSubcategory}>
-                    Agregar
-                  </Button>
-                </Modal.Footer>
-              </Modal>
+                  <span>Opciones</span>
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item as={Link} to="/inventarios/productos/categorias">
+                    Listado de Categorías
+                  </Dropdown.Item>
+                  <Dropdown.Item as={Link} to="/inventarios/productos/subcategorias">
+                    Listado de Subcategorías
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             </div>
           </Form>
           <div className="table-responsive">
@@ -107,7 +61,6 @@ export const ListaProductos = () => {
           </div>
         </Card.Body>
       </Card>
-
     </MainContainer>
   )
 }
