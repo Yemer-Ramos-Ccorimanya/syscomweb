@@ -16,7 +16,7 @@ export const ListaCategorias = () => {
       <Card >
         <Card.Body>
           <Form className="row row-cols-auto g-2">
-            <div className="col-auto">
+            <div className="col-auto col-md-4">
               <InputGroup className="mb-3">
                 <InputGroup.Text>
                   <FontAwesomeIcon icon={faMagnifyingGlass} className="mx-2" />
