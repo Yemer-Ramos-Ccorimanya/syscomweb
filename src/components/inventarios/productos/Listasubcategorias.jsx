@@ -1,11 +1,11 @@
-import { Card, Form, InputGroup, Button, Modal, Dropdown } from "react-bootstrap"
+import { Card, Form, InputGroup, Button } from "react-bootstrap"
 import { MainContainer } from "../../common/MainContainer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faLayerGroup, faList, faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons"
-import { Link } from "react-router-dom"
+import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons"
 import { useState } from "react"
+import { SubCategoriaModal } from "./SubCategoriaModal"
 
-export const ListaSubcategorias = () => {
+export const ListaSubCategorias = () => {
   const [showSubcategoryModal, setShowSubcategoryModal] = useState(false);
   const handleShowSubcategory = () => setShowSubcategoryModal(true);
   const handleCloseSubcategory = () => setShowSubcategoryModal(false);
@@ -28,28 +28,8 @@ export const ListaSubcategorias = () => {
             <div className="col-auto">
               <Button variant="success" onClick={handleShowSubcategory} className="ms-2">
                 <FontAwesomeIcon icon={faPlus} className="me-1" />
-                <span>Agregar Subcategoría</span>
+                <span className="text-uppercase">Agregar Subcategoría</span>
               </Button>
-              {/* Subcategory Modal */}
-              <Modal show={showSubcategoryModal} onHide={handleCloseSubcategory}>
-                <Modal.Header closeButton>
-                  <Modal.Title>Agregar Subcategoría</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <Form.Group className="mb-3" controlId="formSubcategoryName">
-                    <Form.Label>Nombre de la Subcategoría</Form.Label>
-                    <Form.Control type="text" placeholder="Ingrese el nombre de la subcategoría" />
-                  </Form.Group>
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button variant="secondary" onClick={handleCloseSubcategory}>
-                    Cancelar
-                  </Button>
-                  <Button variant="primary" onClick={handleCloseSubcategory}>
-                    Agregar
-                  </Button>
-                </Modal.Footer>
-              </Modal>
             </div>
           </Form>
           <div className="table-responsive">
@@ -67,6 +47,7 @@ export const ListaSubcategorias = () => {
           </div>
         </Card.Body>
       </Card>
+      <SubCategoriaModal showSubcategoryModal={showSubcategoryModal} handleCloseSubcategory={handleCloseSubcategory} />
     </MainContainer>
   )
 }

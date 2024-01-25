@@ -1,14 +1,15 @@
-import { Card, Form, InputGroup, Button, Modal, Dropdown } from "react-bootstrap"
+import { Card, Form, InputGroup, Button, Modal } from "react-bootstrap"
 import { MainContainer } from "../../common/MainContainer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faLayerGroup, faList, faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons"
-import { Link } from "react-router-dom"
+import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons"
 import { useState } from "react"
+import { CategoriaModal } from "./CategoriaModal"
 
 export const ListaCategorias = () => {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const handleShowCategory = () => setShowCategoryModal(true);
   const handleCloseCategory = () => setShowCategoryModal(false);
+
   return (
     <MainContainer>
       <h5>Categorías</h5>
@@ -28,27 +29,8 @@ export const ListaCategorias = () => {
             <div className="col-auto">
               <Button variant="success" onClick={handleShowCategory}>
                 <FontAwesomeIcon icon={faPlus} className="me-1" />
-                <span>Agregar Categoría</span>
+                <span className="text-uppercase">Agregar Categoría</span>
               </Button>
-              <Modal show={showCategoryModal} onHide={handleCloseCategory}>
-                <Modal.Header closeButton>
-                  <Modal.Title>Agregar Categoría</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <Form.Group className="mb-3" controlId="formCategoryName">
-                    <Form.Label>Nombre de la Categoría</Form.Label>
-                    <Form.Control type="text" placeholder="Ingrese el nombre de la categoría" />
-                  </Form.Group>
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button variant="secondary" onClick={handleCloseCategory}>
-                    Cancelar
-                  </Button>
-                  <Button variant="primary" onClick={handleCloseCategory}>
-                    Agregar
-                  </Button>
-                </Modal.Footer>
-              </Modal>
             </div>
           </Form>
           <div className="table-responsive">
@@ -66,6 +48,7 @@ export const ListaCategorias = () => {
           </div>
         </Card.Body>
       </Card>
+      <CategoriaModal showCategoryModal={showCategoryModal} handleCloseCategory={handleCloseCategory} />
     </MainContainer>
   )
 }
