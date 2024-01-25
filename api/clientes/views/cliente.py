@@ -1,5 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.pagination import PageNumberPagination
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from clientes.models import Cliente
@@ -9,14 +10,17 @@ from clientes.serializers import ClienteSerializer
 
 class ClienteListCreateView(APIView):
     permission_classes = [IsAuthenticated]
+    pagination_class = PageNumberPagination
 
     def get(self, request):
         empresa_por_defecto = get_empresa_por_defecto(request.user)
 
         if empresa_por_defecto:
             clientes = Cliente.objects.filter(empresa=empresa_por_defecto)
-            serializer = ClienteSerializer(clientes, many=True)
-            return Response(serializer.data)
+            paginator = self.pagination_class()
+            result_page = paginator.paginate_queryset(clientes, request, view=self)
+            serializer = ClienteSerializer(result_page, many=True)
+            return paginator.get_paginated_response(serializer.data)
         else:
             return Response({'detail': 'No se ha definido una empresa por defecto para este usuario.'},
                             status=status.HTTP_400_BAD_REQUEST)
