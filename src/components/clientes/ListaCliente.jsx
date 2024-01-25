@@ -11,20 +11,20 @@ export const ListaCliente = () => {
       <Card >
         <Card.Body>
           <Form className="row row-cols-auto g-2">
-            <div className="col-auto">
+            <div className="col-auto col-md-5">
               <InputGroup className="mb-3">
                 <InputGroup.Text>
                   <FontAwesomeIcon icon={faMagnifyingGlass} className="mx-2" />
                 </InputGroup.Text>
                 <Form.Control
-                  placeholder="Nombre"
+                  placeholder="Nombres Completo / Razón Social"
                 />
               </InputGroup>
             </div>
             <div className="col-auto">
               <Link to="/clientes/agregar" className="btn btn-success" variant="success">
                 <FontAwesomeIcon icon={faPlus} className="me-1" />
-                <span>Nuevo Cliente</span>
+                <span className="text-uppercase">Nuevo Cliente</span>
               </Link>
             </div>
           </Form>
@@ -33,8 +33,7 @@ export const ListaCliente = () => {
               <thead>
                 <tr className="text-uppercase">
                   <th>D.N.I</th>
-                  <th>Nombre</th>
-                  <th>Apellido</th>
+                  <th>Razón Social</th>
                   <th>Dirección</th>
                   <th>Número</th>
                 </tr>
