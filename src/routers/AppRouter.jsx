@@ -3,11 +3,11 @@ import { Login } from "../components/auth/Login"
 import { Registro } from "../components/auth/Registro"
 import { Dashboard } from "./Dashboard"
 import { InventarioRoute } from "./InventarioRoute"
-import { ClienteRoute } from "./clienteRoute"
 import { AlquilerRoute } from "./AlquilerRoute"
 import { PuntodeVentaRoute } from "./PuntodeVentaRoute"
 import { PrivateRoute } from "./PrivateRoute"
 import { UserProvider } from "../context/UserProvider"
+import { ClientesRoute } from "./ClientesRoute"
 
 export const AppRouter = () => {
   return (
@@ -23,7 +23,7 @@ export const AppRouter = () => {
           } />
           <Route path="/clientes/*" element={
             <PrivateRoute>
-              <ClienteRoute />
+              <ClientesRoute />
             </PrivateRoute>
           } />
           <Route path="/alquileres/*" element={
