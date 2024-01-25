@@ -1,15 +1,22 @@
-import { Card, Col, Button, Form } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 import { MainContainer } from "../common/MainContainer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCashRegister, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faCashRegister } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 
 export const ListadoVentas = () => {
+  const navigate = useNavigate()
+
+  const handleTerminal = () => {
+    navigate("/PuntodeVenta/1/terminal")
+  }
+
   return (
     <MainContainer>
       <h5>CANALES DE PUNTO DE VENTA ABIERTO</h5>
       <div className="d-flex">
-        <Card style={{ width: '18rem' }} className="me-3">
+        <Card style={{ width: '18rem', cursor: 'pointer' }} onClick={handleTerminal} className="me-3">
           <Card.Body className="d-flex justify-content-center align-items-center">
             <FontAwesomeIcon icon={faCashRegister} className="me-3" style={{ fontSize: '5.5em' }} />
             <div>
@@ -19,7 +26,7 @@ export const ListadoVentas = () => {
             </div>
           </Card.Body>
         </Card>
-        <Card style={{ width: '18rem' }} className="me-3">
+        <Card style={{ width: '18rem', cursor: 'pointer' }} onClick={handleTerminal} className="me-3">
           <Card.Body className="d-flex justify-content-center align-items-center">
             <FontAwesomeIcon icon={faCashRegister} className="me-3" style={{ fontSize: '5.5em' }} />
             <div>
@@ -29,7 +36,7 @@ export const ListadoVentas = () => {
             </div>
           </Card.Body>
         </Card>
-        <Card style={{ width: '18rem' }}>
+        <Card style={{ width: '18rem', cursor: 'pointer' }} onClick={handleTerminal}>
           <Card.Body className="d-flex justify-content-center align-items-center">
             <FontAwesomeIcon icon={faCashRegister} className="me-3" style={{ fontSize: '5.5em' }} />
             <div>
@@ -47,7 +54,7 @@ export const ListadoVentas = () => {
         <Button variant="outline-success" className="me-2">Últimos 7 días</Button>
         <Button variant="outline-success" className="me-2">Últimos 30 días</Button>
 
-        <button className="btn btn-success">Apertura de Caja  </button>
+        <button className="btn btn-success">Apertura de Caja</button>
       </div>
       <h1>   </h1>
       <Card>
