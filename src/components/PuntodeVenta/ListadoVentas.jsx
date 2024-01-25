@@ -8,54 +8,45 @@ export const ListadoVentas = () => {
   return (
     <MainContainer>
       <h5>CANALES DE PUNTO DE VENTA ABIERTO</h5>
-      <div className="d-flex gap-2 justify-content-start"> 
-        <Col xs={12} md={4}>
-          <Card style={{ width: '18rem' }}>
-            <Card.Body className="d-flex justify-content-center align-items-center">
-              <FontAwesomeIcon icon={faCashRegister} className="me-3" style={{ fontSize: '5.5em' }} />
-              <div>
-                <Card.Title>CAJA - 1</Card.Title>
-                <Card.Text>10/01/2024 11:00PM</Card.Text>
-                <Card.Text>USER - CAJA</Card.Text>
-              </div>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col xs={12} md={4}>
-          <Card style={{ width: '18rem' }}>
-            <Card.Body className="d-flex justify-content-center align-items-center">
-              <FontAwesomeIcon icon={faCashRegister} className="me-3" style={{ fontSize: '5.5em' }} />
-              <div>
-                <Card.Title>CAJA - 2</Card.Title>
-                <Card.Text>10/01/2024 11:00PM</Card.Text>
-                <Card.Text>USER - CAJA</Card.Text>
-              </div>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col xs={12} md={4}>
-          <Card style={{ width: '18rem' }}>
-            <Card.Body className="d-flex justify-content-center align-items-center">
-              <FontAwesomeIcon icon={faCashRegister} className="me-3" style={{ fontSize: '5.5em' }} />
-              <div>
-                <Card.Title>CAJA - 3</Card.Title>
-                <Card.Text>10/01/2024 11:00PM</Card.Text>
-                <Card.Text>USER - CAJA</Card.Text>
-              </div>
-            </Card.Body>
-          </Card>
-        </Col>
+      <div className="d-flex">
+        <Card style={{ width: '18rem' }} className="me-3">
+          <Card.Body className="d-flex justify-content-center align-items-center">
+            <FontAwesomeIcon icon={faCashRegister} className="me-3" style={{ fontSize: '5.5em' }} />
+            <div>
+              <Card.Title>CAJA - 1</Card.Title>
+              <Card.Text>10/01/2024 11:00PM</Card.Text>
+              <Card.Text>USER - CAJA</Card.Text>
+            </div>
+          </Card.Body>
+        </Card>
+        <Card style={{ width: '18rem' }} className="me-3">
+          <Card.Body className="d-flex justify-content-center align-items-center">
+            <FontAwesomeIcon icon={faCashRegister} className="me-3" style={{ fontSize: '5.5em' }} />
+            <div>
+              <Card.Title>CAJA - 2</Card.Title>
+              <Card.Text>10/01/2024 11:00PM</Card.Text>
+              <Card.Text>USER - CAJA</Card.Text>
+            </div>
+          </Card.Body>
+        </Card>
+        <Card style={{ width: '18rem' }}>
+          <Card.Body className="d-flex justify-content-center align-items-center">
+            <FontAwesomeIcon icon={faCashRegister} className="me-3" style={{ fontSize: '5.5em' }} />
+            <div>
+              <Card.Title>CAJA - 1</Card.Title>
+              <Card.Text>10/01/2024 11:00PM</Card.Text>
+              <Card.Text>USER - CAJA</Card.Text>
+            </div>
+          </Card.Body>
+        </Card>
       </div>
-
-      
-      <h1>   </h1>
       <h5>OPERACIONES DE TERMINALES DE PUNTOS DE VENTA</h5>
       <div className="col-auto d-flex gap-2">
         <Button variant="outline-success" className="me-2">Hoy</Button>
         <Button variant="outline-success" className="me-2">Ayer</Button>
         <Button variant="outline-success" className="me-2">Últimos 7 días</Button>
         <Button variant="outline-success" className="me-2">Últimos 30 días</Button>
-        
+
         <button className="btn btn-success">Apertura de Caja  </button>
       </div>
       <h1>   </h1>
