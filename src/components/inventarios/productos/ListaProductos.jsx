@@ -1,7 +1,7 @@
-import { Card, Form, InputGroup, Button, Modal, Dropdown } from "react-bootstrap"
+import { Card, Form, InputGroup, Dropdown } from "react-bootstrap"
 import { MainContainer } from "../../common/MainContainer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import {faLayerGroup, faList, faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons"
+import {faLayerGroup, faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons"
 import { Link } from "react-router-dom"
 
 export const ListaProductos = () => {

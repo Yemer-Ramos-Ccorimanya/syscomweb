@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import { cssValidation } from "../common/css.validation"
-import { createClienteHook, getClienteHook, updateClienteHook } from "../../hooks/clientes.hook"
+import { createClienteHook, getClienteHook, updateClienteHook } from "../../hooks/clientes"
 import { toastSuccess } from "../common/helpers"
 import { useEffect } from "react"
 
