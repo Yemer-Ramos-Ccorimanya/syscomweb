@@ -1,4 +1,4 @@
-import Axios from "./axios"
+import Axios from "../axios"
 
 export const getSubCategoriasHook = async (query = "", page = 1) => {
   const URL = `/api/inventarios/subcategorias?page=${page}&query=${query}`

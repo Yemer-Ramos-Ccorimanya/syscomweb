@@ -1,4 +1,4 @@
-import Axios from "./axios"
+import Axios from "../axios"
 
 export const getClientesHook = async (query = "", page = 1) => {
   const URL = `/api/clientes/?page=${page}&query=${query}`
