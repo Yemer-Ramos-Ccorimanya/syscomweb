@@ -1,77 +1,73 @@
-import { Card } from "react-bootstrap";
-import { MainContainer } from "../common/MainContainer";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleUser } from "@fortawesome/free-solid-svg-icons"; // Asegúrate de importar el icono que necesitas
+import { Button, Card, Form, InputGroup } from "react-bootstrap"
+import { MainContainer } from "../common/MainContainer"
+import { SidebarDashboard } from "./SidebarDashboard"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCircleUser } from "@fortawesome/free-solid-svg-icons"
 
 export const Home = () => {
   return (
-    <MainContainer>
-      <h1 className="h1 text-start mb-4">Reporte de Clientes por fecha de Renta</h1>
-      <div className="container">
-        <div className="row">
-          <div className="col-md-6 mb-4">
-            <div className="mt-5">
-              <Card style={{ width: '35rem' }}>
-                <Card.Body>
-                  <Card.Title>Clientes</Card.Title>
-                  <div className="d-flex align-items-center justify-content-start mb-2">
-                    <FontAwesomeIcon icon={faCircleUser} style={{ fontSize: "3rem" }} />
-                    <div className="ml-3">
+    <MainContainer bsPadding="p-0">
+      <div className="d-flex justify-content-beetween">
+        <div className="w-100 p-1">
+          <div className="row">
+            <h1 className="text-primary" style={{ fontSize: "1.5em" }}>Reporte de clientes por fecha de renta</h1>
+            <div className="col-6">
+              <Card className="m-2" >
+                <Card.Header>
+                  <Card.Title className="m-2">Clientes</Card.Title>
+                </Card.Header>
+                <Card.Body className="d-flex align-items-start">
+                  <FontAwesomeIcon icon={faCircleUser} className="me-3" style={{ fontSize: '5.5em' }} />
+                  <div>
+                    <Card.Text>Ana Rodas Palomino</Card.Text>
+                    <Card.Text><i>anarodas25@gmail.com</i></Card.Text>
+                  </div>
+                </Card.Body>
+              </Card>
+              <Card className="m-2" >
+                <Card.Header>
+                  <Card.Title className="m-2">Periodo de Renta</Card.Title>
+                </Card.Header>
+                <Card.Body className="d-flex align-content-between">
+                  <div className="ms-3">
+                    <Card.Text className="m-2">Entrega</Card.Text>
+                    <input type="date" className="form-control m-2" />
+                    <input type="time" className="form-control m-2" />
+                  </div>
+                  <div className="mx-5">
+                    <Card.Text className="m-2">Devolución</Card.Text>
+                    <input type="date" className="form-control m-2" />
+                    <input type="time" className="form-control m-2" />
+                  </div>
+                </Card.Body>
+              </Card>
+            </div>
+            <div className="col-6">
+              <Card className="m-2" >
+                {/* card header */}
+                <Card.Header>
+                  <Card.Title className="m-2">información del cliente</Card.Title>
+                </Card.Header>
+                <Card.Body className="">
+                  <div className="row">
+                    <div className="col-6">
+                      <Card.Text className="m-2">Direccion</Card.Text>
+                    </div>
+                    <div className="col-6">
                       <Card.Text className="m-2">Ana Rodas Palomino</Card.Text>
-                      <Card.Text className="m-2"><i>abc@gmail.com</i></Card.Text>
+                      <Card.Text className="m-2">12345678</Card.Text>
+                      <Card.Text className="m-2">987654321</Card.Text>
                     </div>
                   </div>
-                </Card.Body>
-              </Card>
-            </div>
-            <div className="mt-4">
-              <Card style={{ width: '35rem' }}>
-                <Card.Body>
-                  <Card.Title>Periodo de Renta</Card.Title>
-                  <div className="d-flex align-items-center justify-content-start mb-2">
-                    <div className="row">
-                      <div className="col">
-                        <Card.Text className="m-2">Entrega</Card.Text>
-                        <input type="date" className="form-control m-2" />
-                        <input type="time" className="form-control m-2" />
-                      </div>
-                      <div className="col">
-                        <Card.Text className="m-2">Retorno</Card.Text>
-                        <input type="date" className="form-control m-2" />
-                        <input type="time" className="form-control m-2" />
-                      </div>
+                  <hr/>
+                  <div className="row">
+                    <div className="col-6">
+                      <Card.Text className="m-2">Prendas</Card.Text>
                     </div>
-                  </div>
-                </Card.Body>
-              </Card>
-            </div>
-          </div>
-          <div className="col-md-6 mb-4">
-            <div className="mt-5">
-              <Card style={{ width: '35rem', height: '22.2rem' }}>
-                <Card.Body>
-                  <Card.Title>Información del Cliente</Card.Title>
-                  <div className="d-flex align-items-center justify-content-start mb-2">
-                    <div className="ml-0">
-                      <div className="d-flex">
-                        <div className="col">
-                          <Card.Text className="m-2" >Dirección</Card.Text>
-                        </div>
-                        <div className="col">
-                          <Card.Text className="m-2">Av Andahuaylas</Card.Text>
-                          <Card.Text className="m-2">987654321</Card.Text>
-                        </div>
-                      </div>
-                      <div className="d-flex">
-                        <div className="col">
-                          <Card.Text className="m-2">Prendas</Card.Text>
-                        </div>
-                        <div className="col">
-                          <Card.Text className="m-2">04- calzados</Card.Text>
-                          <Card.Text className="m-2">02- pantalones</Card.Text>
-                          <Card.Text className="m-2">01- camisa</Card.Text>
-                        </div>
-                      </div>
+                    <div className="col-6">
+                      <Card.Text className="m-2">04- calzados</Card.Text>
+                      <Card.Text className="m-2">02- pantalones</Card.Text>
+                      <Card.Text className="m-2">01- camisa</Card.Text>
                     </div>
                   </div>
                 </Card.Body>
@@ -79,9 +75,8 @@ export const Home = () => {
             </div>
           </div>
         </div>
+        <SidebarDashboard />
       </div>
-
-
     </MainContainer>
-  );
-};
+  )
+}
