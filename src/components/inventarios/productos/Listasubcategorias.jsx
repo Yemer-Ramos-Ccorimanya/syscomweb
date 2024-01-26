@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons"
 import { useEffect, useState } from "react"
 import { SubCategoriaModal } from "./SubCategoriaModal"
-import { getSubCategoriasHook } from "../../../hooks/subcategorias"
+import { getSubCategoriasHook } from "../../../hooks/subcategorias.hook"
 import { useFormik } from "formik"
 
 export const ListaSubCategorias = () => {
