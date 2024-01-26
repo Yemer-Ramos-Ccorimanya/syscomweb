@@ -7,7 +7,7 @@ export const getClientesHook = async (query = "", page = 1) => {
 }
 
 export const createClienteHook = async (data) => {
-  const URL = "/api/clientes"
+  const URL = "/api/clientes/"
   const result = await Axios.post(URL, data)
   return result.data
 }
@@ -19,19 +19,19 @@ export const getClienteHook = async (id) => {
 }
 
 export const updateClienteHook = async (id, data) => {
-  const URL = `/api/clientes/${id}`
+  const URL = `/api/clientes/${id}/`
   const result = await Axios.put(URL, data)
   return result.data
 }
 
 export const updatePartialClienteHook = async (id, data) => {
-  const URL = `/api/clientes/${id}`
+  const URL = `/api/clientes/${id}/`
   const result = await Axios.patch(URL, data)
   return result.data
 }
 
 export const deleteClienteHook = async (id) => {
-  const URL = `/api/clientes/${id}`
+  const URL = `/api/clientes/${id}/`
   const result = await Axios.delete(URL)
   return result.data
 }
