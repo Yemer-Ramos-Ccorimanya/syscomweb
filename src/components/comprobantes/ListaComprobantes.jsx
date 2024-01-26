@@ -1,4 +1,4 @@
-import { Card, Form, InputGroup, Button, Dropdown, Pagination, CardTitle, CardText } from "react-bootstrap"
+import { Card, Form, InputGroup, Button, Dropdown, Pagination, CardTitle, CardText, Badge } from "react-bootstrap"
 import { MainContainer } from "../common/MainContainer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMagnifyingGlass, faDownload, faChevronLeft, faChevronRight, faEye, faEnvelope, faCircleQuestion } from "@fortawesome/free-solid-svg-icons"
@@ -140,7 +140,7 @@ export const ListaComprobantes = () => {
                   <td>25-01-2024</td>
                   <td>25-01-2024</td>
                   <td>Aceptado</td>
-                  <td className="text-success">Pagado</td>
+                    <Badge bg="success" className="mt-1 text-light">Pagado</Badge>
                   <td>
                     <FontAwesomeIcon icon={faEye} className="mx-2 text-success" />
                     <FontAwesomeIcon icon={faEnvelope} className="mx-2 text-success" />
