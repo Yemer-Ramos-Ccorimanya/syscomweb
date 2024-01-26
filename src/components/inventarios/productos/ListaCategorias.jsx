@@ -1,16 +1,20 @@
 import { Card, Form, InputGroup, Button } from "react-bootstrap"
 import { MainContainer } from "../../common/MainContainer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons"
+import { faEdit, faMagnifyingGlass, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { useEffect, useState } from "react"
-import { CategoriaModal } from "./CategoriaModal"
-import { getCategoriasHook } from "../../../hooks/inventarios"
 import { useFormik } from "formik"
+import { formTypeModal } from "../../../config"
+import { CategoriaModal } from "./CategoriaModal"
+import { deleteCategoriaHook, getCategoriasHook } from "../../../hooks/inventarios"
+import { deleteConfirm } from "../../common/sweetalert"
 
 export const ListaCategorias = () => {
   const [categorias, setCategorias] = useState({})
+  const [titleModal, setTitleModal] = useState("")
+  const [categoriaActual, setCategoriaActual] = useState({})
+  const [typeModal, setTypeModal] = useState(formTypeModal.add)
   const [showCategoryModal, setShowCategoryModal] = useState(false)
-  const handleShowCategory = () => setShowCategoryModal(true)
   const handleCloseCategory = () => setShowCategoryModal(false)
 
   useEffect(() => {
@@ -25,6 +29,46 @@ export const ListaCategorias = () => {
       getCategoriasHook(values.query).then(result => setCategorias(result))
     }
   })
+
+  const handleAddCategoryModal = () => {
+    setTitleModal("Agregar Categoría")
+    setTypeModal(formTypeModal.add)
+    setShowCategoryModal(true)
+  }
+
+  const handleEditarCategoriaModal = (item) => {
+    setTitleModal("Editar Categoría")
+    setTypeModal(formTypeModal.edit)
+    setCategoriaActual(item)
+    setShowCategoryModal(true)
+  }
+
+  const saveChanges = ({ data, type }) => {
+    if (type === formTypeModal.add) {
+      const results = [data, ...categorias.results]
+      setCategorias({ ...categorias, results })
+      setShowCategoryModal(false)
+    }
+    if (type === formTypeModal.edit) {
+      const results = categorias.results.map(item => {
+        if (item.id === data.id) item = data
+        return item
+      })
+      setCategorias({ ...categorias, results })
+      setShowCategoryModal(false)
+    }
+  }
+
+  const handleDelete = (id) => {
+    deleteConfirm().then(result => {
+      if (result.isConfirmed) {
+        deleteCategoriaHook(id).then(() => {
+          const results = categorias.results.filter(item => item.id !== id)
+          setCategorias({ ...categorias, results })
+        })
+      }
+    })
+  }
 
   return (
     <MainContainer>
@@ -46,7 +90,7 @@ export const ListaCategorias = () => {
               </InputGroup>
             </div>
             <div className="col-auto">
-              <Button type="button" variant="success" onClick={handleShowCategory}>
+              <Button type="button" variant="success" onClick={handleAddCategoryModal}>
                 <FontAwesomeIcon icon={faPlus} className="me-1" />
                 <span className="text-uppercase">Agregar Categoría</span>
               </Button>
@@ -58,6 +102,7 @@ export const ListaCategorias = () => {
                 <tr className="text-uppercase">
                   <th>N°</th>
                   <th>Nombre</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -66,6 +111,18 @@ export const ListaCategorias = () => {
                     <tr key={item.id} className="text-uppercase">
                       <td>{index + 1}</td>
                       <td>{item.nombre}</td>
+                      <td>
+                        <div className="d-flex justify-content-end">
+                          <Button variant={"secondary"}
+                            onClick={() => handleEditarCategoriaModal(item)}
+                            size={"sm"} className="me-2">
+                            <FontAwesomeIcon icon={faEdit} />
+                          </Button>
+                          <Button variant={"danger"} onClick={() => handleDelete(item.id)} size={"sm"}>
+                            <FontAwesomeIcon icon={faTrash} />
+                          </Button>
+                        </div>
+                      </td>
                     </tr>
                   ))
                 }
@@ -74,7 +131,13 @@ export const ListaCategorias = () => {
           </div>
         </Card.Body>
       </Card>
-      <CategoriaModal showCategoryModal={showCategoryModal} handleCloseCategory={handleCloseCategory} />
+      <CategoriaModal
+        type={typeModal}
+        title={titleModal}
+        categoria={categoriaActual}
+        saveChanges={saveChanges}
+        showCategoryModal={showCategoryModal}
+        handleCloseCategory={handleCloseCategory} />
     </MainContainer>
   )
 }
