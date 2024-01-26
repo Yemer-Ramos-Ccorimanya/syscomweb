@@ -8,6 +8,7 @@ import { AlquilerRoute } from "./AlquilerRoute"
 import { PuntodeVentaRoute } from "./PuntodeVentaRoute"
 import { PrivateRoute } from "./PrivateRoute"
 import { UserProvider } from "../context/UserProvider"
+import { ComprobanteRoute } from "./Comprobanteroute"
 
 export const AppRouter = () => {
   return (
@@ -34,6 +35,11 @@ export const AppRouter = () => {
           <Route path="/PuntodeVenta/*" element={
             <PrivateRoute>
               <PuntodeVentaRoute />
+            </PrivateRoute>
+          } />
+          <Route path="/comprobantes/*" element={
+            <PrivateRoute>
+              <ComprobanteRoute/>
             </PrivateRoute>
           } />
           <Route path="/*" element={
