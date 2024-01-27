@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react"
-import { getUserDataHook } from "../hooks/auth.hook.js"
+import { getUserDataHook } from "../hooks/account"
 
 export const UserContext = createContext({})
 

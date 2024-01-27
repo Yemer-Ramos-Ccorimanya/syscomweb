@@ -13,46 +13,57 @@ export const ProductoForm = () => {
       </div>
       <div className="row mb-3">
         <div className="col-2 offset-1">
+          <h6 className="mb-0">Tipo Item</h6>
+        </div>
+        <div className="col-8">
+          <Card>
+            <Card.Body className="fw-semibold">
+              <div className="d-flex justify-content-center">
+                <Form.Check
+                  type="radio"
+                  label="Producto"
+                  id="item_producto" name="tipo_item"
+                  className="me-3" defaultChecked />
+                <Form.Check
+                  type="radio"
+                  label="Servicio"
+                  id="item_servicio" name="tipo_item"
+                  className="me-3" />
+                <Form.Check
+                  type="radio"
+                  label="Para alquilar"
+                  id="item_para_alquilar" name="tipo_item" />
+              </div>
+            </Card.Body>
+          </Card>
+        </div>
+      </div>
+      <div className="row mb-3">
+        <div className="col-2 offset-1">
           <h6>Información de producto</h6>
           <p>Por favor, ingrese todos los detalles requeridos para que sus productos puedan ser exhibidos en sus canales de venta.</p>
         </div>
         <div className="col-8">
           <Card>
             <Card.Body>
+              <Form.Group className="mb-3">
+                <Form.Label>Nombre</Form.Label>
+                <Form.Control type="text" />
+              </Form.Group>
               <div className="row mb-3">
-                <div className="col-10">
-                  <Form.Label>Nombre</Form.Label>
-                  <Form.Control type="text" />
-                  <div className="row mt-2">
-                    <div className="col-6">
-                      <Form.Label>Categoría</Form.Label>
-                      <Form.Select />
-                    </div>
-                    <div className="col-6">
-                      <Form.Label>SubCategoría</Form.Label>
-                      <Form.Select />
-                    </div>
-                  </div>
+                <div className="col-6">
+                  <Form.Label>Categoría</Form.Label>
+                  <Form.Select />
                 </div>
-                <div className="col-2">
-                  <img src="https://picsum.photos/200/200" className="img-thumbnail" alt="..." />
+                <div className="col-6">
+                  <Form.Label>SubCategoría</Form.Label>
+                  <Form.Select />
                 </div>
               </div>
-              <div className="row mb-3">
-                <div className="col-10">
-                  <Form.Label>Descripción</Form.Label>
-                  <Form.Control type="text" />
-                </div>
-                <div className="col-2">
-                  <Form.Label>&nbsp;</Form.Label>
-                  <Form.Check
-                    type="switch"
-                    id="custom-switch"
-                    label="Para alquiler"
-                    className="mt-1"
-                  />
-                </div>
-              </div>
+              <Form.Group className="mb-3">
+                <Form.Label>Descripción</Form.Label>
+                <Form.Control as="textarea" />
+              </Form.Group>
               <div className="row mb-3">
                 <div className="col-6">
                   <Form.Label>Código de barras</Form.Label>

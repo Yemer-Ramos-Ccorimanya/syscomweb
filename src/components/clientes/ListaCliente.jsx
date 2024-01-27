@@ -2,7 +2,7 @@ import { Card, Form, InputGroup } from "react-bootstrap"
 import { MainContainer } from "../common/MainContainer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons"
-import { getClientesHook } from "../../hooks/clientes.hook"
+import { getClientesHook } from "../../hooks/clientes"
 import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { useFormik } from "formik"
@@ -36,6 +36,7 @@ export const ListaCliente = () => {
                   <FontAwesomeIcon icon={faMagnifyingGlass} className="mx-2" />
                 </InputGroup.Text>
                 <Form.Control
+                  type="text"
                   name="query"
                   value={formik.values.query}
                   onChange={formik.handleChange}
@@ -51,7 +52,7 @@ export const ListaCliente = () => {
             </div>
           </Form>
           <div className="table-responsive">
-            <table className="table">
+            <table className="table mb-0">
               <thead>
                 <tr className="text-uppercase">
                   <th>D.N.I</th>
@@ -63,9 +64,13 @@ export const ListaCliente = () => {
               <tbody>
                 {
                   clientes && clientes.results?.map(item => (
-                    <tr key={item.id}>
+                    <tr key={item.id} className="text-uppercase">
                       <td>{item.dni}</td>
-                      <td>{item.dni}</td>
+                      <td>
+                        <Link to={`/clientes/${item.id}/editar`}>
+                          {item.nombre_completo}
+                        </Link>
+                      </td>
                       <td>{item.address}</td>
                       <td>{item.celular}</td>
                     </tr>

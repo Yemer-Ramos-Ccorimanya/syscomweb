@@ -1,4 +1,4 @@
-import Axios from "./axios.js"
+import Axios from "../axios.js"
 
 export const registerUserHook = async (data) => {
   const URL = "/api/account/register/"

@@ -1,20 +1,30 @@
-import { Card, Button } from "react-bootstrap";
+import { useState } from "react";
+import { Card, Button, Pagination } from "react-bootstrap";
 import { MainContainer } from "../common/MainContainer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCashRegister } from "@fortawesome/free-solid-svg-icons";
+import { faCashRegister, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import DateRangePicker from "@wojtekmaj/react-daterange-picker";
 import { useNavigate } from "react-router-dom";
 
-
 export const ListadoVentas = () => {
-  const navigate = useNavigate()
+  const [dateRange, setDateRange] = useState([new Date(), new Date()]);
+  const navigate = useNavigate();
 
   const handleTerminal = () => {
-    navigate("/PuntodeVenta/1/terminal")
-  }
+    navigate("/PuntodeVenta/1/terminal");
+  };
+
+  const handleCardClick = (index) => {
+    // Agrega la lógica de redirección o cualquier otra acción que desees
+    navigate(`/PuntodeVenta/${index}/detalles`);
+  };
 
   return (
     <MainContainer>
-      <h5>CANALES DE PUNTO DE VENTA ABIERTO</h5>
+      <div className="m-3">
+        <h5>CANALES DE PUNTO DE VENTA ABIERTO</h5>
+      </div>
+      
       <div className="d-flex">
         <Card style={{ width: '18rem', cursor: 'pointer' }} onClick={handleTerminal} className="me-3">
           <Card.Body className="d-flex justify-content-center align-items-center">
@@ -47,15 +57,27 @@ export const ListadoVentas = () => {
           </Card.Body>
         </Card>
       </div>
-      <h5>OPERACIONES DE TERMINALES DE PUNTOS DE VENTA</h5>
-      <div className="col-auto d-flex gap-2">
-        <Button variant="outline-success" className="me-2">Hoy</Button>
-        <Button variant="outline-success" className="me-2">Ayer</Button>
-        <Button variant="outline-success" className="me-2">Últimos 7 días</Button>
-        <Button variant="outline-success" className="me-2">Últimos 30 días</Button>
-
-        <button className="btn btn-success">Apertura de Caja</button>
+      <div className="m-3">
+        <h5>OPERACIONES DE TERMINALES DE PUNTOS DE VENTA</h5>
       </div>
+      
+      <div className="col-auto d-flex gap-2">
+        <Button variant="outline-success" className="me-2">
+          Hoy
+        </Button>
+        <Button variant="outline-success" className="me-2">
+          Ayer
+        </Button>
+        <Button variant="outline-success" className="me-2">
+          Últimos 7 días
+        </Button>
+        <Button variant="outline-success" className="me-2">
+          Últimos 30 días
+        </Button>
+        <DateRangePicker onChange={setDateRange} value={dateRange} className="me-2" />
+        <button className="btn btn-success">Apertura de Caja  </button>
+      </div>
+      
       <h1>   </h1>
       <Card>
         <Card.Body>
@@ -78,6 +100,35 @@ export const ListadoVentas = () => {
             </table>
           </div>
         </Card.Body>
+        <Card.Footer>
+          <div className="d-flex justify-content-end">
+            <div className="m-2">
+              <span>Filas por página: </span>
+              <select className ="rounded">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+              </select>
+            </div>
+            <div className="m-2">
+              <span>1-10 de 1</span>
+            </div>
+            <nav aria-label="...">
+              <Pagination>
+                <Pagination.Prev disabled>
+                  <FontAwesomeIcon icon={faChevronLeft} />
+                  <span className="visually-hidden">Anterior</span>
+                </Pagination.Prev>
+                <Pagination.Item active>{1}</Pagination.Item>   
+                <Pagination.Next>
+                  <FontAwesomeIcon icon={faChevronRight} />
+                  <span className="visually-hidden">Siguiente</span>
+                </Pagination.Next>
+              </Pagination>
+            </nav>
+          </div>
+        </Card.Footer>
+
       </Card>
     </MainContainer>
   );
