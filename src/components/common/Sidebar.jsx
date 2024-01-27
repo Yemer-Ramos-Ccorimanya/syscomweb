@@ -68,6 +68,12 @@ export const Sidebar = () => {
           </Link>
         </MenuItem>
         <MenuItem>
+          <Link to={"/Almacen"} className={styles.link}>
+            <FontAwesomeIcon icon={faCartFlatbed} className={styles.icon} />
+            <MenuItemText>Almacen</MenuItemText>
+          </Link>
+        </MenuItem>
+        <MenuItem>
           <Link to={"/"} className={styles.link}>
             <FontAwesomeIcon icon={faChartColumn} className={styles.icon} />
             <MenuItemText>Reportes</MenuItemText>
