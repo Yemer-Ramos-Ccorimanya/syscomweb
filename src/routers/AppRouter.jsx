@@ -7,6 +7,7 @@ import {ClienteRoute} from "./clienteRoute"
 import {AlquilerRoute} from "./AlquilerRoute"
 import {PuntodeVentaRoute} from "./PuntodeVentaRoute"
 import {PrivateRoute} from "./PrivateRoute"
+import {SkuRoute} from "./SkuRoute"
 
 export const AppRouter = () => {
   return (
@@ -27,6 +28,11 @@ export const AppRouter = () => {
         <Route path="/alquileres/*" element={
           <PrivateRoute>
             <AlquilerRoute/>
+          </PrivateRoute>
+        }/>
+        <Route path="/ListadoSku/*" element={
+          <PrivateRoute>
+            <SkuRoute/>
           </PrivateRoute>
         }/>
         <Route path="/PuntodeVenta/*" element={

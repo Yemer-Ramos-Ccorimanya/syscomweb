@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faLayerGroup, faList, faMagnifyingGlass, faCirclePlus,faCircleMinus,faCalendarAlt,faDownload,faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons"
 import { Link } from "react-router-dom"
 
-export const ListaInventarios = () => {
+export const ListadoSkus = () => {
   return (
     <MainContainer>
       <h5>Inventario</h5>
