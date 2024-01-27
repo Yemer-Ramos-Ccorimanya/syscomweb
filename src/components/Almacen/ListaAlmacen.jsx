@@ -1,50 +1,21 @@
-import { Card, Form, InputGroup, Button, Modal, Dropdown,Pagination  } from "react-bootstrap"
+import { Card, Form, InputGroup, Button,Pagination  } from "react-bootstrap"
 import { MainContainer } from "../common/MainContainer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faLayerGroup, faList, faMagnifyingGlass, faCirclePlus,faCircleMinus,faCalendarAlt,faDownload,faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons"
+import { faMagnifyingGlass,faCalendarAlt,faChevronLeft, faChevronRight, faPlus } from "@fortawesome/free-solid-svg-icons"
+
 import { Link } from "react-router-dom"
 
-export const ListaInventarios = () => {
+export const ListaAlmacen = () => {
   return (
     <MainContainer>
-      <h5>Inventario</h5>
+      <h5>Almacen</h5>
       <div className="col-auto d-flex gap-2 mb-3">
-
-
-
-        <Link to="productos/descontarstock">
-
-        <Button variant="outline-dark" className="me-2" style={{ border: 'none' }}>
-          <FontAwesomeIcon icon={faCircleMinus} className="mx-2" />
-          Descontar Stock
-        </Button>
-
-
-        <Button variant="outline-dark" className="me-2" style={{ border: 'none' }}>
-          <FontAwesomeIcon icon={faCirclePlus} className="mx-2" />
-          Agregar Stock
-        </Button>
-
-        <Button as={Link} to="/inventarios/productos/AgregarNuevoSku" variant="outline-dark" className="me-2" style={{ border: 'none' }}>
-          <FontAwesomeIcon icon={faCirclePlus} className="mx-2" />
-          Nuevo Sku
-        </Button>
-
-        </Link>
-        <Link to="productos/agregarstock">
-          <Button variant="outline-dark" className="me-2" style={{ border: 'none' }}>
-          <FontAwesomeIcon icon={faCirclePlus} className="mx-2" />
-          Agregar Stock
-        </Button>
-        </Link>
 
       </div>
       <Card >
-        {/* cabecera del card */}
         <Card.Header>
           <div className="d-flex justify-content-start">
-            <h5 className= "m-2" style={{ fontSize: '.9em'}}>Reporte de inventario</h5>
-            <h5 className= "m-2" style={{ fontSize: '.9em' }}>Reporte Consolidado</h5>
+            <h5 className= "m-2" style={{ fontSize: '.9em'}}>Lista de almacenes</h5>
           </div>
         </Card.Header>
         <Card.Body>
@@ -55,7 +26,7 @@ export const ListaInventarios = () => {
                   <FontAwesomeIcon icon={faMagnifyingGlass} className="mx-2" />
                 </InputGroup.Text>
                 <Form.Control
-                  placeholder="Buscar por nombre o código SKU"
+                  placeholder="Buscar por nombre"
                 />
               </InputGroup>
             </div>
@@ -69,26 +40,19 @@ export const ListaInventarios = () => {
                   placeholder="Seleccionar fecha"
                 />
                 <Button variant="outline-dark" className="me-2">Más filtros</Button>
+
               </InputGroup>
-            </div>
-            <div className="col-2">
-              <Button variant="outline-dark" className="ms-5 me-0">Exportar
-              <FontAwesomeIcon icon={faDownload} className="mx-2" />
-              </Button>
             </div>
           </Form>
           <div className="table-responsive">
             <table className="table">
               <thead>
                 <tr className="text-uppercase">
-                  <th>Nombre SKU</th>
-                  <th>Cód. SKU</th>
-                  <th>Almacén</th>
-                  <th>Stock actual</th>
-                  <th>U. de medida</th>
-                  <th>Costo unitario</th>
-                  <th>Costo total</th>
-                  <th>Ultimo movimiento</th>
+                  <th>Nombre</th>
+                  <th>Descripción</th>
+                  <th>Dirección</th>
+                  <th>Teléfono</th>
+                  <th>Estado</th>
                 </tr>
               </thead>
               <tbody>
@@ -96,7 +60,7 @@ export const ListaInventarios = () => {
             </table>
           </div>
         </Card.Body>
-        {/* card footer */}
+
         <Card.Footer>
           <div className="d-flex justify-content-end">
             <div className="m-2">
@@ -123,6 +87,12 @@ export const ListaInventarios = () => {
                 </Pagination.Next>
               </Pagination>
             </nav>
+          </div>
+          <div className="col-auto">
+          <Link to="/almacen/EditarAlmacen">
+
+            <Button variant="outline-success" className="me-2"> Actualizar</Button>
+          </Link>
           </div>
         </Card.Footer>
       </Card>

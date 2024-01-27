@@ -1,7 +1,7 @@
-import { Card, Form, InputGroup, Button, Modal, Dropdown } from "react-bootstrap"
+import { Card, Form, InputGroup, Dropdown } from "react-bootstrap"
 import { MainContainer } from "../../common/MainContainer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import {faLayerGroup, faList, faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons"
+import {faLayerGroup, faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons"
 import { Link } from "react-router-dom"
 
 export const ListaProductos = () => {
@@ -24,21 +24,21 @@ export const ListaProductos = () => {
             <div className="col-auto">
               <Link to="/inventarios/productos/agregar" className="btn btn-success" variant="success">
                 <FontAwesomeIcon icon={faPlus} className="me-1" />
-                <span>Nuevo Producto</span>
+                <span className="text-uppercase">Nuevo Producto</span>
               </Link>
             </div>
             <div className="col-auto">
               <Dropdown>
                 <Dropdown.Toggle variant="warning" id="dropdown-basic">
                 <FontAwesomeIcon icon={faLayerGroup} className="me-1" />
-                  <span>Opciones</span>
+                  <span className="text-uppercase">Opciones</span>
                 </Dropdown.Toggle>
-                <Dropdown.Menu>
+                <Dropdown.Menu className="text-uppercase">
                   <Dropdown.Item as={Link} to="/inventarios/productos/categorias">
-                    Listado de Categorías
+                    Categorías
                   </Dropdown.Item>
                   <Dropdown.Item as={Link} to="/inventarios/productos/subcategorias">
-                    Listado de Subcategorías
+                    Subcategorías
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
