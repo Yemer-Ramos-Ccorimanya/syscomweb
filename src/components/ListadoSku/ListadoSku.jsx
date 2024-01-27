@@ -4,21 +4,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faLayerGroup, faList, faMagnifyingGlass, faCirclePlus,faCircleMinus,faCalendarAlt,faDownload,faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons"
 import { Link } from "react-router-dom"
 
-export const ListaInventarios = () => {
+export const ListadoSkus = () => {
   return (
     <MainContainer>
       <h5>Inventario</h5>
       <div className="col-auto d-flex gap-2 mb-3">
 
-
-
-        <Link to="productos/descontarstock">
-
         <Button variant="outline-dark" className="me-2" style={{ border: 'none' }}>
           <FontAwesomeIcon icon={faCircleMinus} className="mx-2" />
           Descontar Stock
         </Button>
-
 
         <Button variant="outline-dark" className="me-2" style={{ border: 'none' }}>
           <FontAwesomeIcon icon={faCirclePlus} className="mx-2" />
@@ -29,14 +24,6 @@ export const ListaInventarios = () => {
           <FontAwesomeIcon icon={faCirclePlus} className="mx-2" />
           Nuevo Sku
         </Button>
-
-        </Link>
-        <Link to="productos/agregarstock">
-          <Button variant="outline-dark" className="me-2" style={{ border: 'none' }}>
-          <FontAwesomeIcon icon={faCirclePlus} className="mx-2" />
-          Agregar Stock
-        </Button>
-        </Link>
 
       </div>
       <Card >
