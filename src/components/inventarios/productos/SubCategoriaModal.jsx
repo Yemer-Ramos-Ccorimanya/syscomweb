@@ -65,6 +65,7 @@ export const SubCategoriaModal = (props) => {
     <Modal show={showSubcategoryModal} onEntering={() => {
       if (type === formTypeModal.add) {
         formik.resetForm()
+        setSelectedOptionCategorias(null)
       }
       if (type === formTypeModal.edit) {
         formik.setValues({
