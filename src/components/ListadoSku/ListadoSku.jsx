@@ -7,75 +7,88 @@ import { Link } from "react-router-dom"
 export const ListadoSkus = () => {
   return (
     <MainContainer>
-      <h5>Inventario</h5>
-      <div className="col-auto d-flex gap-2 mb-3">
+      <h1>SKU</h1>
+    
+      <div className="col-auto d-flex justify-content-between gap-2 mb-3">
+
+  <Button variant="outline-dark" style={{ border: 'none' }}>
+    <FontAwesomeIcon icon={faCircleMinus} className="mx-2" />
+    Exportar
+  </Button>
+
+  <Button  style={{ backgroundColor: 'green' }}>
+  <FontAwesomeIcon  className="mx-2" />
+  nuevo Sku
+</Button>
+
+</div>
+      <Card >
+        {/* cabecera del card */}
+        
+        <Card.Body>
+        <Button variant="outline-dark" className="me-2" style={{ border: 'none' }}>
+          <FontAwesomeIcon icon={faCircleMinus} className="mx-2" />
+          todos
+        </Button>
 
         <Button variant="outline-dark" className="me-2" style={{ border: 'none' }}>
           <FontAwesomeIcon icon={faCircleMinus} className="mx-2" />
-          Descontar Stock
+          Habilitados
         </Button>
 
         <Button variant="outline-dark" className="me-2" style={{ border: 'none' }}>
-          <FontAwesomeIcon icon={faCirclePlus} className="mx-2" />
-          Agregar Stock
+          <FontAwesomeIcon icon={faCircleMinus} className="mx-2" />
+          Deshabilitados
         </Button>
+        <Form className="row g-2">
+  <div className="col-3">
+    {/* Input de búsqueda */}
+    <InputGroup className="mb-2">
+      <InputGroup.Text>
+        <FontAwesomeIcon icon={faMagnifyingGlass} className="mx-2" />
+      </InputGroup.Text>
+      <Form.Control placeholder="Buscar por nombre o código SKU" />
+    </InputGroup>
+  </div>
+  <div className="col-3">
+    {/* Primer select de moneda */}
+    <Form.Group controlId="moneda1">
+      <Form.Label>Unidad de Moneda </Form.Label>
+      <select className="custom-select">
+        <option selected>Soles</option>
+        <option>Dólares</option>
+        <option>Euros</option>
+      </select>
+    </Form.Group>
+  </div>
+  <div className="col-3">
+    {/* Segundo select de moneda */}
+    <Form.Group controlId="moneda2">
+      <Form.Label>Habilitado</Form.Label>
+      <select className="custom-select">
+        <option selected>Habilitado</option>
+        <option>Deshabilitado</option>
+      </select>
+    </Form.Group>
+  </div>
+  <div className="col-3">
+    {/* Segundo select de moneda */}
+    <Button variant="outline-dark" className="me-2" style={{ border: 'none' }}>
+          <FontAwesomeIcon icon={faCircleMinus} className="mx-2" />
+          Mas filtros
+    </Button>
+  </div>
+</Form>
 
-        <Button as={Link} to="/inventarios/productos/AgregarNuevoSku" variant="outline-dark" className="me-2" style={{ border: 'none' }}>
-          <FontAwesomeIcon icon={faCirclePlus} className="mx-2" />
-          Nuevo Sku
-        </Button>
-
-      </div>
-      <Card >
-        {/* cabecera del card */}
-        <Card.Header>
-          <div className="d-flex justify-content-start">
-            <h5 className= "m-2" style={{ fontSize: '.9em'}}>Reporte de inventario</h5>
-            <h5 className= "m-2" style={{ fontSize: '.9em' }}>Reporte Consolidado</h5>
-          </div>
-        </Card.Header>
-        <Card.Body>
-          <Form className="row row-cols-auto g-2">
-            <div className="col-7">
-              <InputGroup className="mb-2">
-                <InputGroup.Text>
-                  <FontAwesomeIcon icon={faMagnifyingGlass} className="mx-2" />
-                </InputGroup.Text>
-                <Form.Control
-                  placeholder="Buscar por nombre o código SKU"
-                />
-              </InputGroup>
-            </div>
-            <div className="col-3">
-              <InputGroup className="mb-2">
-                <InputGroup.Text>
-                  <FontAwesomeIcon icon={faCalendarAlt} className="mx-2" />
-                </InputGroup.Text>
-                <Form.Control
-                  type="date"
-                  placeholder="Seleccionar fecha"
-                />
-                <Button variant="outline-dark" className="me-2">Más filtros</Button>
-              </InputGroup>
-            </div>
-            <div className="col-2">
-              <Button variant="outline-dark" className="ms-5 me-0">Exportar
-              <FontAwesomeIcon icon={faDownload} className="mx-2" />
-              </Button>
-            </div>
-          </Form>
           <div className="table-responsive">
             <table className="table">
               <thead>
                 <tr className="text-uppercase">
                   <th>Nombre SKU</th>
                   <th>Cód. SKU</th>
-                  <th>Almacén</th>
-                  <th>Stock actual</th>
-                  <th>U. de medida</th>
-                  <th>Costo unitario</th>
-                  <th>Costo total</th>
-                  <th>Ultimo movimiento</th>
+                  <th>Descripion</th>
+                  <th>Unidad</th>
+                  <th>Estado</th>
                 </tr>
               </thead>
               <tbody>
@@ -87,7 +100,7 @@ export const ListadoSkus = () => {
         <Card.Footer>
           <div className="d-flex justify-content-end">
             <div className="m-2">
-              <span>Filas por página: </span>
+              <span>Skus por página: </span>
               <select className ="rounded">
                 <option value="10">10</option>
                 <option value="20">20</option>
