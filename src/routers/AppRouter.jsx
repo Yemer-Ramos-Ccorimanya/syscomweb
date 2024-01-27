@@ -8,6 +8,7 @@ import { PuntodeVentaRoute } from "./PuntodeVentaRoute"
 import { PrivateRoute } from "./PrivateRoute"
 import { UserProvider } from "../context/UserProvider"
 import { ClientesRoute } from "./ClientesRoute"
+import { ListaAlmacen } from "../components/Almacen/ListaAlmacen"
 
 export const AppRouter = () => {
   return (
@@ -34,6 +35,11 @@ export const AppRouter = () => {
           <Route path="/PuntodeVenta/*" element={
             <PrivateRoute>
               <PuntodeVentaRoute />
+            </PrivateRoute>
+          } />
+          <Route path="/Almacen/*" element={
+            <PrivateRoute>
+              <ListaAlmacen />
             </PrivateRoute>
           } />
           <Route path="/*" element={
