@@ -6,6 +6,12 @@ export const getCategoriasHook = async (query = "", page = 1) => {
   return result.data
 }
 
+export const getCategoriasSelectHook = async (query = "") => {
+  const URL = `/api/inventarios/categorias/select?query=${query}`
+  const result = await Axios.get(URL)
+  return result.data
+}
+
 export const createCategoriaHook = async (data) => {
   const URL = "/api/inventarios/categorias"
   const result = await Axios.post(URL, data)
