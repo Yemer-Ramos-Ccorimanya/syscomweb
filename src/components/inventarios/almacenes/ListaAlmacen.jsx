@@ -1,8 +1,7 @@
-import { Card, Form, InputGroup, Button,Pagination  } from "react-bootstrap"
-import { MainContainer } from "../common/MainContainer"
+import { Card, Form, InputGroup, Button, Pagination } from "react-bootstrap"
+import { MainContainer } from "../../common/MainContainer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faMagnifyingGlass,faCalendarAlt,faChevronLeft, faChevronRight, faPlus } from "@fortawesome/free-solid-svg-icons"
-
+import { faMagnifyingGlass, faCalendarAlt, faChevronLeft, faChevronRight, faPlus, faCirclePlus } from "@fortawesome/free-solid-svg-icons"
 import { Link } from "react-router-dom"
 
 export const ListaAlmacen = () => {
@@ -10,12 +9,15 @@ export const ListaAlmacen = () => {
     <MainContainer>
       <h5>Almacen</h5>
       <div className="col-auto d-flex gap-2 mb-3">
-
+        <Link to="/inventarios/almacenes/agregar" className="btn btn-outline-dark me-2" style={{ border: 'none' }}>
+          <FontAwesomeIcon icon={faCirclePlus} className="mx-2" />
+          Agregar Stock
+        </Link>
       </div>
       <Card >
         <Card.Header>
           <div className="d-flex justify-content-start">
-            <h5 className= "m-2" style={{ fontSize: '.9em'}}>Lista de almacenes</h5>
+            <h5 className="m-2" style={{ fontSize: '.9em' }}>Lista de almacenes</h5>
           </div>
         </Card.Header>
         <Card.Body>
@@ -65,7 +67,7 @@ export const ListaAlmacen = () => {
           <div className="d-flex justify-content-end">
             <div className="m-2">
               <span>Filas por página: </span>
-              <select className ="rounded">
+              <select className="rounded">
                 <option value="10">10</option>
                 <option value="20">20</option>
                 <option value="30">30</option>
@@ -80,19 +82,13 @@ export const ListaAlmacen = () => {
                   <FontAwesomeIcon icon={faChevronLeft} />
                   <span className="visually-hidden">Anterior</span>
                 </Pagination.Prev>
-                <Pagination.Item active>{1}</Pagination.Item>   
+                <Pagination.Item active>{1}</Pagination.Item>
                 <Pagination.Next>
                   <FontAwesomeIcon icon={faChevronRight} />
                   <span className="visually-hidden">Siguiente</span>
                 </Pagination.Next>
               </Pagination>
             </nav>
-          </div>
-          <div className="col-auto">
-          <Link to="/almacen/EditarAlmacen">
-
-            <Button variant="outline-success" className="me-2"> Actualizar</Button>
-          </Link>
           </div>
         </Card.Footer>
       </Card>

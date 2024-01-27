@@ -11,12 +11,12 @@ export const ListadoVentas = () => {
   const navigate = useNavigate();
 
   const handleTerminal = () => {
-    navigate("/PuntodeVenta/1/terminal");
+    navigate("/terminales/1/caja");
   };
 
   const handleCardClick = (index) => {
     // Agrega la lógica de redirección o cualquier otra acción que desees
-    navigate(`/PuntodeVenta/${index}/detalles`);
+    navigate(`/terminales/${index}/detalles`);
   };
 
   return (
@@ -24,7 +24,7 @@ export const ListadoVentas = () => {
       <div className="m-3">
         <h5>CANALES DE PUNTO DE VENTA ABIERTO</h5>
       </div>
-      
+
       <div className="d-flex">
         <Card style={{ width: '18rem', cursor: 'pointer' }} onClick={handleTerminal} className="me-3">
           <Card.Body className="d-flex justify-content-center align-items-center">
@@ -60,7 +60,7 @@ export const ListadoVentas = () => {
       <div className="m-3">
         <h5>OPERACIONES DE TERMINALES DE PUNTOS DE VENTA</h5>
       </div>
-      
+
       <div className="col-auto d-flex gap-2">
         <Button variant="outline-success" className="me-2">
           Hoy
@@ -75,9 +75,9 @@ export const ListadoVentas = () => {
           Últimos 30 días
         </Button>
         <DateRangePicker onChange={setDateRange} value={dateRange} className="me-2" />
-        <button className="btn btn-success">Apertura de Caja  </button>
+        <button className="btn btn-success">Apertura de Caja</button>
       </div>
-      
+
       <h1>   </h1>
       <Card>
         <Card.Body>
@@ -104,7 +104,7 @@ export const ListadoVentas = () => {
           <div className="d-flex justify-content-end">
             <div className="m-2">
               <span>Filas por página: </span>
-              <select className ="rounded">
+              <select className="rounded">
                 <option value="10">10</option>
                 <option value="20">20</option>
                 <option value="30">30</option>
@@ -119,7 +119,7 @@ export const ListadoVentas = () => {
                   <FontAwesomeIcon icon={faChevronLeft} />
                   <span className="visually-hidden">Anterior</span>
                 </Pagination.Prev>
-                <Pagination.Item active>{1}</Pagination.Item>   
+                <Pagination.Item active>{1}</Pagination.Item>
                 <Pagination.Next>
                   <FontAwesomeIcon icon={faChevronRight} />
                   <span className="visually-hidden">Siguiente</span>

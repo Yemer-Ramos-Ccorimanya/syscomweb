@@ -1,12 +1,10 @@
 import React, { useEffect } from "react";
 import { Button, Card, Form } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faCircleXmark, faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
-import { MainContainer } from "../common/MainContainer";
 import { useNavigate, useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { cssValidation } from "../common/css.validation";
+import { cssValidation } from "../../common/css.validation";
+import { MainContainer } from "../../common/MainContainer";
 
 const ClienteSchema = Yup.object().shape({
   tipo_doc: Yup.string().required("Campo requerido"),
@@ -141,7 +139,7 @@ export const EditarAlmacen = () => {
           <Card>
             <Card.Body>
               <div className="table-responsive">
-              <Button variant="outline-success" className="me-2"> Agregar Sucursal</Button>
+                <Button variant="outline-success" className="me-2"> Agregar Sucursal</Button>
                 <table className="table mb-0">
                   <thead>
                     <tr className="text-uppercase">

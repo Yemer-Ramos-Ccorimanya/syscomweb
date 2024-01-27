@@ -28,10 +28,10 @@ export const AgregarNuevoSku = () => {
                 </div>
                 <div className="col-6">
                   <Form.Group controlId="codigoSku">
-                    <select className="custom-select">
-                      <option selected>Automatico</option>
+                    <Form.Select>
+                      <option>Automatico</option>
                       <option>Por defecto</option>
-                    </select>
+                    </Form.Select>
                     <Form.Label>Código de SKU</Form.Label>
                     <Form.Control type="text" placeholder="Código del sku" />
                   </Form.Group>
@@ -41,21 +41,21 @@ export const AgregarNuevoSku = () => {
                 <div className="col-6">
                   <Form.Group controlId="moneda">
                     <Form.Label>Moneda</Form.Label>
-                    <select className="custom-select">
-                      <option selected>Soles</option>
+                    <Form.Select>
+                      <option>Soles</option>
                       <option>Dólares</option>
                       <option>Euros</option>
-                    </select>
+                    </Form.Select>
                   </Form.Group>
                 </div>
                 <div className="col-6">
                   <Form.Group controlId="tipoUnidad">
                     <Form.Label>Tipo de Unidad</Form.Label>
-                    <select className="custom-select">
-                      <option selected>Unidad</option>
+                    <Form.Select>
+                      <option>Unidad</option>
                       <option>Docena</option>
                       <option>Caja</option>
-                    </select>
+                    </Form.Select>
                   </Form.Group>
                   <p className="text-danger">
                     *La unidad no se podrá editar posteriormente
@@ -70,13 +70,12 @@ export const AgregarNuevoSku = () => {
                   </Form.Group>
                 </div>
               </div>
-                <div className="col-6">
-                  <Form.Group controlId="descripcion">
-                    <Form.Label>Descripción</Form.Label>
-                    <Form.Control as="textarea" rows="3" placeholder="Descripción" />
-                  </Form.Group>
-                </div>
-              
+              <div className="col-6">
+                <Form.Group controlId="descripcion">
+                  <Form.Label>Descripción</Form.Label>
+                  <Form.Control as="textarea" rows="3" placeholder="Descripción" />
+                </Form.Group>
+              </div>
             </Card.Body>
           </Card>
         </div>

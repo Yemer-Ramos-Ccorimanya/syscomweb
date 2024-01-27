@@ -1,69 +1,14 @@
-
-import {BrowserRouter, Route, Routes} from "react-router-dom"
-import {Login} from "../components/auth/Login"
-import {Registro} from "../components/auth/Registro"
-import {Dashboard} from "./Dashboard"
-import {InventarioRoute} from "./InventarioRoute"
-import {ClienteRoute} from "./clienteRoute"
-import {AlquilerRoute} from "./AlquilerRoute"
-import {PuntodeVentaRoute} from "./PuntodeVentaRoute"
-import {PrivateRoute} from "./PrivateRoute"
-import {SkuRoute} from "./SkuRoute"
-
-export const AppRouter = () => {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login/>}/>
-        <Route path="/registro" element={<Registro/>}/>
-        <Route path="/inventarios/*" element={
-          <PrivateRoute>
-            <InventarioRoute/>
-          </PrivateRoute>
-        }/>
-        <Route path="/clientes/*" element={
-          <PrivateRoute>
-            <ClienteRoute/>
-          </PrivateRoute>
-        }/>
-        <Route path="/alquileres/*" element={
-          <PrivateRoute>
-            <AlquilerRoute/>
-          </PrivateRoute>
-        }/>
-        <Route path="/ListadoSku/*" element={
-          <PrivateRoute>
-            <SkuRoute/>
-          </PrivateRoute>
-        }/>
-        <Route path="/PuntodeVenta/*" element={
-          <PrivateRoute>
-            <PuntodeVentaRoute/>
-          </PrivateRoute>
-        }/>
-        <Route path="/*" element={
-          <PrivateRoute>
-            <Dashboard/>
-          </PrivateRoute>
-        }/>
-      </Routes>
-    </BrowserRouter>
-=======
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { Login } from "../components/auth/Login"
 import { Registro } from "../components/auth/Registro"
 import { Dashboard } from "./Dashboard"
 import { InventarioRoute } from "./InventarioRoute"
 import { AlquilerRoute } from "./AlquilerRoute"
-import { PuntodeVentaRoute } from "./PuntodeVentaRoute"
+import { TerminalRoute } from "./TerminalRoute"
 import { PrivateRoute } from "./PrivateRoute"
 import { UserProvider } from "../context/UserProvider"
-
-import { ComprobanteRoute } from "./Comprobanteroute"
-
 import { ClientesRoute } from "./ClientesRoute"
-import { ListaAlmacen } from "../components/Almacen/ListaAlmacen"
-
+import { ComprobanteRoute } from "./ComprobanteRoute"
 
 export const AppRouter = () => {
   return (
@@ -87,20 +32,14 @@ export const AppRouter = () => {
               <AlquilerRoute />
             </PrivateRoute>
           } />
-          <Route path="/PuntodeVenta/*" element={
+          <Route path="/terminales/*" element={
             <PrivateRoute>
-              <PuntodeVentaRoute />
+              <TerminalRoute />
             </PrivateRoute>
           } />
-
           <Route path="/comprobantes/*" element={
             <PrivateRoute>
-              <ComprobanteRoute/>
-
-          <Route path="/Almacen/*" element={
-            <PrivateRoute>
-              <ListaAlmacen />
-
+              <ComprobanteRoute />
             </PrivateRoute>
           } />
           <Route path="/*" element={
@@ -111,6 +50,5 @@ export const AppRouter = () => {
         </Routes>
       </BrowserRouter>
     </UserProvider>
-
   )
 }

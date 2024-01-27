@@ -13,7 +13,7 @@ export const ListaComprobantes = () => {
     <MainContainer>
       <div className="row">
         <div className="d-flex justify-content-end">
-          <h5 className="me-auto">Gestión Documentaria</h5>
+          <h5 className="me-auto">Gestión comprobantes de pago</h5>
           <Button variant="success" className="ms-auto me-0">Nuevo Documento</Button>
         </div>
       </div>
@@ -126,8 +126,7 @@ export const ListaComprobantes = () => {
                   <th className="text-secondary">fecha de vencimiento</th>
                   <th className="text-secondary">Estado SUNAT</th>
                   <th className="text-secondary">Estado</th>
-                  <th className="text-secondary">Acciones
-                  </th>
+                  <th className="text-secondary">Acciones</th>
                 </tr>
               </thead>
               <tbody>
@@ -140,7 +139,7 @@ export const ListaComprobantes = () => {
                   <td>25-01-2024</td>
                   <td>25-01-2024</td>
                   <td>Aceptado</td>
-                    <Badge bg="success" className="mt-1 text-light">Pagado</Badge>
+                  <td><Badge bg="success" className="mt-1 text-light">Pagado</Badge></td>
                   <td>
                     <FontAwesomeIcon icon={faEye} className="mx-2 text-success" />
                     <FontAwesomeIcon icon={faEnvelope} className="mx-2 text-success" />
