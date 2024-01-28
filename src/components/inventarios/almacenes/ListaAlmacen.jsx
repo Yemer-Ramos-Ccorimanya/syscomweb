@@ -6,7 +6,7 @@ import { Link } from "react-router-dom"
 
 export const ListaAlmacen = () => {
   return (
-    <MainContainer>
+    <MainContainer> 
       <h5>Almacen</h5>
       <div className="col-auto d-flex gap-2 mb-3">
         <Link to="/inventarios/almacenes/agregar" className="btn btn-outline-dark me-2" style={{ border: 'none' }}>

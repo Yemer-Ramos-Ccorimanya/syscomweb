@@ -1,7 +1,7 @@
 import { Card, Form, InputGroup, Button, Pagination } from "react-bootstrap"
 import { MainContainer } from "../../common/MainContainer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faMagnifyingGlass, faCircleMinus, faChevronLeft, faChevronRight, faCirclePlus } from "@fortawesome/free-solid-svg-icons"
+import { faMagnifyingGlass, faCircleMinus, faChevronLeft, faChevronRight, faCirclePlus, faSearch } from "@fortawesome/free-solid-svg-icons"
 import { Link } from "react-router-dom"
 
 export const ListadoSku = () => {
@@ -34,6 +34,10 @@ export const ListadoSku = () => {
             <FontAwesomeIcon icon={faCircleMinus} className="mx-2" />
             Deshabilitados
           </Button>
+          <Link to="/inventarios/sku/Buscar" className="btn btn-outline-dark me-2" style={{ border: 'none' }}>
+            <FontAwesomeIcon icon={faSearch} className="mx-2" />
+            Buscar SKU
+         </Link>
           <Form className="row g-2">
             <div className="col-3">
               {/* Input de búsqueda */}

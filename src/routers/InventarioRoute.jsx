@@ -8,6 +8,7 @@ import { GestionInventarios } from "../components/inventarios/gestion/GestionInv
 import { AgregarStock } from "../components/inventarios/gestion/AgregarStock"
 import { DescontarStock } from "../components/inventarios/gestion/DescontarStock"
 import { ListadoSku } from "../components/inventarios/sku/ListadoSku"
+import { BuscarSku } from "../components/inventarios/sku/BuscarSku"
 import { ListaAlmacen } from "../components/inventarios/almacenes/ListaAlmacen"
 import { EditarAlmacen } from "../components/inventarios/almacenes/EditarAlmacen"
 
@@ -23,6 +24,7 @@ export const InventarioRoute = () => {
       <Route path="/gestion/descontarstock" element={<DescontarStock />} />
       <Route path="/lista-sku" element={<ListadoSku />} />
       <Route path="/sku/agregar" element={<AgregarNuevoSku />} />
+      <Route path="/sku/Buscar" element={<BuscarSku />} />
       <Route path="/almacenes" element={<ListaAlmacen />} />
       <Route path="/almacenes/agregar" element={<EditarAlmacen />} />
     </Routes>
