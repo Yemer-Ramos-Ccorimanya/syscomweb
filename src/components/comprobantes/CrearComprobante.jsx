@@ -1,13 +1,21 @@
-import { Badge, Button, Card, Dropdown, Form, InputGroup } from "react-bootstrap"
+import { Badge, Button, Card, Dropdown, Form, InputGroup, Modal } from "react-bootstrap"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCalendarAlt, faChevronLeft, faCircleXmark, faDollar, faEnvelope, faEye, faFloppyDisk, faMagnifyingGlass, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { MainContainer } from "../common/MainContainer"
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export const CrearComprobante = () => {
-  const handleCancel = () => {
-    navigate("/clientes")
-  }
+  
+  const [showModal, setShowModal] = useState(false);
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
 
   return (
     <MainContainer>
@@ -128,8 +136,84 @@ export const CrearComprobante = () => {
                 </div>
                 <div className="col-auto">
                   <InputGroup className="mb-2">
-                    <Button variant="outline-dark" className="me-2">Producto Libre</Button>
+                    <Button variant="outline-dark" className="me-2" onClick={handleOpenModal}>
+                      Producto Libre
+                    </Button>
                   </InputGroup>
+
+                  <Modal show={showModal} onHide={handleCloseModal}>
+                    <Modal.Header closeButton>
+                      <Modal.Title style={{ fontSize: 'smaller' }}>Agregar Producto o Servicio libre</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <Form>
+                        {/* Agrega aquí los campos del formulario para el producto libre */}
+                        <Form.Group className="mb-3" controlId="nombreProducto">
+                          <Form.Label>Nombre del Producto</Form.Label>
+                          <Form.Control type="text" placeholder="Ingrese el nombre del producto" />
+                          {/* tipo de moneda y precio */}
+                          <div className="row m-2">
+                            <div className="col-6">
+                              <Form.Label>Tipo de Moneda</Form.Label>
+                              {/* icono de dolar */}
+                              
+                              <Dropdown>
+                                <Dropdown.Toggle variant="outline-dark" id="dropdown-basic">
+                                  Tipo de moneda
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                  <Dropdown.Item href="#/action-1">Dolares</Dropdown.Item>
+                                  <Dropdown.Item href="#/action-1">Soles</Dropdown.Item>
+                                  <Dropdown.Item href="#/action-1">Pesos</Dropdown.Item>
+                                </Dropdown.Menu>
+                              </Dropdown>
+                            </div>
+                            <div className="col-6">
+                              <Form.Label>Precio</Form.Label>
+                              <InputGroup>
+                                <InputGroup.Text>$</InputGroup.Text>
+                                <Form.Control type="number" placeholder="Ingrese el precio del producto" />
+                              </InputGroup>
+                            </div>
+                          </div>
+                          <div className="row m-2">
+                            <div className="col-6">
+                              <Form.Label>Unidad de Medida</Form.Label>
+                              <Dropdown>
+                                <Dropdown.Toggle variant="outline-dark" id="dropdown-basic">
+                                 Unidad de medida
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                  <Dropdown.Item href="#/action-1">...</Dropdown.Item>
+                                </Dropdown.Menu>
+                              </Dropdown>
+                            </div>
+                            <div className="col-6">
+                              <Form.Label>impuestos</Form.Label>
+                              <Dropdown>
+                                <Dropdown.Toggle variant="outline-dark" id="dropdown-basic">
+                                  Gravado del 18% del IGV
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                  <Dropdown.Item href="#/action-1">...</Dropdown.Item>
+                                </Dropdown.Menu>
+                              </Dropdown>
+                            </div>
+                          </div>
+
+                        </Form.Group>
+                        {/* ... (otros campos del formulario) */}
+                      </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button variant="secondary" onClick={handleCloseModal}>
+                        Cancelar
+                      </Button>
+                      <Button variant="primary" onClick={handleCloseModal}>
+                        Aceptar
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
                 </div>
 
               </Form>
@@ -192,7 +276,7 @@ export const CrearComprobante = () => {
           <Button variant="secondary" className="me-2">
             <span className="text-uppercase">Borrador</span>
           </Button>
-          <Button type="submit"  variant="primary" className="ms-2">
+          <Button type="submit" variant="primary" className="ms-2">
             <span className="text-uppercase">Emitir Comprobante</span>
           </Button>
         </div>
