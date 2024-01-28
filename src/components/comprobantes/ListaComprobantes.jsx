@@ -14,7 +14,9 @@ export const ListaComprobantes = () => {
       <div className="row">
         <div className="d-flex justify-content-end">
           <h5 className="me-auto">Gestión comprobantes de pago</h5>
-          <Button variant="success" className="ms-auto me-0">Nuevo Documento</Button>
+          <Link to="/comprobantes/crear">
+            <Button variant="success" className="ms-auto me-0">Nuevo Documento</Button>
+          </Link>
         </div>
       </div>
       <div className="col-auto d-flex gap-2 mb-3">
