@@ -95,7 +95,7 @@ export const ListaCliente = () => {
                       id="inputPassword5"
                       aria-describedby="passwordHelpBlock"
                     />
-                    <Form.Label htmlFor="inputPassword5">NDirección</Form.Label>
+                    <Form.Label htmlFor="inputPassword5">Dirección</Form.Label>
                     <Form.Control
                       type="text"
                       id="inputPassword5"
