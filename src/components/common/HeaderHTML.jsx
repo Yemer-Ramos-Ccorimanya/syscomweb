@@ -39,6 +39,7 @@ export const HeaderHTML = () => {
             <Nav.Link href="#link" className="text-uppercase">Punto de Venta</Nav.Link>
             <Nav.Link href="#link" className="text-uppercase">Reportes</Nav.Link>
             <Nav.Link href="#link" className="text-uppercase">Configuración</Nav.Link>
+            <Nav.Link href="#link" className="text-uppercase">Listar Sku</Nav.Link>
           </Nav>
           <Nav className="ms-auto">
             <Nav.Link href="#home">

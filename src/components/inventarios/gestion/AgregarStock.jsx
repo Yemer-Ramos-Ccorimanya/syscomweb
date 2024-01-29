@@ -4,15 +4,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronLeft, faChevronRight, faLayerGroup, faList, faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons"
 import { Link } from "react-router-dom"
 
-export const DescontarStock = () => {
+export const AgregarStock = () => {
   return (
     <MainContainer>
       {/* icono de volver para para volver a la listaInventario */}
-      <Link to="/inventarios" style={{ color: 'black', textDecoration: 'none' }}>
+      <Link to="/inventarios/gestion" style={{ color: 'black', textDecoration: 'none' }}>
         <FontAwesomeIcon icon={faChevronLeft} className="mx-2" />
         <span>Regresar</span>
       </Link>
-      <h5 className="mb-3 mt-2">Descontar Stock</h5>
+      <h5 className="mb-3 mt-2">Agregar Stock</h5>
       {/* crear  dos divs que el primero ocupe 8 y el segundo 4 */}
       <div className="row">
         <div className="col-8">

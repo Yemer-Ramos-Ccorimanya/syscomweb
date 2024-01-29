@@ -4,10 +4,11 @@ import { Registro } from "../components/auth/Registro"
 import { Dashboard } from "./Dashboard"
 import { InventarioRoute } from "./InventarioRoute"
 import { AlquilerRoute } from "./AlquilerRoute"
-import { PuntodeVentaRoute } from "./PuntodeVentaRoute"
+import { TerminalRoute } from "./TerminalRoute"
 import { PrivateRoute } from "./PrivateRoute"
 import { UserProvider } from "../context/UserProvider"
 import { ClientesRoute } from "./ClientesRoute"
+import { ComprobanteRoute } from "./ComprobanteRoute"
 
 export const AppRouter = () => {
   return (
@@ -31,9 +32,14 @@ export const AppRouter = () => {
               <AlquilerRoute />
             </PrivateRoute>
           } />
-          <Route path="/PuntodeVenta/*" element={
+          <Route path="/terminales/*" element={
             <PrivateRoute>
-              <PuntodeVentaRoute />
+              <TerminalRoute />
+            </PrivateRoute>
+          } />
+          <Route path="/comprobantes/*" element={
+            <PrivateRoute>
+              <ComprobanteRoute />
             </PrivateRoute>
           } />
           <Route path="/*" element={
