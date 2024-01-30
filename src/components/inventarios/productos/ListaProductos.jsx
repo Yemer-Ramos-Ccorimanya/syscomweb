@@ -7,9 +7,7 @@ import { useState } from "react"
 import Modal from 'react-bootstrap/Modal';
 
 export const ListaProductos = () => {
-
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 

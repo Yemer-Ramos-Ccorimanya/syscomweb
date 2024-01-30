@@ -1,19 +1,25 @@
 import { Card, Form, InputGroup, Button, Pagination } from "react-bootstrap"
 import { MainContainer } from "../../common/MainContainer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faMagnifyingGlass, faCalendarAlt, faChevronLeft, faChevronRight, faPlus, faCirclePlus } from "@fortawesome/free-solid-svg-icons"
-import { Link } from "react-router-dom"
+import { faMagnifyingGlass, faCalendarAlt, faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons"
+import { AlmacenFormModal } from "./AlmacenFormModal"
+import { useState } from "react"
+
 
 export const ListaAlmacen = () => {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleCloseModal = () => setShowModal(false);
+  const handleShowModal = () => setShowModal(true);
+
   return (
-    <MainContainer> 
+    <MainContainer>
       <h5>Almacen</h5>
       <div className="col-auto d-flex gap-2 mb-3">
-        <Link to="/inventarios/almacenes/agregar" className="btn btn-outline-dark me-2" style={{ border: 'none' }}>
-          <FontAwesomeIcon icon={faCirclePlus} className="mx-2" />
-          Agregar Stock
-        </Link>
+
+        <Button onClick={handleCloseModal} variant="success" > Agregar Almacen</Button>{' '}
       </div>
+
       <Card >
         <Card.Header>
           <div className="d-flex justify-content-start">
@@ -92,6 +98,12 @@ export const ListaAlmacen = () => {
           </div>
         </Card.Footer>
       </Card>
+      
+      <AlmacenFormModal 
+      showModal={showModal}
+      handleCloseModal={handleCloseModal}
+      />
+
     </MainContainer>
   )
 }
