@@ -1,7 +1,7 @@
 import Axios from "../axios"
 
-export const getCatalogoSkusHook = async (query = "", page = 1) => {
-  const URL = `/api/inventarios/catalogos-sku/?page=${page}&query=${query}`
+export const getCatalogoSkusHook = async (query = "", estado = "HABILITADO", page = 1) => {
+  const URL = `/api/inventarios/catalogos-sku/?page=${page}&query=${query}&estado=${estado}`
   const result = await Axios.get(URL)
   return result.data
 }

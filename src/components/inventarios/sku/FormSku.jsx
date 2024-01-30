@@ -38,7 +38,7 @@ export const FormSku = () => {
     initialValues: {
       nombre: '',
       codigo_sku: '',
-      unidad_medida: '',
+      unidad_medida: 'NIU:UNIDAD',
       descripcion: '',
     },
     validationSchema: SkuSchema,

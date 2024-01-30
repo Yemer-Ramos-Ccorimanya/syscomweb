@@ -4,8 +4,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMagnifyingGlass, faChevronLeft, faChevronRight, faCirclePlus, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { Link, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { deleteCatalogoSkuHook, getCatalogoSkusHook } from "../../../hooks/inventarios"
+import { deleteCatalogoSkuHook, getCatalogoSkuHook, getCatalogoSkusHook } from "../../../hooks/inventarios"
 import { deleteConfirm } from "../../common/sweetalert"
+import { useFormik } from "formik"
 
 export const ListadoSku = () => {
   const navigate = useNavigate()
@@ -14,6 +15,17 @@ export const ListadoSku = () => {
   useEffect(() => {
     getCatalogoSkusHook().then(result => setCatalogoSkus(result))
   }, [])
+
+  const formik = useFormik({
+    initialValues: {
+      query: "",
+      estado: "HABILITADO",
+    },
+    onSubmit: values => {
+      getCatalogoSkusHook(values.query, values.estado)
+        .then(result => setCatalogoSkus(result))
+    }
+  })
 
   const handleDelete = (id) => {
     deleteConfirm().then(result => {
@@ -33,19 +45,31 @@ export const ListadoSku = () => {
           <span className="fw-semibold">Códigos de Referencia</span>
         </Card.Header>
         <Card.Body>
-          <Form className="row row-cols-auto g-2">
+          <Form onSubmit={formik.handleSubmit} className="row row-cols-auto g-2">
             <div className="col-auto col-md-4">
               <InputGroup>
                 <InputGroup.Text>
                   <FontAwesomeIcon icon={faMagnifyingGlass} className="mx-2" />
                 </InputGroup.Text>
-                <Form.Control placeholder="Buscar por nombre o código SKU" />
+                <Form.Control
+                  type="text"
+                  name="query"
+                  value={formik.values.query}
+                  onChange={formik.handleChange}
+                  placeholder="Buscar por nombre o código SKU" />
               </InputGroup>
             </div>
             <div className="col-auto">
-              <Form.Select className="text-uppercase">
-                <option>Habilitado</option>
-                <option>Deshabilitado</option>
+              <Form.Select
+                name="estado"
+                value={formik.values.estado}
+                onChange={(e) => {
+                  formik.handleChange(e)
+                  formik.handleSubmit()
+                }}
+                className="text-uppercase">
+                <option value="HABILITADO">HABILITADO</option>
+                <option value="DESHABILITADO">DESHABILITADO</option>
               </Form.Select>
             </div>
             <div className="col-auto">
@@ -69,7 +93,11 @@ export const ListadoSku = () => {
                 {
                   catalogoSkus && catalogoSkus.results?.map(item => (
                     <tr key={item.id}>
-                      <td>{item.nombre}</td>
+                      <td>
+                        <Link to={`/inventarios/codigos-referencia/${item.id}/editar`} className="text-decoration-none">
+                          {item.nombre}
+                        </Link>
+                      </td>
                       <td>{item.codigo_sku}</td>
                       <td>{item.unidad_medida}</td>
                       <td>
