@@ -13,7 +13,7 @@ export const createClienteHook = async (data) => {
 }
 
 export const getClienteHook = async (id) => {
-  const URL = `/api/clientes/${id}`
+  const URL = `/api/clientes/${id}/`
   const result = await Axios.get(URL)
   return result.data
 }
