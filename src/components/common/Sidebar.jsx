@@ -76,7 +76,7 @@ export const Sidebar = () => {
         <MenuItem>
           <Link to={"/inventarios/lista-sku"} className={styles.link}>
             <FontAwesomeIcon icon={faList} className={styles.icon} />
-            <MenuItemText>Listado Skus</MenuItemText>
+            <MenuItemText>Listado Sku</MenuItemText>
           </Link>
         </MenuItem>
         <MenuItem>

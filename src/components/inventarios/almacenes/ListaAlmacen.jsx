@@ -71,15 +71,11 @@ export const ListaAlmacen = () => {
 
   return (
     <MainContainer>
-      <h5>Almacen</h5>
-      <div className="col-auto d-flex gap-2 mb-3">
-        <Button onClick={handleAddModal} variant="success" >Agregar Almacen</Button>
-      </div>
-
+      <h5>Almacenes</h5>
       <Card >
         <Card.Header>
           <div className="d-flex justify-content-start">
-            <h5 className="m-2" style={{ fontSize: '.9em' }}>Lista de almacenes</h5>
+            <h5 className="text-uppercase m-2" style={{ fontSize: '.9em' }}>Lista de almacenes</h5>
           </div>
         </Card.Header>
         <Card.Body>
@@ -98,17 +94,7 @@ export const ListaAlmacen = () => {
               </InputGroup>
             </div>
             <div className="col-3">
-              <InputGroup className="mb-2">
-                <InputGroup.Text>
-                  <FontAwesomeIcon icon={faCalendarAlt} className="mx-2" />
-                </InputGroup.Text>
-                <Form.Control
-                  type="date"
-                  placeholder="Seleccionar fecha"
-                />
-                <Button variant="outline-dark" className="me-2">Más filtros</Button>
-
-              </InputGroup>
+            <Button onClick={handleAddModal} className="text-uppercase" variant="success" >Agregar Almacen</Button>
             </div>
           </Form>
           <div className="table-responsive">

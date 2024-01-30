@@ -4,6 +4,7 @@ import * as Yup from "yup"
 import { formTypeModal } from "../../../config"
 import { createAlmacenHook, updateAlmacenHook } from "../../../hooks/inventarios"
 import { cssValidation } from "../../common/css.validation"
+import { toastSuccess } from "../../common/helpers"
 
 const AlmacenSchema = Yup.object().shape({
   nombre: Yup.string().required("Campo requerido"),
@@ -34,12 +35,14 @@ export const AlmacenFormModal = (props) => {
         createAlmacenHook(values)
           .then(result => {
             saveChanges({ data: result, type })
+            toastSuccess("Almacén registrado!")
           })
       }
       if (type === formTypeModal.edit) {
         updateAlmacenHook(almacen.id, values)
           .then(result => {
             saveChanges({ data: result, type })
+            toastSuccess("Almacén actualizado!")
           })
       }
     },
@@ -66,7 +69,7 @@ export const AlmacenFormModal = (props) => {
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title>{type === formTypeModal.add ? "Agregar": "Editar"} Almacén</Modal.Title>
+        <Modal.Title className="text-uppercase">{type === formTypeModal.add ? "Agregar" : "Editar"} Almacén</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form id="f_almacen" onSubmit={formik.handleSubmit}>
@@ -100,7 +103,7 @@ export const AlmacenFormModal = (props) => {
               onChange={formik.handleChange}
             />
           </Form.Group>
-          <Form.Group className="mb-3">
+          <Form.Group>
             <Form.Label htmlFor="inputPassword5">Descripción</Form.Label>
             <Form.Control
               as="textarea"
