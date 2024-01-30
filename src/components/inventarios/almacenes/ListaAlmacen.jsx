@@ -1,23 +1,79 @@
 import { Card, Form, InputGroup, Button, Pagination } from "react-bootstrap"
 import { MainContainer } from "../../common/MainContainer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faMagnifyingGlass, faCalendarAlt, faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons"
+import { faMagnifyingGlass, faCalendarAlt, faChevronLeft, faChevronRight, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { AlmacenFormModal } from "./AlmacenFormModal"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { deleteAlmacenHook, getAlmacenesHook } from "../../../hooks/inventarios/almacenes.hook"
+import { useFormik } from "formik"
+import { formTypeModal } from "../../../config"
+import { deleteConfirm } from "../../common/sweetalert"
 
 
 export const ListaAlmacen = () => {
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false)
+  const [typeModal, setTypeModal] = useState(formTypeModal.add)
+  const [almacenes, setAlmacenes] = useState({})
+  const [almacenActual, setAlmacenActual] = useState({})
 
-  const handleCloseModal = () => setShowModal(false);
-  const handleShowModal = () => setShowModal(true);
+  useEffect(() => {
+    getAlmacenesHook().then(result => setAlmacenes(result))
+  }, [])
+
+  const formik = useFormik({
+    initialValues: {
+      query: ""
+    },
+    onSubmit: values => {
+      getAlmacenesHook(values.query).then(result => setAlmacenes(result))
+    }
+  })
+
+  const handleCloseModal = () => setShowModal(false)
+
+  const handleAddModal = () => {
+    setTypeModal(formTypeModal.add)
+    setShowModal(true)
+  }
+
+  const handleEditarAlamcenModal = (item) => {
+    setTypeModal(formTypeModal.edit)
+    setAlmacenActual(item)
+    setShowModal(true)
+  }
+
+  const saveChanges = ({ data, type }) => {
+    if (type === formTypeModal.add) {
+      const results = [data, ...almacenes.results]
+      setAlmacenes({ ...almacenes, results })
+      setShowModal(false)
+    }
+    if (type === formTypeModal.edit) {
+      const results = almacenes.results.map(item => {
+        if (item.id === data.id) item = data
+        return item
+      })
+      setAlmacenes({ ...almacenes, results })
+      setShowModal(false)
+    }
+  }
+
+  const handleDeleteAlmacen = (id) => {
+    deleteConfirm().then(result => {
+      if (result.isConfirmed) {
+        deleteAlmacenHook(id).then(() => {
+          const results = almacenes.results.filter(item => item.id !== id)
+          setAlmacenes({ ...almacenes, results })
+        })
+      }
+    })
+  }
 
   return (
     <MainContainer>
       <h5>Almacen</h5>
       <div className="col-auto d-flex gap-2 mb-3">
-
-        <Button onClick={handleCloseModal} variant="success" > Agregar Almacen</Button>{' '}
+        <Button onClick={handleAddModal} variant="success" >Agregar Almacen</Button>
       </div>
 
       <Card >
@@ -27,13 +83,16 @@ export const ListaAlmacen = () => {
           </div>
         </Card.Header>
         <Card.Body>
-          <Form className="row row-cols-auto g-2">
+          <Form onSubmit={formik.handleSubmit} className="row row-cols-auto g-2">
             <div className="col-7">
               <InputGroup className="mb-2">
                 <InputGroup.Text>
                   <FontAwesomeIcon icon={faMagnifyingGlass} className="mx-2" />
                 </InputGroup.Text>
                 <Form.Control
+                  name="query"
+                  value={formik.values.query}
+                  onChange={formik.handleChange}
                   placeholder="Buscar por nombre"
                 />
               </InputGroup>
@@ -57,13 +116,33 @@ export const ListaAlmacen = () => {
               <thead>
                 <tr className="text-uppercase">
                   <th>Nombre</th>
-                  <th>Descripción</th>
                   <th>Dirección</th>
                   <th>Teléfono</th>
-                  <th>Estado</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
+                {
+                  almacenes && almacenes.results?.map(item => (
+                    <tr key={item.id}>
+                      <td>{item.nombre}</td>
+                      <td>{item.direccion}</td>
+                      <td>{item.telefono}</td>
+                      <td>
+                        <div className="d-flex justify-content-end">
+                          <Button variant={"secondary"}
+                            onClick={() => handleEditarAlamcenModal(item)}
+                            size={"sm"} className="me-2">
+                            <FontAwesomeIcon icon={faEdit} />
+                          </Button>
+                          <Button variant={"danger"} onClick={() => handleDeleteAlmacen(item.id)} size={"sm"}>
+                            <FontAwesomeIcon icon={faTrash} />
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                }
               </tbody>
             </table>
           </div>
@@ -98,10 +177,13 @@ export const ListaAlmacen = () => {
           </div>
         </Card.Footer>
       </Card>
-      
-      <AlmacenFormModal 
-      showModal={showModal}
-      handleCloseModal={handleCloseModal}
+
+      <AlmacenFormModal
+        type={typeModal}
+        showModal={showModal}
+        handleCloseModal={handleCloseModal}
+        almacen={almacenActual}
+        saveChanges={saveChanges}
       />
 
     </MainContainer>

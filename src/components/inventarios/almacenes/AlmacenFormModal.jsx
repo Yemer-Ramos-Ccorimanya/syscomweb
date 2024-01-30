@@ -1,75 +1,119 @@
+import { useFormik } from "formik"
 import { Button, Form, Modal } from "react-bootstrap"
+import * as Yup from "yup"
+import { formTypeModal } from "../../../config"
+import { createAlmacenHook, updateAlmacenHook } from "../../../hooks/inventarios"
+import { cssValidation } from "../../common/css.validation"
+
+const AlmacenSchema = Yup.object().shape({
+  nombre: Yup.string().required("Campo requerido"),
+  direccion: Yup.string().required("Campo requerido"),
+  telefono: Yup.string(),
+  descripcion: Yup.string(),
+})
+
 export const AlmacenFormModal = (props) => {
-  const { 
+  const {
     showModal,
-    handleCloseModal
-    } = props
+    handleCloseModal,
+    almacen,
+    type,
+    saveChanges
+  } = props
+
+  const formik = useFormik({
+    initialValues: {
+      nombre: "",
+      direccion: "",
+      telefono: "",
+      descripcion: "",
+    },
+    validationSchema: AlmacenSchema,
+    onSubmit: (values) => {
+      if (type === formTypeModal.add) {
+        createAlmacenHook(values)
+          .then(result => {
+            saveChanges({ data: result, type })
+          })
+      }
+      if (type === formTypeModal.edit) {
+        updateAlmacenHook(almacen.id, values)
+          .then(result => {
+            saveChanges({ data: result, type })
+          })
+      }
+    },
+  })
+
   return (
-    <>
-      <Modal
-        show={showModal}
-        onHide={handleCloseModal}
-        backdrop="static"
-        keyboard={false}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Editar cliente</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="row mb-3">
-            <div className="col-6">
-              <Form.Label htmlFor="inputPassword5">Tipo documento</Form.Label>
-              <Form.Control
-                type="text"
-                id="inputPassword5"
-                aria-describedby="passwordHelpBlock"
-              />
-            </div>
-            <div className="col-6">
-              <Form.Label htmlFor="inputPassword5">D.N.I/R.U.C</Form.Label>
-              <Form.Control
-                type="text"
-                id="inputPassword5"
-                aria-describedby="passwordHelpBlock"
-              />
-            </div>
-          </div>
-          <Form.Label htmlFor="inputPassword5">Nombres Completo / Razón Social</Form.Label>
-          <Form.Control
-            type="text"
-            id="inputPassword5"
-            aria-describedby="passwordHelpBlock"
-          />
-          <Form.Label htmlFor="inputPassword5">Dirección</Form.Label>
-          <Form.Control
-            type="text"
-            id="inputPassword5"
-            aria-describedby="passwordHelpBlock"
-          />
-          <div className="row mb-3">
-            <div className="col-6">
-              <Form.Label htmlFor="inputPassword5">Código Ubigeo</Form.Label>
-              <Form.Control
-                type="text"
-                id="inputPassword5"
-                aria-describedby="passwordHelpBlock"
-              />
-            </div>
-            <div className="col-6">
-              <Form.Label htmlFor="inputPassword5">Número de Celular</Form.Label>
-              <Form.Control
-                type="text"
-                id="inputPassword5"
-                aria-describedby="passwordHelpBlock"
-              />
-            </div>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>Cancelar</Button>
-          <Button variant="primary">Guardar</Button>
-        </Modal.Footer>
-      </Modal>
-    </>
+    <Modal
+      show={showModal}
+      onHide={handleCloseModal}
+      keyboard={false}
+      onEntering={() => {
+        if (type === formTypeModal.add) {
+          formik.resetForm()
+        }
+        if (type === formTypeModal.edit) {
+          formik.setValues({
+            nombre: almacen.nombre,
+            direccion: almacen.direccion,
+            telefono: almacen.telefono,
+            descripcion: almacen.descripcion,
+          })
+        }
+      }}
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>{type === formTypeModal.add ? "Agregar": "Editar"} Almacén</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form id="f_almacen" onSubmit={formik.handleSubmit}>
+          <Form.Group className="mb-3">
+            <Form.Label htmlFor="inputPassword5">Nombre</Form.Label>
+            <Form.Control
+              type="text"
+              name="nombre" value={formik.values.nombre}
+              onChange={formik.handleChange}
+              className={(formik.errors.nombre && formik.touched.nombre)
+                && cssValidation.isInvalid}
+            />
+            <div className={cssValidation.invalidFeedback}>{formik.errors.nombre}</div>
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label htmlFor="inputPassword5">Dirección</Form.Label>
+            <Form.Control
+              type="text"
+              name="direccion" value={formik.values.direccion}
+              onChange={formik.handleChange}
+              className={(formik.errors.direccion && formik.touched.direccion)
+                && cssValidation.isInvalid}
+            />
+            <div className={cssValidation.invalidFeedback}>{formik.errors.direccion}</div>
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label htmlFor="inputPassword5">Teléfono</Form.Label>
+            <Form.Control
+              type="text"
+              name="telefono" value={formik.values.telefono}
+              onChange={formik.handleChange}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label htmlFor="inputPassword5">Descripción</Form.Label>
+            <Form.Control
+              as="textarea"
+              name="descripcion" value={formik.values.descripcion}
+              onChange={formik.handleChange}
+            />
+          </Form.Group>
+        </Form>
+      </Modal.Body>
+      <Modal.Footer className="justify-content-center">
+        <Button variant="secondary" size="lg" onClick={handleCloseModal}>CANCELAR</Button>
+        <Button variant="primary" type="submit" form="f_almacen" size="lg">GUARDAR</Button>
+      </Modal.Footer>
+    </Modal>
   )
 }

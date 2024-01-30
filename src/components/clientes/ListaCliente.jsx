@@ -16,7 +16,7 @@ export const ListaCliente = () => {
   const handleShow = () => setShow(true);
 
   useEffect(() => {
-    getClientesHook().then(result => setClientes(result));
+    getClientesHook().then(result => setClientes(result))
   }, [])
 
   const formik = useFormik({

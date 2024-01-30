@@ -37,8 +37,10 @@ export const ClienteForm = () => {
       })
     }
   }, [clienteId])
-
+  
+  // formulario de cliente.
   const formik = useFormik({
+    // configura valores iniciales del formulario.
     initialValues: {
       tipo_doc: "",
       dni: "",
@@ -47,7 +49,9 @@ export const ClienteForm = () => {
       cod_ubigeo: "",
       celular: "",
     },
+    // configura el esquema de validación del formulario.
     validationSchema: ClienteSchema,
+    // envia al servidor los datos obtenidos del formulario.
     onSubmit: (values, { setValues }) => {
       if (!clienteId) {
         createClienteHook(values).then(result => {

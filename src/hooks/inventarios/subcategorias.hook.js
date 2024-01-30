@@ -6,6 +6,12 @@ export const getSubCategoriasHook = async (query = "", page = 1) => {
   return result.data
 }
 
+export const getSubCategoriasByCategoriaHook = async (id) => {
+  const URL = `/api/inventarios/subcategorias/${id}/listar`
+  const result = await Axios.get(URL)
+  return result.data
+}
+
 export const createSubCategoriaHook = async (data) => {
   const URL = "/api/inventarios/subcategorias/"
   const result = await Axios.post(URL, data)
