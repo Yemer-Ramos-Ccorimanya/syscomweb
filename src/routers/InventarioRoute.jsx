@@ -22,7 +22,7 @@ export const InventarioRoute = () => {
       <Route path="/gestion/descontarstock" element={<DescontarStock />} />
       <Route path="/codigos-referencia" element={<ListadoSku />} />
       <Route path="/codigos-referencia/agregar" element={<FormSku />} />
-      <Route path="/codigos-referencia/:id/editar" element={<FormSku />} />
+      <Route path="/codigos-referencia/:skuId/editar" element={<FormSku />} />
       <Route path="/almacenes" element={<ListaAlmacen />} />
     </Routes>
   )

@@ -1,10 +1,31 @@
-import { Card, Form, InputGroup, Pagination } from "react-bootstrap"
+import { Button, Card, Form, InputGroup, Pagination } from "react-bootstrap"
 import { MainContainer } from "../../common/MainContainer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faMagnifyingGlass, faChevronLeft, faChevronRight, faCirclePlus } from "@fortawesome/free-solid-svg-icons"
-import { Link } from "react-router-dom"
+import { faMagnifyingGlass, faChevronLeft, faChevronRight, faCirclePlus, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
+import { Link, useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { deleteCatalogoSkuHook, getCatalogoSkusHook } from "../../../hooks/inventarios"
+import { deleteConfirm } from "../../common/sweetalert"
 
 export const ListadoSku = () => {
+  const navigate = useNavigate()
+  const [catalogoSkus, setCatalogoSkus] = useState({})
+
+  useEffect(() => {
+    getCatalogoSkusHook().then(result => setCatalogoSkus(result))
+  }, [])
+
+  const handleDelete = (id) => {
+    deleteConfirm().then(result => {
+      if (result.isConfirmed) {
+        deleteCatalogoSkuHook(id).then(() => {
+          const results = catalogoSkus.results.filter(item => item.id !== id)
+          setCatalogoSkus({ ...catalogoSkus, results })
+        })
+      }
+    })
+  }
+
   return (
     <MainContainer>
       <Card >
@@ -35,16 +56,37 @@ export const ListadoSku = () => {
             </div>
           </Form>
           <div className="table-responsive">
-            <table className="table">
+            <table className="table mb-0">
               <thead>
                 <tr className="text-uppercase">
-                  <th>Nombre SKU</th>
-                  <th>Cód. SKU</th>
+                  <th>Nombre</th>
+                  <th>Cód. Referencia</th>
                   <th>Unidad</th>
-                  <th>Estado</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
+                {
+                  catalogoSkus && catalogoSkus.results?.map(item => (
+                    <tr key={item.id}>
+                      <td>{item.nombre}</td>
+                      <td>{item.codigo_sku}</td>
+                      <td>{item.unidad_medida}</td>
+                      <td>
+                        <div className="d-flex justify-content-end">
+                          <Button variant={"secondary"}
+                            onClick={() => navigate(`/inventarios/codigos-referencia/${item.id}/editar`)}
+                            size={"sm"} className="me-2">
+                            <FontAwesomeIcon icon={faEdit} />
+                          </Button>
+                          <Button variant={"danger"} onClick={() => handleDelete(item.id)} size={"sm"}>
+                            <FontAwesomeIcon icon={faTrash} />
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                }
               </tbody>
             </table>
           </div>

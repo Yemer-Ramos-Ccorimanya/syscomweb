@@ -69,8 +69,7 @@ export const ClienteForm = () => {
               cod_ubigeo: result.cod_ubigeo,
               celular: result.celular,
             })
-            toastSuccess("Cliente Actualizado!")
-            navigate(`/clientes/${result.id}/editar`)
+            toastSuccess("Cliente actualizado!")
           })
       }
     },
