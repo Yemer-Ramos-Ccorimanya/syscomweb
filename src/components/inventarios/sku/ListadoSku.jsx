@@ -1,80 +1,37 @@
-import { Card, Form, InputGroup, Button, Pagination } from "react-bootstrap"
+import { Card, Form, InputGroup, Pagination } from "react-bootstrap"
 import { MainContainer } from "../../common/MainContainer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faMagnifyingGlass, faCircleMinus, faChevronLeft, faChevronRight, faCirclePlus, faSearch } from "@fortawesome/free-solid-svg-icons"
+import { faMagnifyingGlass, faChevronLeft, faChevronRight, faCirclePlus } from "@fortawesome/free-solid-svg-icons"
 import { Link } from "react-router-dom"
 
 export const ListadoSku = () => {
   return (
     <MainContainer>
-      <h1>SKU</h1>
-      <div className="col-auto d-flex justify-content-between gap-2 mb-3">
-        <Button variant="outline-dark" style={{ border: 'none' }}>
-          <FontAwesomeIcon icon={faCircleMinus} className="mx-2" />
-          Exportar
-        </Button>
-        <Link to="/inventarios/sku/agregar" className="btn btn-success">
-          <FontAwesomeIcon icon={faCirclePlus} className="mx-2" />
-          Nuevo Sku
-        </Link>
-
-      </div>
       <Card >
-        {/* cabecera del card */}
+        <Card.Header>
+          <span className="fw-semibold">Códigos de Referencia</span>
+        </Card.Header>
         <Card.Body>
-          <Button variant="outline-dark" className="me-2" style={{ border: 'none' }}>
-            <FontAwesomeIcon icon={faCircleMinus} className="mx-2" />
-            todos
-          </Button>
-          <Button variant="outline-dark" className="me-2" style={{ border: 'none' }}>
-            <FontAwesomeIcon icon={faCircleMinus} className="mx-2" />
-            Habilitados
-          </Button>
-          <Button variant="outline-dark" className="me-2" style={{ border: 'none' }}>
-            <FontAwesomeIcon icon={faCircleMinus} className="mx-2" />
-            Deshabilitados
-          </Button>
-          <Link to="/inventarios/sku/Buscar" className="btn btn-outline-dark me-2" style={{ border: 'none' }}>
-            <FontAwesomeIcon icon={faSearch} className="mx-2" />
-            Buscar SKU
-         </Link>
-          <Form className="row g-2">
-            <div className="col-3">
-              {/* Input de búsqueda */}
-              <InputGroup className="mb-2">
+          <Form className="row row-cols-auto g-2">
+            <div className="col-auto col-md-4">
+              <InputGroup>
                 <InputGroup.Text>
                   <FontAwesomeIcon icon={faMagnifyingGlass} className="mx-2" />
                 </InputGroup.Text>
                 <Form.Control placeholder="Buscar por nombre o código SKU" />
               </InputGroup>
             </div>
-            <div className="col-3">
-              {/* Primer select de moneda */}
-              <Form.Group controlId="moneda1">
-                <Form.Label>Unidad de Moneda </Form.Label>
-                <Form.Select>
-                  <option>Soles</option>
-                  <option>Dólares</option>
-                  <option>Euros</option>
-                </Form.Select>
-              </Form.Group>
+            <div className="col-auto">
+              <Form.Select className="text-uppercase">
+                <option>Habilitado</option>
+                <option>Deshabilitado</option>
+              </Form.Select>
             </div>
-            <div className="col-3">
-              {/* Segundo select de moneda */}
-              <Form.Group controlId="moneda2">
-                <Form.Label>Habilitado</Form.Label>
-                <Form.Select>
-                  <option>Habilitado</option>
-                  <option>Deshabilitado</option>
-                </Form.Select>
-              </Form.Group>
-            </div>
-            <div className="col-3">
-              {/* Segundo select de moneda */}
-              <Button variant="outline-dark" className="me-2" style={{ border: 'none' }}>
-                <FontAwesomeIcon icon={faCircleMinus} className="mx-2" />
-                Mas filtros
-              </Button>
+            <div className="col-auto">
+              <Link to="/inventarios/codigos-referencia/agregar" className="btn btn-success">
+                <FontAwesomeIcon icon={faCirclePlus} className="me-1" />
+                <span className="text-uppercase">Nuevo Cód. Referencia</span>
+              </Link>
             </div>
           </Form>
           <div className="table-responsive">
@@ -83,7 +40,6 @@ export const ListadoSku = () => {
                 <tr className="text-uppercase">
                   <th>Nombre SKU</th>
                   <th>Cód. SKU</th>
-                  <th>Descripion</th>
                   <th>Unidad</th>
                   <th>Estado</th>
                 </tr>
@@ -97,11 +53,11 @@ export const ListadoSku = () => {
         <Card.Footer>
           <div className="d-flex justify-content-end">
             <div className="m-2">
-              <span>Skus por página: </span>
+              <span>Códigos por página: </span>
               <select className="rounded">
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="30">30</option>
+                <option value="12">12</option>
+                <option value="24">24</option>
+                <option value="36">36</option>
               </select>
             </div>
             <div className="m-2">

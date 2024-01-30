@@ -1,15 +1,14 @@
 import { Route, Routes } from "react-router-dom"
 import { ListaProductos } from "../components/inventarios/productos/ListaProductos"
 import { ProductoForm } from "../components/inventarios/productos/ProductoForm"
-import { AgregarNuevoSku } from "../components/inventarios/sku/AgregarNuevoSku"
 import { ListaCategorias } from "../components/inventarios/productos/ListaCategorias"
 import { ListaSubCategorias } from "../components/inventarios/productos/Listasubcategorias"
 import { GestionInventarios } from "../components/inventarios/gestion/GestionInventarios"
 import { AgregarStock } from "../components/inventarios/gestion/AgregarStock"
 import { DescontarStock } from "../components/inventarios/gestion/DescontarStock"
 import { ListadoSku } from "../components/inventarios/sku/ListadoSku"
-import { BuscarSku } from "../components/inventarios/sku/BuscarSku"
 import { ListaAlmacen } from "../components/inventarios/almacenes/ListaAlmacen"
+import { FormSku } from "../components/inventarios/sku/FormSku"
 
 export const InventarioRoute = () => {
   return (
@@ -21,12 +20,10 @@ export const InventarioRoute = () => {
       <Route path="/gestion" element={<GestionInventarios />} />
       <Route path="/gestion/agregarstock" element={<AgregarStock />} />
       <Route path="/gestion/descontarstock" element={<DescontarStock />} />
-      <Route path="/lista-sku" element={<ListadoSku />} />
-      <Route path="/sku/agregar" element={<AgregarNuevoSku />} />
-      <Route path="/sku/Buscar" element={<BuscarSku />} />
+      <Route path="/codigos-referencia" element={<ListadoSku />} />
+      <Route path="/codigos-referencia/agregar" element={<FormSku />} />
+      <Route path="/codigos-referencia/:id/editar" element={<FormSku />} />
       <Route path="/almacenes" element={<ListaAlmacen />} />
-     
-
     </Routes>
   )
 }

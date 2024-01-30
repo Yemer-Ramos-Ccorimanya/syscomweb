@@ -1,7 +1,7 @@
 import { Card, Form, InputGroup, Button, Pagination } from "react-bootstrap"
 import { MainContainer } from "../../common/MainContainer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faMagnifyingGlass, faCalendarAlt, faChevronLeft, faChevronRight, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
+import { faMagnifyingGlass, faChevronLeft, faChevronRight, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { AlmacenFormModal } from "./AlmacenFormModal"
 import { useEffect, useState } from "react"
 import { deleteAlmacenHook, getAlmacenesHook } from "../../../hooks/inventarios/almacenes.hook"
@@ -71,7 +71,6 @@ export const ListaAlmacen = () => {
 
   return (
     <MainContainer>
-      <h5>Almacenes</h5>
       <Card >
         <Card.Header>
           <div className="d-flex justify-content-start">
@@ -94,7 +93,7 @@ export const ListaAlmacen = () => {
               </InputGroup>
             </div>
             <div className="col-3">
-            <Button onClick={handleAddModal} className="text-uppercase" variant="success" >Agregar Almacen</Button>
+              <Button onClick={handleAddModal} className="text-uppercase" variant="success" >Agregar Almacen</Button>
             </div>
           </Form>
           <div className="table-responsive">
