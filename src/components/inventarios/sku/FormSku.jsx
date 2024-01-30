@@ -199,7 +199,64 @@ export const FormSku = () => {
           </Card>
         </div>
       </div>
-      <div className="row">
+      <div className="row mb-3">
+        <div className="col-11">
+          <div className="d-flex justify-content-end">
+            <Button size="lg" onClick={() => navigate("/inventarios/codigos-referencia")} variant="secondary" className="me-2">
+              <FontAwesomeIcon icon={faCircleXmark} className="me-1" />
+              <span className="text-uppercase">Cancelar</span>
+            </Button>
+            <Button type="submit" form="f_sku" size="lg" variant="primary">
+              <FontAwesomeIcon icon={faFloppyDisk} className="me-1" />
+              <span className="text-uppercase">Guardar</span>
+            </Button>
+          </div>
+        </div>
+      </div>
+      <div className="row mb-3">
+        <div className="col-2 offset-1">
+          <h6>Configuración Stock</h6>
+          <p>Asocia tu código de referencia a un almacén.</p>
+        </div>
+        <div className="col-8">
+          <Card>
+            <Card.Body>
+              <div className="table-responsive">
+                <table className="table mb-0">
+                  <thead>
+                    <tr className="text-uppercase">
+                      <th>Estado</th>
+                      <th>Almacén</th>
+                      <th>Stock Mínimo</th>
+                      <th>Costo Unitario</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-uppercase">
+                    <tr>
+                      <td>
+                        <Form.Check
+                          type="switch"
+                          id="almacen-switch"
+                        />
+                      </td>
+                      <td>
+                        Tienda Principal
+                      </td>
+                      <td>
+                        <input type="number" />
+                      </td>
+                      <td>
+                        <input type="number" step="0.1" />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </Card.Body>
+          </Card>
+        </div>
+      </div>
+      <div className="row mb-3">
         <div className="col-11">
           <div className="d-flex justify-content-end">
             <Button size="lg" onClick={() => navigate("/inventarios/codigos-referencia")} variant="secondary" className="me-2">
