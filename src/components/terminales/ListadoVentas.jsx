@@ -25,7 +25,7 @@ export const ListadoVentas = () => {
         <h5>CANALES DE PUNTO DE VENTA ABIERTO</h5>
       </div>
 
-      <div className="d-flex">
+      <div className="m-3 d-flex">
         <Card style={{ width: '18rem', cursor: 'pointer' }} onClick={handleTerminal} className="me-3">
           <Card.Body className="d-flex justify-content-center align-items-center">
             <FontAwesomeIcon icon={faCashRegister} className="me-3" style={{ fontSize: '5.5em' }} />
@@ -60,26 +60,15 @@ export const ListadoVentas = () => {
       <div className="m-3">
         <h5>OPERACIONES DE TERMINALES DE PUNTOS DE VENTA</h5>
       </div>
-
-      <div className="col-auto d-flex gap-2">
-        <Button variant="outline-success" className="me-2">
-          Hoy
-        </Button>
-        <Button variant="outline-success" className="me-2">
-          Ayer
-        </Button>
-        <Button variant="outline-success" className="me-2">
-          Últimos 7 días
-        </Button>
-        <Button variant="outline-success" className="me-2">
-          Últimos 30 días
-        </Button>
+      <div className="m-3 col-auto d-flex gap-2">
+        <Button variant="outline-success" className="me-2">Hoy</Button>
+        <Button variant="outline-success" className="me-2">Ayer</Button>
+        <Button variant="outline-success" className="me-2">Últimos 7 días</Button>
+        <Button variant="outline-success" className="me-2"> Últimos 30 días</Button>
         <DateRangePicker onChange={setDateRange} value={dateRange} className="me-2" />
         <button className="btn btn-success">Apertura de Caja</button>
       </div>
-
-      <h1>   </h1>
-      <Card>
+      <Card className="m-3">
         <Card.Body>
           <div className="d-flex justify-content-between mb-3">
           </div>
