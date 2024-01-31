@@ -8,28 +8,25 @@ export const GestionInventarios = () => {
   return (
     <MainContainer>
       <h5>Inventario</h5>
-      <div className="col-auto d-flex gap-2 mb-3">
+      <div className="col-auto d-flex gap-2 mb-2">
         <Link to="/inventarios/gestion/agregarstock" className="btn btn-outline-dark me-2" style={{ border: 'none' }}>
-          <FontAwesomeIcon icon={faCirclePlus} className="mx-2" />
+          <FontAwesomeIcon icon={faCirclePlus} className="me-2" />
           Agregar Stock
         </Link>
         <Link to="/inventarios/gestion/descontarstock" className="btn btn-outline-dark me-2" style={{ border: 'none' }}>
-          <FontAwesomeIcon icon={faCircleMinus} className="mx-2" />
+          <FontAwesomeIcon icon={faCircleMinus} className="me-2" />
           Descontar Stock
         </Link>
       </div>
       <Card >
         {/* cabecera del card */}
         <Card.Header>
-          <div className="d-flex justify-content-start">
-            <h5 className="m-2" style={{ fontSize: '.9em' }}>Reporte de inventario</h5>
-            <h5 className="m-2" style={{ fontSize: '.9em' }}>Reporte Consolidado</h5>
-          </div>
+        <span className="text-uppercase fw-semibold">Gestión de Inventarios</span>
         </Card.Header>
         <Card.Body>
           <Form className="row row-cols-auto g-2">
-            <div className="col-7">
-              <InputGroup className="mb-2">
+            <div className="col-auto col-5">
+              <InputGroup>
                 <InputGroup.Text>
                   <FontAwesomeIcon icon={faMagnifyingGlass} className="mx-2" />
                 </InputGroup.Text>
@@ -38,21 +35,17 @@ export const GestionInventarios = () => {
                 />
               </InputGroup>
             </div>
-            <div className="col-3">
-              <InputGroup className="mb-2">
-                <InputGroup.Text>
-                  <FontAwesomeIcon icon={faCalendarAlt} className="mx-2" />
-                </InputGroup.Text>
-                <Form.Control
-                  type="date"
-                  placeholder="Seleccionar fecha"
-                />
+            <div className="col-auto col-md-3">
+              <InputGroup>
+                <Form.Select>
+                </Form.Select>
                 <Button variant="outline-dark" className="me-2">Más filtros</Button>
               </InputGroup>
             </div>
-            <div className="col-2">
-              <Button variant="outline-dark" className="ms-5 me-0">Exportar
-                <FontAwesomeIcon icon={faDownload} className="mx-2" />
+            <div className="col-auto">
+              <Button variant="outline-dark">
+              <FontAwesomeIcon icon={faDownload}  className="me-1" />
+                <span className="text-uppercase">Exportar</span>                
               </Button>
             </div>
           </Form>
@@ -60,14 +53,11 @@ export const GestionInventarios = () => {
             <table className="table">
               <thead>
                 <tr className="text-uppercase">
-                  <th>Nombre SKU</th>
-                  <th>Cód. SKU</th>
-                  <th>Almacén</th>
-                  <th>Stock actual</th>
-                  <th>U. de medida</th>
-                  <th>Costo unitario</th>
-                  <th>Costo total</th>
-                  <th>Ultimo movimiento</th>
+                  <th>Nombre</th>
+                  <th>Cód. Referencia</th>
+                  <th>Stock</th>
+                  <th>Costo Unitario</th>
+                  <th>Costo Total</th>
                 </tr>
               </thead>
               <tbody>

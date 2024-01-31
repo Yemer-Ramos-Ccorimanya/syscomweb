@@ -42,7 +42,7 @@ export const ListadoSku = () => {
     <MainContainer>
       <Card >
         <Card.Header>
-          <span className="fw-semibold">Códigos de Referencia</span>
+          <span className="fw-semibold text-uppercase">Códigos de Referencia</span>
         </Card.Header>
         <Card.Body>
           <Form onSubmit={formik.handleSubmit} className="row row-cols-auto g-2">

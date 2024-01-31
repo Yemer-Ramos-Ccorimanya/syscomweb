@@ -73,9 +73,7 @@ export const ListaAlmacen = () => {
     <MainContainer>
       <Card >
         <Card.Header>
-          <div className="d-flex justify-content-start">
-            <h5 className="text-uppercase m-2" style={{ fontSize: '.9em' }}>Lista de almacenes</h5>
-          </div>
+          <span className="text-uppercase fw-semibold">Almacenes</span>
         </Card.Header>
         <Card.Body>
           <Form onSubmit={formik.handleSubmit} className="row row-cols-auto g-2">

@@ -1,7 +1,7 @@
 import { Card, Form, InputGroup, Button, Modal, Dropdown, CardHeader, Pagination } from "react-bootstrap"
 import { MainContainer } from "../../common/MainContainer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faChevronLeft, faChevronRight, faLayerGroup, faList, faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons"
+import { faChevronLeft, faChevronRight, faCircleXmark, faFloppyDisk, faLayerGroup, faList, faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons"
 import { Link } from "react-router-dom"
 
 export const DescontarStock = () => {
@@ -18,36 +18,25 @@ export const DescontarStock = () => {
         <div className="col-8">
           <Card >
             <Card.Header>
-              <div className="d-flex justify-content-start">
-                <h5 className="m-2" style={{ fontSize: '.9em' }}>Almacen *</h5>
-              </div>
-              <div className="d-flex justify-content-start">
-                <Form.Select aria-label="Default select example">
-                  <option>seleccionar Tienda</option>
-                  <option value="1">Tienda PRINCIPAL</option>
-                  <option value="2">Tienda SECUNDARIA</option>
-                </Form.Select>
+              <div className="row row-cols-auto g-2">
+                <div className="col-auto">
+                  <label className="form-label col-form-label fw-semibold text-uppercase">Almacén</label>
+                </div>
+                <div className="col-auto">
+                  <Form.Select aria-label="Default select example">
+                    <option>seleccionar Tienda</option>
+                    <option value="1">Tienda PRINCIPAL</option>
+                    <option value="2">Tienda SECUNDARIA</option>
+                  </Form.Select>
+                </div>
+                <div className="col-auto">
+                  <Button variant="success">
+                    <span className="text-uppercase">Explorar Cód. Referencia</span>
+                  </Button>
+                </div>
               </div>
             </Card.Header>
             <Card.Body>
-              <Form className="row row-cols-auto g-2">
-                <div className="col-10">
-                  <InputGroup className="mb-3">
-                    <InputGroup.Text>
-                      <FontAwesomeIcon icon={faMagnifyingGlass} className="mx-2" />
-                    </InputGroup.Text>
-                    <Form.Control
-                      placeholder="Buscar por nombre o código SKU"
-                    />
-                  </InputGroup>
-                </div>
-                <div className="col-2">
-                  <button className="btn btn-light" variant="light">
-                    <span>Explorar Skus</span>
-                  </button>
-                </div>
-
-              </Form>
               <div className="table-responsive">
                 <table className="table">
                   <thead>
@@ -98,7 +87,7 @@ export const DescontarStock = () => {
           </Card>
         </div>
         <div className="col-4">
-          <Card >
+          <Card className="mb-3">
             <Card.Body>
               <Form className="g-2">
                 <div className="">
@@ -113,6 +102,16 @@ export const DescontarStock = () => {
 
             </Card.Body>
           </Card>
+          <div className="d-flex">
+            <Button size="lg" variant="secondary" className="w-100 me-2">
+              <FontAwesomeIcon icon={faCircleXmark} className="me-1" />
+              <span className="text-uppercase">Cancelar</span>
+            </Button>
+            <Button type="submit" form="f_sku" size="lg" className="w-100" variant="primary">
+              <FontAwesomeIcon icon={faFloppyDisk} className="me-1" />
+              <span className="text-uppercase">Guardar</span>
+            </Button>
+          </div>
         </div>
       </div>
 
