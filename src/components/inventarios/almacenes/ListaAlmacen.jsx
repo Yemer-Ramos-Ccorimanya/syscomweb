@@ -77,7 +77,7 @@ export const ListaAlmacen = () => {
         </Card.Header>
         <Card.Body>
           <Form onSubmit={formik.handleSubmit} className="row row-cols-auto g-2">
-            <div className="col-7">
+            <div className="col-4">
               <InputGroup className="mb-2">
                 <InputGroup.Text>
                   <FontAwesomeIcon icon={faMagnifyingGlass} className="mx-2" />
