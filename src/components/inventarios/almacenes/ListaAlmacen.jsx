@@ -95,7 +95,7 @@ export const ListaAlmacen = () => {
             </div>
           </Form>
           <div className="table-responsive">
-            <table className="table">
+            <table className="table mb-0">
               <thead>
                 <tr className="text-uppercase">
                   <th>Nombre</th>
