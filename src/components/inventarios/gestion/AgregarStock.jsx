@@ -1,10 +1,17 @@
-import { Card, Form, InputGroup, Button, Modal, Dropdown, CardHeader, Pagination } from "react-bootstrap"
+import { Card, Form, Button, Pagination } from "react-bootstrap"
 import { MainContainer } from "../../common/MainContainer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faChevronLeft, faChevronRight, faCircleXmark, faFloppyDisk, faLayerGroup, faList, faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons"
+import { faChevronLeft, faChevronRight, faCircleXmark, faFloppyDisk } from "@fortawesome/free-solid-svg-icons"
 import { Link } from "react-router-dom"
+import { ExplorarSkuByAlmacen } from "../sku/ExplorarSkuByAlmacen"
+import { useState } from "react"
 
 export const AgregarStock = () => {
+  const [showModal, setShowModal] = useState(false)
+
+  const handleCloseModal = () => setShowModal(false)
+  const handleShowModal = () => setShowModal(true)
+
   return (
     <MainContainer>
       {/* icono de volver para para volver a la listaInventario */}
@@ -30,8 +37,8 @@ export const AgregarStock = () => {
                   </Form.Select>
                 </div>
                 <div className="col-auto">
-                  <Button variant="success">
-                  <span className="text-uppercase">Explorar Cód. Referencia</span>
+                  <Button onClick={handleShowModal} variant="success">
+                    <span className="text-uppercase">Explorar Cód. Referencia</span>
                   </Button>
                 </div>
               </div>
@@ -113,7 +120,10 @@ export const AgregarStock = () => {
           </div>
         </div>
       </div>
-
+      <ExplorarSkuByAlmacen
+        show={showModal}
+        handleClose={handleCloseModal}
+      />
     </MainContainer>
   )
 }
