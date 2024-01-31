@@ -20,7 +20,7 @@ export const ListaCategorias = () => {
   useEffect(() => {
     getCategoriasHook().then(result => setCategorias(result));
   }, [])
-
+  
   const formik = useFormik({
     initialValues: {
       query: ""
