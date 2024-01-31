@@ -12,9 +12,9 @@ import { cssValidation } from "../../common/css.validation"
 import { useEffect, useState } from "react"
 
 const ProductoSchema = Yup.object().shape({
-  tipo_item: Yup.string().required("Campo requerido"),
+  tipo_item: Yup.string().default("PRODUCTO").required("Campo requerido"),
   nombre: Yup.string().required("Campo requerido"),
-  categoria: Yup.string().required("Campo requerido"),
+  categoria: Yup.string().default('DEFAULT').notOneOf(['DEFAULT'], "Seleccione una Categoría"),
   sub_categoria: Yup.string(),
   descripcion: Yup.string().required("Campo requerido"),
   codigo_barra: Yup.string().required("Campo requerido"),
@@ -27,18 +27,15 @@ export const ProductoForm = () => {
   useEffect(() => {
     getCategoriasHook().then(result => setCategorias(result));
   }, [])
-  useEffect(() => {
-    getSubCategoriasByCategoriaHook().then(result => setSubcategorias(result));
-  }, [])
 
   const [categorias, setCategorias] = useState([]);
   const [subcategorias, setSubcategorias] = useState([]);
 
   const formik = useFormik({
     initialValues: {
-      tipo_item: "",
+      tipo_item: "PRODUCTO",
       nombre: "",
-      categoria: "",
+      categoria: "DEFAULT",
       sub_categoria: "",
       descripcion: "",
       codigo_barra: "",
@@ -47,25 +44,26 @@ export const ProductoForm = () => {
       impuesto: "",
     },
     validationSchema: ProductoSchema,
-    onSubmit:  (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
       try {
-        //const result = await createProductoHook(values);
+        const result = await createProductoHook(values);
         saveChanges({ data: result, type });
       } catch (error) {
         console.error("Error submitting form:", error);
       }
     },
   })
+
   useEffect(() => {
     getCategoriasHook().then((result) => {
       setCategorias(result);
     });
   }, []);
 
-  
+
   useEffect(() => {
-    if (formik.values.categoria) {
+    const { categoria } = formik.values
+    if (categoria && categoria !== "DEFAULT") {
       getSubCategoriasByCategoriaHook(formik.values.categoria).then(result => {
         setSubcategorias(result);
       });
@@ -76,6 +74,7 @@ export const ProductoForm = () => {
   const handleCancel = () => {
     formik.resetForm()
   }
+
   return (
     <MainContainer>
       <Form onSubmit={formik.handleSubmit}>
@@ -97,7 +96,7 @@ export const ProductoForm = () => {
                     label="Producto"
                     id="item_producto"
                     name="tipo_item"
-                    value="Producto"
+                    value="PRODUCTO"
                     onChange={formik.handleChange}
                     className="me-3"
                     defaultChecked
@@ -107,7 +106,7 @@ export const ProductoForm = () => {
                     label="Servicio"
                     id="item_servicio"
                     name="tipo_item"
-                    value="Servicio"
+                    value="SERVICIO"
                     onChange={formik.handleChange}
                     className="me-3"
                   />
@@ -116,7 +115,7 @@ export const ProductoForm = () => {
                     label="Para alquilar"
                     id="item_para_alquilar"
                     name="tipo_item"
-                    value="Para alquilar"
+                    value="PARA_ALQUILER"
                     onChange={formik.handleChange}
                   />
                 </div>
@@ -153,11 +152,16 @@ export const ProductoForm = () => {
                       name="categoria"
                       value={formik.values.categoria}
                       onChange={formik.handleChange}
+                      isInvalid={formik.errors.categoria && formik.touched.categoria}
                     >
-                      {categorias.results?.map((item, index) => (
+                      <option value="">Seleccione una Categoría</option>
+                      {categorias && categorias.results?.map((item, index) => (
                         <option key={item.id} value={item.id}>{item.nombre}</option>
                       ))}
                     </Form.Select>
+                    <Form.Control.Feedback type="invalid">
+                      {formik.errors.categoria}
+                    </Form.Control.Feedback>
                   </div>
                   <div className="col-6">
                     <Form.Label>SubCategoría</Form.Label>
@@ -166,7 +170,7 @@ export const ProductoForm = () => {
                       value={formik.values.sub_categoria}
                       onChange={formik.handleChange}
                     >
-                      {subcategorias.map((item) => (
+                      {subcategorias && subcategorias.map((item) => (
                         <option key={item.id} value={item.id}>
                           {item.nombre}
                         </option>
@@ -309,7 +313,7 @@ export const ProductoForm = () => {
                     type="radio"
                     label="Producto con variantes"
                     id="producto_con_variantes"
-                    
+
                   />
                 </div>
               </Card.Body>
@@ -335,14 +339,14 @@ export const ProductoForm = () => {
                     type="radio"
                     label="Inventario simple"
                     id="inventario_simple"
-                    
+
                     className="me-3"
                   />
                   <Form.Check
                     type="radio"
                     label="Inventario compuesto"
                     id="inventario_compuesto"
-               
+
                   />
                 </div>
               </Card.Body>
