@@ -26,7 +26,7 @@ export const ListarEmpresas = () => {
               </InputGroup>
             </div>
             <div className="col-3">
-              <Link to="/empresas/agregar">
+              <Link to="/inventarios/empresas/agregar">
                 <Button className="text-uppercase" variant="success">Nueva empresa</Button>
               </Link>
             </div>
