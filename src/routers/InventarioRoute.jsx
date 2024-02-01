@@ -9,6 +9,8 @@ import { DescontarStock } from "../components/inventarios/gestion/DescontarStock
 import { ListadoSku } from "../components/inventarios/sku/ListadoSku"
 import { ListaAlmacen } from "../components/inventarios/almacenes/ListaAlmacen"
 import { FormSku } from "../components/inventarios/sku/FormSku"
+import { ListarEmpresas } from "../components/inventarios/empresas/ListarEmpresas"
+import { FormEmpresa } from "../components/inventarios/empresas/EmpresaForm"
 
 export const InventarioRoute = () => {
   return (
@@ -24,6 +26,8 @@ export const InventarioRoute = () => {
       <Route path="/codigos-referencia/agregar" element={<FormSku />} />
       <Route path="/codigos-referencia/:skuId/editar" element={<FormSku />} />
       <Route path="/almacenes" element={<ListaAlmacen />} />
+      <Route path="/empresas" element={<ListarEmpresas/>} />
+      <Route path="/empresas/agregar" element={<FormEmpresa/>} />
     </Routes>
   )
 }
