@@ -2,8 +2,8 @@ import React from 'react';
 import { Card, Form, InputGroup, Button, Pagination } from 'react-bootstrap';
 import { MainContainer } from '../../common/MainContainer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass, faCircleMinus, faChevronLeft, faChevronRight, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { faMagnifyingGlass, faChevronLeft, faChevronRight, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
+
 
 export const BuscarSku = () => {
   return (

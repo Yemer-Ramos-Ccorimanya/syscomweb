@@ -65,7 +65,7 @@ export const BuscarSku = () => {
   </Card>
 </div>
 
-      <div className='col-6'>
+<div className='col-6'>
      <Card>
           <Card.Body>
           <div className="row">
