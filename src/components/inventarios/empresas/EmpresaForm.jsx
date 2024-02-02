@@ -2,9 +2,17 @@ import { Button, Card, CardHeader, Form, InputGroup, Pagination } from "react-bo
 import { MainContainer } from "../../common/MainContainer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronLeft, faChevronRight, faCircleXmark, faFloppyDisk, faShuffle } from "@fortawesome/free-solid-svg-icons"
-import { useEffect } from "react"
-
+import { useEffect, useState } from "react"
+import { SucursalFormModal } from "./SucursalFormModal"
+import { formTypeModal } from "../../../config"
 export const FormEmpresa = () => {
+  const [showModal, setShowModal] = useState(false)
+  const [typeModal, setTypeModal] = useState(formTypeModal.add)
+  const handleCloseModal = () => setShowModal(false)
+  const handleAddModal = () => {
+    setTypeModal(formTypeModal.add)
+    setShowModal(true)
+  }
   
   return (
     <MainContainer>
@@ -76,7 +84,7 @@ export const FormEmpresa = () => {
               <Card.Header>
                 <div className="d-flex justify-content-between">
                   <span className="text-uppercase fw-semibold">Sucursales</span>
-                  <Button className="text-uppercase" variant="success" >Nueva Sucursal</Button>
+                  <Button className="text-uppercase" onClick={handleAddModal} variant="success" >Nueva Sucursal</Button>
                 </div>
               </Card.Header>
               <Card.Body>
@@ -132,8 +140,14 @@ export const FormEmpresa = () => {
 
         </div>
 
-
       </div>
+      {showModal && (
+        <SucursalFormModal
+          type={typeModal}
+          showModal={showModal}
+          handleCloseModal={handleCloseModal}
+        />
+      )}
     </MainContainer>
   )
 
