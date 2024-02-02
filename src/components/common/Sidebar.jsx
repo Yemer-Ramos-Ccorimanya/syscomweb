@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 import styles from "./Sidebar.module.css"
+import { faBuilding } from "@fortawesome/free-regular-svg-icons"
 
 const SidebarWrapper = styled.div`
   background-color: white;  
@@ -83,6 +84,12 @@ export const Sidebar = () => {
           <Link to={"/inventarios/almacenes"} className={styles.link}>
             <FontAwesomeIcon icon={faStore} className={styles.icon} />
             <MenuItemText>Almacenes</MenuItemText>
+          </Link>
+        </MenuItem>
+        <MenuItem>
+          <Link to={"/inventarios/empresas"} className={styles.link}>
+            <FontAwesomeIcon icon={faBuilding} className={styles.icon} />
+            <MenuItemText>Empresas</MenuItemText>
           </Link>
         </MenuItem>
         <MenuItem>
