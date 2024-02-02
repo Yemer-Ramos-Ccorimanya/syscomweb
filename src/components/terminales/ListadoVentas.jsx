@@ -117,7 +117,6 @@ export const ListadoVentas = () => {
             </nav>
           </div>
         </Card.Footer>
-
       </Card>
     </MainContainer>
   );
