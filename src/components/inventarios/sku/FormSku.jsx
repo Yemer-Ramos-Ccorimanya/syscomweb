@@ -6,8 +6,8 @@ import * as Yup from "yup"
 import { useFormik } from "formik"
 import { cssValidation } from "../../common/css.validation"
 import { useNavigate, useParams } from "react-router-dom"
-import { useEffect } from "react"
-import { createCatalogoSkuHook, getCatalogoSkuHook, updateCatalogoSkuHook } from "../../../hooks/inventarios"
+import { Fragment, useEffect, useState } from "react"
+import { createCatalogoSkuHook, getCatalogoSkuHook, getCatalogoSkusAlmacenHook, updateCatalogoSkuHook } from "../../../hooks/inventarios"
 import { toastSuccess } from "../../common/helpers"
 
 const SkuSchema = Yup.object().shape({
@@ -20,6 +20,7 @@ const SkuSchema = Yup.object().shape({
 export const FormSku = () => {
   const { skuId } = useParams()
   const navigate = useNavigate()
+  const [configAlmacenes, setConfigAlmacenes] = useState([])
 
   useEffect(() => {
     if (skuId) {
@@ -30,6 +31,32 @@ export const FormSku = () => {
           unidad_medida: result.unidad_medida,
           descripcion: result.descripcion,
         })
+      })
+      getCatalogoSkusAlmacenHook(skuId).then(result => {
+        const newCatalogoSkus = result.almacenes?.map(item => {
+          const itemCatalogo = result.catalogos_sku_almacen.find(item => item.almacen == item.id)
+          console.log(itemCatalogo)
+          if (!itemCatalogo) {
+            return {
+              almacenId: item.id,
+              nombreAlmacen: item.nombre,
+              deshabilitado: true,
+              stockMinimo: 0,
+              puntoReposicion: 0,
+              costoUnitario: 0
+            }
+          } else {
+            return {
+              almacenId: item.id,
+              nombreAlmacen: item.nombre,
+              deshabilitado: false,
+              stockMinimo: itemCatalogo.stock_minimo,
+              puntoReposicion: itemCatalogo.punto_reposicion,
+              costoUnitario: itemCatalogo.costo_unitario
+            }
+          }
+        })
+        setConfigAlmacenes(newCatalogoSkus)
       })
     }
   }, [skuId])
@@ -75,6 +102,22 @@ export const FormSku = () => {
     // Construir el código SKU
     const codigoSKU = `${anio}${mes}${dia}${parteAleatoria}`
     formik.setFieldValue('codigo_sku', codigoSKU)
+  }
+
+  const handleSwitchChange = (almacenId) => {
+    setConfigAlmacenes((prevConfigAlmacenes) =>
+      prevConfigAlmacenes.map((configAlmacen) =>
+        configAlmacen.almacenId === almacenId ? { ...configAlmacen, deshabilitado: !configAlmacen.deshabilitado } : configAlmacen
+      )
+    )
+  }
+
+  const handleInputChange = (almacenId, inputName, value) => {
+    setConfigAlmacenes((prevConfigAlmacenes) =>
+      prevConfigAlmacenes.map((configAlmacen) =>
+        configAlmacen.almacenId === almacenId ? { ...configAlmacen, [inputName]: value } : configAlmacen
+      )
+    )
   }
 
   return (
@@ -213,62 +256,95 @@ export const FormSku = () => {
           </div>
         </div>
       </div>
-      <div className="row mb-3">
-        <div className="col-2 offset-1">
-          <h6>Configuración Stock</h6>
-          <p>Asocia tu código de referencia a un almacén.</p>
-        </div>
-        <div className="col-8">
-          <Card>
-            <Card.Body>
-              <div className="table-responsive">
-                <table className="table mb-0">
-                  <thead>
-                    <tr className="text-uppercase">
-                      <th>Estado</th>
-                      <th>Almacén</th>
-                      <th>Stock Mínimo</th>
-                      <th>Costo Unitario</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-uppercase">
-                    <tr>
-                      <td>
-                        <Form.Check
-                          type="switch"
-                          id="almacen-switch"
-                        />
-                      </td>
-                      <td>
-                        Tienda Principal
-                      </td>
-                      <td>
-                        <input type="number" />
-                      </td>
-                      <td>
-                        <input type="number" step="0.1" />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+      {
+        skuId && (
+          <Fragment>
+            <div className="row mb-3">
+              <div className="col-2 offset-1">
+                <h6>Configuración Stock</h6>
+                <p>Asocia tu código de referencia a un almacén.</p>
               </div>
-            </Card.Body>
-          </Card>
-        </div>
-      </div>
-      <div className="row mb-3">
-        <div className="col-11">
-          <div className="d-flex justify-content-end">
-            <Button size="lg" onClick={() => navigate("/inventarios/codigos-referencia")} variant="secondary" className="me-2">
-              <FontAwesomeIcon icon={faCircleXmark} className="me-1" />
-              <span className="text-uppercase">Cancelar</span>
-            </Button>
-            <Button type="submit" form="f_sku" size="lg" variant="primary">
-              <FontAwesomeIcon icon={faFloppyDisk} className="me-1" />
-              <span className="text-uppercase">Guardar</span>
-            </Button>
-          </div>
-        </div>
+              <div className="col-8">
+                <Card>
+                  <Card.Body>
+                    <div className="table-responsive">
+                      <table className="table mb-0">
+                        <thead>
+                          <tr className="text-uppercase">
+                            <th>Almacén</th>
+                            <th>Stock Mínimo</th>
+                            <th>Punto de Reposición</th>
+                            <th>Costo Unitario</th>
+                          </tr>
+                        </thead>
+                        <tbody className="text-uppercase">
+                          {
+                            configAlmacenes && configAlmacenes.map(item => (
+                              <tr key={item.almacenId}>
+                                <td>
+                                  <Form.Check
+                                    type="switch"
+                                    id={item.almacenId}
+                                    label={item.nombreAlmacen}
+                                    onChange={() => handleSwitchChange(item.almacenId)}
+                                  />
+                                </td>
+                                <td>
+                                  <input
+                                    type="number"
+                                    value={item.stockMinimo}
+                                    onChange={(e) => handleInputChange(item.almacenId, 'stockMinimo', e.target.value)}
+                                    disabled={item.deshabilitado}
+                                  />
+                                </td>
+                                <td>
+                                  <input
+                                    type="number"
+                                    value={item.puntoReposicion}
+                                    onChange={(e) => handleInputChange(item.almacenId, 'puntoReposicion', e.target.value)}
+                                    disabled={item.deshabilitado}
+                                  />
+                                </td>
+                                <td>
+                                  <input type="number"
+                                    value={item.costoUnitario}
+                                    onChange={(e) => handleInputChange(item.almacenId, 'costoUnitario', e.target.value)}
+                                    disabled={item.deshabilitado}
+                                    step="0.1" />
+                                </td>
+                              </tr>
+                            ))
+                          }
+                        </tbody>
+                      </table>
+                    </div>
+                  </Card.Body>
+                </Card>
+              </div>
+            </div>
+            <div className="row mb-3">
+              <div className="col-11">
+                <div className="d-flex justify-content-end">
+                  <Button size="lg" onClick={() => navigate("/inventarios/codigos-referencia")} variant="secondary" className="me-2">
+                    <FontAwesomeIcon icon={faCircleXmark} className="me-1" />
+                    <span className="text-uppercase">Cancelar</span>
+                  </Button>
+                  <Button type="submit" form="f_sku" size="lg" variant="primary">
+                    <FontAwesomeIcon icon={faFloppyDisk} className="me-1" />
+                    <span className="text-uppercase">Guardar</span>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </Fragment>
+        )
+      }
+      {/** DEBUG */}
+      <div className="alert alert-warning">
+        <span className="fw-semibold">Configurar Stock</span>
+        <pre>
+          {JSON.stringify(configAlmacenes, null, 2)}
+        </pre>
       </div>
     </MainContainer>
   )
