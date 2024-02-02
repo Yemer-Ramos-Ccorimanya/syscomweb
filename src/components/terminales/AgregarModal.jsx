@@ -23,7 +23,7 @@ export const AgregarModal = (props) => {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Editar cliente</Modal.Title>
+          <Modal.Title>Agregar cliente</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="row mb-3">

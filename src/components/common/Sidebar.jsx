@@ -92,6 +92,12 @@ export const Sidebar = () => {
           </Link>
         </MenuItem>
         <MenuItem>
+          <Link to={"/account"} className={styles.link}>
+            <FontAwesomeIcon icon={faChartColumn} className={styles.icon} />
+            <MenuItemText>Account</MenuItemText>
+          </Link>
+        </MenuItem>
+        <MenuItem>
           <Link to={"/"} className={styles.link}>
             <FontAwesomeIcon icon={faGear} className={styles.icon} />
             <MenuItemText>Configuración</MenuItemText>

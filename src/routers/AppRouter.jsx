@@ -9,6 +9,7 @@ import { PrivateRoute } from "./PrivateRoute"
 import { UserProvider } from "../context/UserProvider"
 import { ClientesRoute } from "./ClientesRoute"
 import { ComprobanteRoute } from "./ComprobanteRoute"
+import { AccountRoute } from "./AccountRoute"
 
 export const AppRouter = () => {
   return (
@@ -40,6 +41,11 @@ export const AppRouter = () => {
           <Route path="/comprobantes/*" element={
             <PrivateRoute>
               <ComprobanteRoute />
+            </PrivateRoute>
+          } />
+          <Route path="/account/*" element={
+            <PrivateRoute>
+              <AccountRoute />
             </PrivateRoute>
           } />
           <Route path="/*" element={
