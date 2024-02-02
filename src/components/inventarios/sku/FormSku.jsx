@@ -7,7 +7,7 @@ import { useFormik } from "formik"
 import { cssValidation } from "../../common/css.validation"
 import { useNavigate, useParams } from "react-router-dom"
 import { Fragment, useEffect, useState } from "react"
-import { createCatalogoSkuHook, getCatalogoSkuHook, getCatalogoSkusAlmacenHook, updateCatalogoSkuHook } from "../../../hooks/inventarios"
+import { createCatalogoSkuAlmacenHook, createCatalogoSkuHook, getCatalogoSkuHook, getCatalogoSkusAlmacenHook, updateCatalogoSkuHook } from "../../../hooks/inventarios"
 import { toastSuccess } from "../../common/helpers"
 
 const SkuSchema = Yup.object().shape({
@@ -20,7 +20,7 @@ const SkuSchema = Yup.object().shape({
 export const FormSku = () => {
   const { skuId } = useParams()
   const navigate = useNavigate()
-  const [configAlmacenes, setConfigAlmacenes] = useState([])
+  const [configurarStock, setConfigurarStock] = useState([])
 
   useEffect(() => {
     if (skuId) {
@@ -32,32 +32,7 @@ export const FormSku = () => {
           descripcion: result.descripcion,
         })
       })
-      getCatalogoSkusAlmacenHook(skuId).then(result => {
-        const newCatalogoSkus = result.almacenes?.map(item => {
-          const itemCatalogo = result.catalogos_sku_almacen.find(item => item.almacen == item.id)
-          console.log(itemCatalogo)
-          if (!itemCatalogo) {
-            return {
-              almacenId: item.id,
-              nombreAlmacen: item.nombre,
-              deshabilitado: true,
-              stockMinimo: 0,
-              puntoReposicion: 0,
-              costoUnitario: 0
-            }
-          } else {
-            return {
-              almacenId: item.id,
-              nombreAlmacen: item.nombre,
-              deshabilitado: false,
-              stockMinimo: itemCatalogo.stock_minimo,
-              puntoReposicion: itemCatalogo.punto_reposicion,
-              costoUnitario: itemCatalogo.costo_unitario
-            }
-          }
-        })
-        setConfigAlmacenes(newCatalogoSkus)
-      })
+      getCatalogoSkusAlmacenHook(skuId).then(result => setConfigurarStock(result))
     }
   }, [skuId])
 
@@ -105,19 +80,35 @@ export const FormSku = () => {
   }
 
   const handleSwitchChange = (almacenId) => {
-    setConfigAlmacenes((prevConfigAlmacenes) =>
-      prevConfigAlmacenes.map((configAlmacen) =>
-        configAlmacen.almacenId === almacenId ? { ...configAlmacen, deshabilitado: !configAlmacen.deshabilitado } : configAlmacen
+    setConfigurarStock((prevConfigurarStock) =>
+      prevConfigurarStock.map((configStock) =>
+        configStock.almacenId === almacenId ? { ...configStock, deshabilitado: !configStock.deshabilitado } : configStock
       )
     )
   }
 
   const handleInputChange = (almacenId, inputName, value) => {
-    setConfigAlmacenes((prevConfigAlmacenes) =>
-      prevConfigAlmacenes.map((configAlmacen) =>
-        configAlmacen.almacenId === almacenId ? { ...configAlmacen, [inputName]: value } : configAlmacen
+    setConfigurarStock((prevConfigurarStock) =>
+      prevConfigurarStock.map((configStock) =>
+        configStock.almacenId === almacenId ? { ...configStock, [inputName]: value } : configStock
       )
     )
+  }
+
+  const guardarConfigurarStock = () => {
+    const configFilter = configurarStock.filter(item => item.deshabilitado === false)
+    const data = configFilter.map(item => {
+      return {
+        almacen: item.almacenId,
+        costo_unitario: item.costoUnitario,
+        stock_minimo: item.stockMinimo,
+        punto_reposicion: item.puntoReposicion,
+      }
+    })
+    createCatalogoSkuAlmacenHook(skuId, data).then(() => {
+      navigate("/inventarios/codigos-referencia")
+      toastSuccess("Configuración actualizada!")
+    })
   }
 
   return (
@@ -279,13 +270,14 @@ export const FormSku = () => {
                         </thead>
                         <tbody className="text-uppercase">
                           {
-                            configAlmacenes && configAlmacenes.map(item => (
+                            configurarStock && configurarStock.map(item => (
                               <tr key={item.almacenId}>
                                 <td>
                                   <Form.Check
                                     type="switch"
                                     id={item.almacenId}
                                     label={item.nombreAlmacen}
+                                    checked={!item.deshabilitado}
                                     onChange={() => handleSwitchChange(item.almacenId)}
                                   />
                                 </td>
@@ -329,7 +321,7 @@ export const FormSku = () => {
                     <FontAwesomeIcon icon={faCircleXmark} className="me-1" />
                     <span className="text-uppercase">Cancelar</span>
                   </Button>
-                  <Button type="submit" form="f_sku" size="lg" variant="primary">
+                  <Button type="button" onClick={guardarConfigurarStock} size="lg" variant="primary">
                     <FontAwesomeIcon icon={faFloppyDisk} className="me-1" />
                     <span className="text-uppercase">Guardar</span>
                   </Button>
@@ -340,12 +332,12 @@ export const FormSku = () => {
         )
       }
       {/** DEBUG */}
-      <div className="alert alert-warning">
+      {/* <div className="alert alert-warning">
         <span className="fw-semibold">Configurar Stock</span>
         <pre>
-          {JSON.stringify(configAlmacenes, null, 2)}
+          {JSON.stringify(configurarStock, null, 2)}
         </pre>
-      </div>
+      </div> */}
     </MainContainer>
   )
 }
