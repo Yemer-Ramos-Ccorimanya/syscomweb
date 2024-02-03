@@ -46,9 +46,9 @@ export const FormSku = () => {
     validationSchema: SkuSchema,
     onSubmit: (values, { setValues }) => {
       if (!skuId) {
-        createCatalogoSkuHook(values).then(() => {
+        createCatalogoSkuHook(values).then(result => {
           toastSuccess("Código de referencia registrado!")
-          navigate("/inventarios/codigos-referencia")
+          navigate(`/inventarios/codigos-referencia/${result.id}/editar`)
         })
       } else {
         updateCatalogoSkuHook(skuId, values)
@@ -107,7 +107,7 @@ export const FormSku = () => {
     })
     createCatalogoSkuAlmacenHook(skuId, data).then(() => {
       navigate("/inventarios/codigos-referencia")
-      toastSuccess("Configuración actualizada!")
+      toastSuccess("Configuración stock actualizada!")
     })
   }
 
@@ -332,12 +332,12 @@ export const FormSku = () => {
         )
       }
       {/** DEBUG */}
-      {/* <div className="alert alert-warning">
+      <div className="alert alert-warning">
         <span className="fw-semibold">Configurar Stock</span>
         <pre>
           {JSON.stringify(configurarStock, null, 2)}
         </pre>
-      </div> */}
+      </div>
     </MainContainer>
   )
 }

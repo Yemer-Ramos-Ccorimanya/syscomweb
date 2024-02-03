@@ -5,7 +5,7 @@ const configUrl = {
   production: "-",
 }
 
-const baseURL = configUrl.development
+export const baseURL = configUrl.development
 
 export const instance = axios.create({baseURL,})
 
