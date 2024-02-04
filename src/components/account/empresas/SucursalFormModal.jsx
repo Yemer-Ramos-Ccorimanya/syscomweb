@@ -1,21 +1,24 @@
 import { useFormik } from 'formik';
 import { Button, Form, Modal } from 'react-bootstrap';
 import * as Yup from 'yup';
-import { useEffect } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { formTypeModal } from '../../../config';
 import { cssValidation } from '../../common/css.validation';
 import { toastSuccess } from '../../common/helpers';
-import { createSucursalHook,updateSucursalHook } from '../../../hooks/account';
+import { createSucursalHook, updateSucursalHook } from '../../../hooks/account';
+import { getAlmacenesHook } from '../../../hooks/inventarios/almacenes.hook';
 
 const SucursalSchema = Yup.object().shape({
-  cod_sunat: Yup.string().required('Campo requerido'),
-  nombre: Yup.string().required('Campo requerido'),
-  direccion: Yup.string().required('Campo requerido'),
+  cod_sunat: Yup.string().required('El código SUNAT es obligatorio'),
+  nombre: Yup.string().required('El nombre de la sucursal es obligatorio'),
+  direccion: Yup.string().required('La dirección de la sucursal es obligatoria'),
+  almacen: Yup.string().required('Seleccione un almacén'),
   descripcion: Yup.string(),
-});
+})
 
 export const SucursalFormModal = (props) => {
   const {
+    empresaId,
     showModal,
     handleCloseModal,
     sucursal,
@@ -23,28 +26,34 @@ export const SucursalFormModal = (props) => {
     saveChanges
   } = props;
 
+  const [almacenes, setAlmacenes] = useState([])
+
   const formik = useFormik({
     initialValues: {
       cod_sunat: "",
       nombre: "",
       direccion: "",
+      almacen: "",
       descripcion: "",
     },
     validationSchema: SucursalSchema,
     onSubmit: (values) => {
-      if (type === formTypeModal.add) {
-        createSucursalHook(values)
-          .then(result => {
-            saveChanges({ data: result, type });
-            toastSuccess('Sucursal registrada!');
-          });
-      }
-      if (type === formTypeModal.edit) {
-        updateSucursalHook(sucursal.id, values)
-        .then(result => {
-          saveChanges({ data: result, type });
-          toastSuccess('Sucursal actualizada!');
-        });
+      console.log(empresaId)
+      if (empresaId) {
+        if (type === formTypeModal.add) {
+          createSucursalHook(empresaId, values)
+            .then(result => {
+              saveChanges({ data: result, type });
+              toastSuccess('Sucursal registrada!');
+            });
+        }
+        if (type === formTypeModal.edit) {
+          updateSucursalHook(empresaId, sucursal.id, values)
+            .then(result => {
+              saveChanges({ data: result, type });
+              toastSuccess('Sucursal actualizada!');
+            });
+        }
       }
     },
   });
@@ -57,6 +66,7 @@ export const SucursalFormModal = (props) => {
       dialogClassName="modal-lg"
       keyboard={false}
       onEntering={() => {
+        getAlmacenesHook().then(data => setAlmacenes(data.results))
         if (type === formTypeModal.add) {
           formik.resetForm()
         }
@@ -65,6 +75,7 @@ export const SucursalFormModal = (props) => {
             cod_sunat: sucursal.cod_sunat,
             nombre: sucursal.nombre,
             direccion: sucursal.direccion,
+            almacen: sucursal.almacen,
             descripcion: sucursal.descripcion,
           })
         }
@@ -76,7 +87,7 @@ export const SucursalFormModal = (props) => {
       </Modal.Header>
       <Modal.Body>
         <Form id="f_sucursal" onSubmit={formik.handleSubmit}>
-          <div className="row">
+          <div className="row mb-2">
             <div className="col-md-6">
               <Form.Group>
                 <Form.Label>Codigo SUNAT</Form.Label>
@@ -106,18 +117,40 @@ export const SucursalFormModal = (props) => {
               </Form.Group>
             </div>
           </div>
-          <Form.Group>
-            <Form.Label>Direccion</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Direccion"
-              value={formik.values.direccion}
-              name="direccion"
-              onChange={formik.handleChange}
-              className={(formik.errors.direccion && formik.touched.direccion) && cssValidation.isInvalid}
-            />
-            <div className={cssValidation.invalidFeedback}>{formik.errors.direccion}</div>
-          </Form.Group>
+          <div className="row mb-2">
+            <div className="col-6">
+              <Form.Group>
+                <Form.Label>Direccion</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Direccion"
+                  value={formik.values.direccion}
+                  name="direccion"
+                  onChange={formik.handleChange}
+                  className={(formik.errors.direccion && formik.touched.direccion) && cssValidation.isInvalid}
+                />
+                <div className={cssValidation.invalidFeedback}>{formik.errors.direccion}</div>
+              </Form.Group>
+            </div>
+            <div className="col-6">
+              <Form.Group>
+                <Form.Label>Almacenes</Form.Label>
+                <Form.Select
+                  value={formik.values.almacen}
+                  name="almacen"
+                  onChange={formik.handleChange}
+                  className={(formik.errors.almacen && formik.touched.almacen) && cssValidation.isInvalid}>
+                  <option value="">Seleccionar Almacén</option>
+                  {
+                    almacenes && almacenes.map(item => (
+                      <option key={item.id} value={item.id}>{item.nombre}</option>
+                    ))
+                  }
+                </Form.Select>
+                <div className={cssValidation.invalidFeedback}>{formik.errors.almacen}</div>
+              </Form.Group>
+            </div>
+          </div>
           <Form.Group>
             <Form.Label>Descripcion</Form.Label>
             <Form.Control

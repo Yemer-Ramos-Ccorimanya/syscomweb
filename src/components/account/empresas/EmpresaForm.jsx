@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { SucursalFormModal } from "./SucursalFormModal";
 import { formTypeModal } from "../../../config";
 import { useFormik } from "formik";
-import { getSucursalesHook, deleteSucursalHook, getUserEmpresaHook, createUserEmpresaHook, updateUserEmpresaHook } from "../../../hooks/account";
+import { deleteSucursalHook, getUserEmpresaHook, createUserEmpresaHook, updateUserEmpresaHook } from "../../../hooks/account";
 import { deleteConfirm } from "../../common/sweetalert";
 import { useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup"
@@ -82,30 +82,31 @@ export const FormEmpresa = () => {
     setSucursalActual(item);
     setShowModal(true);
   };
+
   const saveChanges = ({ data, type }) => {
     if (type === formTypeModal.add) {
-      const results = [data, ...sucursales.results];
-      setSucursales({ ...sucursales, results });
-      setShowModal(false);
+      setSucursales([data, ...sucursales])
+      setShowModal(false)
     }
     if (type === formTypeModal.edit) {
-      const results = sucursales.results.map(item => {
+      const newSucursales = sucursales.map(item => {
         if (item.id === data.id) item = data;
         return item;
       });
-      setSucursales({ ...sucursales, results });
-      setShowModal(false);
+      setSucursales(newSucursales)
+      setShowModal(false)
     }
   }
+
   const handleDeleteSucursal = (id) => {
     deleteConfirm().then(result => {
-      if (result.isConfirmed) {
-        deleteSucursalHook(id).then(() => {
-          const results = sucursales.results.filter(item => item.id !== id);
-          setSucursales({ ...sucursales, results });
-        });
+      if (result.isConfirmed && empresaId) {
+        deleteSucursalHook(empresaId, id).then(() => {
+          const newSucursales = sucursales.filter(item => item.id !== id)
+          setSucursales(newSucursales)
+        })
       }
-    });
+    })
   }
 
   return (
@@ -263,6 +264,7 @@ export const FormEmpresa = () => {
         }
       </div>
       <SucursalFormModal
+        empresaId={empresaId}
         type={typeModal}
         showModal={showModal}
         handleCloseModal={handleCloseModal}
