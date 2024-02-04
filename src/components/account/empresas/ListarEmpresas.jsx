@@ -1,15 +1,13 @@
-import { Card, Form, Button, InputGroup, Pagination } from "react-bootstrap"
+import { Card, Button } from "react-bootstrap"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import {faEdit, faMagnifyingGlass, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons"
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { Link } from "react-router-dom"
 import { getUserEmpresasHook } from "../../../hooks/account"
 import { useEffect, useState } from "react"
-import { useFormik } from "formik"
 import { MainContainer } from "../../common/MainContainer"
 
 export const ListarEmpresas = () => {
   const [empresas, setEmpresas] = useState([])
-  const [empresaActual, setEmpresaActual] = useState({})
 
   useEffect(() => {
     getUserEmpresasHook().then(result => {
@@ -18,17 +16,6 @@ export const ListarEmpresas = () => {
     })
   }, [])
 
-  const formik = useFormik({
-    initialValues: {
-      query: ""
-    },
-    onSubmit: values => {
-      getUserEmpresasHook(values.query).then(result => setEmpresas(result))
-    }
-  })
-
-  
-
   return (
     <MainContainer>
       <Card>
@@ -36,26 +23,9 @@ export const ListarEmpresas = () => {
           <span className="text-uppercase fw-semibold">Empresas</span>
         </Card.Header>
         <Card.Body>
-          <Form className="row row-cols-auto g-2">
-            <div className="col-4">
-              <InputGroup className="mb-2">
-                <InputGroup.Text>
-                  <FontAwesomeIcon icon={faMagnifyingGlass} className="mx-2" />
-                </InputGroup.Text>
-                <Form.Control
-                  placeholder="Busqueda"
-                  name="query"
-                  onChange={formik.handleChange}
-                  value={formik.values.query}
-                />
-              </InputGroup>
-            </div>
-            <div className="col-3">
-              <Link to="/inventarios/empresas/agregar">
-                <Button className="text-uppercase" variant="success">Nueva empresa</Button>
-              </Link>
-            </div>
-          </Form>
+          <Link to="/account/empresas/agregar">
+            <Button className="text-uppercase" variant="success">Nueva empresa</Button>
+          </Link>
           <div className="table-responsive">
             <table className="table">
               <thead>
@@ -69,11 +39,14 @@ export const ListarEmpresas = () => {
               <tbody>
                 {
                   empresas && empresas?.map(item => {
-                    console.log(item); // Imprimir el objeto item en la consola
                     return (
                       <tr key={item.id}>
                         <td>{item.ruc}</td>
-                        <td>{item.rzn_social}</td>
+                        <td>
+                          <Link to={`/account/empresas/${item.id}/editar`}>
+                          {item.rzn_social}
+                          </Link>
+                        </td>
                         <td>{item.direccion}</td>
                         <td>
                           <div className="d-flex justify-content-end">
@@ -94,6 +67,13 @@ export const ListarEmpresas = () => {
           </div>
         </Card.Body>
       </Card>
+      {/** DEBUG */}
+      <div className="alert alert-warning mt-2">
+        <span className="fw-semibold">Configurar Stock</span>
+        <pre>
+          {JSON.stringify(empresas, null, 2)}
+        </pre>
+      </div>
     </MainContainer>
   )
 }
