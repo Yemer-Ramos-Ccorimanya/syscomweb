@@ -7,8 +7,17 @@ import { useEffect, useState } from "react"
 import { deleteCatalogoSkuHook, getCatalogoSkuHook, getCatalogoSkusHook } from "../../../hooks/inventarios"
 import { deleteConfirm } from "../../common/sweetalert"
 import { useFormik } from "formik"
+import { SkuFormModal } from "./SkuFormModal"
+import { formTypeModal } from "../../../config"
 
 export const ListadoSku = () => {
+  const [showModal, setShowModal] = useState(false)
+  const [typeModal, setTypeModal] = useState(formTypeModal.add)
+  const handleCloseModal = () => setShowModal(false)
+  const handleAddModal = () => {
+    setTypeModal(formTypeModal.add)
+    setShowModal(true)
+  }
   const navigate = useNavigate()
   const [catalogoSkus, setCatalogoSkus] = useState({})
 
@@ -77,6 +86,11 @@ export const ListadoSku = () => {
                 <FontAwesomeIcon icon={faCirclePlus} className="me-1" />
                 <span className="text-uppercase">Nuevo Cód. Referencia</span>
               </Link>
+              <Button className="ms-2" onClick={handleAddModal}>
+                <FontAwesomeIcon icon={faCirclePlus} className="me-1" />
+                <span className="text-uppercase">Agregar Nuevo SKU</span>
+              </Button>
+              
             </div>
           </Form>
           <div className="table-responsive">
@@ -149,6 +163,13 @@ export const ListadoSku = () => {
           </div>
         </Card.Footer>
       </Card>
+      {showModal && (
+        <SkuFormModal
+          type={typeModal}
+          showModal={showModal}
+          handleCloseModal={handleCloseModal}
+        />
+      )}
     </MainContainer>
   )
 }
