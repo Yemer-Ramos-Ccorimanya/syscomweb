@@ -13,7 +13,9 @@ const AlmacenSchema = Yup.object().shape({
   descripcion: Yup.string(),
 })
 
+
 export const AlmacenFormModal = (props) => {
+
   const {
     showModal,
     handleCloseModal,
@@ -29,6 +31,7 @@ export const AlmacenFormModal = (props) => {
       telefono: "",
       descripcion: "",
     },
+    
     validationSchema: AlmacenSchema,
     onSubmit: (values) => {
       if (type === formTypeModal.add) {

@@ -99,6 +99,12 @@ export const Sidebar = () => {
           </Link>
         </MenuItem>
         <MenuItem>
+          <Link to={"/comprobantes/SerieComprobantes"} className={styles.link}>
+            <FontAwesomeIcon icon={faCartShopping} className={styles.icon} />
+            <MenuItemText>Series de comprobantes</MenuItemText>
+          </Link>
+        </MenuItem>
+        <MenuItem>
           <Link to={"/account"} className={styles.link}>
             <FontAwesomeIcon icon={faChartColumn} className={styles.icon} />
             <MenuItemText>Account</MenuItemText>
