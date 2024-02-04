@@ -7,23 +7,11 @@ import { useEffect, useState } from "react"
 import { deleteCatalogoSkuHook, getCatalogoSkuHook, getCatalogoSkusHook } from "../../../hooks/inventarios"
 import { deleteConfirm } from "../../common/sweetalert"
 import { useFormik } from "formik"
-import { SkuFormModal } from "./SkuFormModal"
-import { formTypeModal } from "../../../config"
 
 export const ListadoSku = () => {
-  const [showModal, setShowModal] = useState(false)
-  const [typeModal, setTypeModal] = useState(formTypeModal.add)
-  const handleCloseModal = () => setShowModal(false)
-  const handleAddModal = () => {
-    setTypeModal(formTypeModal.add)
-    setShowModal(true)
-  }
   const navigate = useNavigate()
+  const [pageSize, setPageSize] = useState(12)
   const [catalogoSkus, setCatalogoSkus] = useState({})
-
-  useEffect(() => {
-    getCatalogoSkusHook().then(result => setCatalogoSkus(result))
-  }, [])
 
   const formik = useFormik({
     initialValues: {
@@ -31,10 +19,16 @@ export const ListadoSku = () => {
       estado: "HABILITADO",
     },
     onSubmit: values => {
-      getCatalogoSkusHook(values.query, values.estado)
+      getCatalogoSkusHook(values.query, values.estado, 1, pageSize)
         .then(result => setCatalogoSkus(result))
     }
   })
+
+  useEffect(() => {
+    getCatalogoSkusHook(formik.values.query,
+      formik.values.estado, 1, pageSize)
+      .then(result => setCatalogoSkus(result))
+  }, [pageSize])
 
   const handleDelete = (id) => {
     deleteConfirm().then(result => {
@@ -86,11 +80,6 @@ export const ListadoSku = () => {
                 <FontAwesomeIcon icon={faCirclePlus} className="me-1" />
                 <span className="text-uppercase">Nuevo Cód. Referencia</span>
               </Link>
-              <Button className="ms-2" onClick={handleAddModal}>
-                <FontAwesomeIcon icon={faCirclePlus} className="me-1" />
-                <span className="text-uppercase">Agregar Nuevo SKU</span>
-              </Button>
-              
             </div>
           </Form>
           <div className="table-responsive">
@@ -138,10 +127,13 @@ export const ListadoSku = () => {
           <div className="d-flex justify-content-end">
             <div className="m-2">
               <span>Códigos por página: </span>
-              <select className="rounded">
-                <option value="12">12</option>
-                <option value="24">24</option>
-                <option value="36">36</option>
+              <select className="rounded"
+                onChange={(e) => {
+                  setPageSize(e.target.value)
+                }}>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
               </select>
             </div>
             <div className="m-2">
@@ -149,12 +141,12 @@ export const ListadoSku = () => {
             </div>
             <nav aria-label="...">
               <Pagination>
-                <Pagination.Prev disabled>
+                <Pagination.Prev disabled={catalogoSkus.previous === null}>
                   <FontAwesomeIcon icon={faChevronLeft} />
                   <span className="visually-hidden">Anterior</span>
                 </Pagination.Prev>
                 <Pagination.Item active>{1}</Pagination.Item>
-                <Pagination.Next>
+                <Pagination.Next disabled={catalogoSkus.next === null}>
                   <FontAwesomeIcon icon={faChevronRight} />
                   <span className="visually-hidden">Siguiente</span>
                 </Pagination.Next>
@@ -163,13 +155,13 @@ export const ListadoSku = () => {
           </div>
         </Card.Footer>
       </Card>
-      {showModal && (
-        <SkuFormModal
-          type={typeModal}
-          showModal={showModal}
-          handleCloseModal={handleCloseModal}
-        />
-      )}
+      {/** DEBUG */}
+      <div className="alert alert-warning mt-2">
+        <span className="fw-semibold">Configurar Stock</span>
+        <pre>
+          {JSON.stringify(catalogoSkus, null, 2)}
+        </pre>
+      </div>
     </MainContainer>
   )
 }
