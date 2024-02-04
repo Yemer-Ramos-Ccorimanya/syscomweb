@@ -17,6 +17,7 @@ export const InventarioRoute = () => {
     <Routes>
       <Route path="/productos" element={<ListaProductos />} />
       <Route path="/productos/agregar" element={<ProductoForm />} />
+      <Route path="/productos/:productoId/editar" element={<ProductoForm />} />
       <Route path="/productos/categorias" element={<ListaCategorias />} />
       <Route path="/productos/subcategorias" element={<ListaSubCategorias />} />
       <Route path="/gestion" element={<GestionInventarios />} />
@@ -26,8 +27,8 @@ export const InventarioRoute = () => {
       <Route path="/codigos-referencia/agregar" element={<FormSku />} />
       <Route path="/codigos-referencia/:skuId/editar" element={<FormSku />} />
       <Route path="/almacenes" element={<ListaAlmacen />} />
-      <Route path="/empresas" element={<ListarEmpresas/>} />
-      <Route path="/empresas/agregar" element={<FormEmpresa/>} />
+      <Route path="/empresas" element={<ListarEmpresas />} />
+      <Route path="/empresas/agregar" element={<FormEmpresa />} />
     </Routes>
   )
 }

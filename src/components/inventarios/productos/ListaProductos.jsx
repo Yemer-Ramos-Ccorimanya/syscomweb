@@ -1,28 +1,62 @@
 import { Card, Form, InputGroup, Dropdown, Button } from "react-bootstrap"
 import { MainContainer } from "../../common/MainContainer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faLayerGroup, faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons"
-import { Link } from "react-router-dom"
-import { useState } from "react"
+import { faEdit, faLayerGroup, faMagnifyingGlass, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons"
+import { Link, useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
 import Modal from 'react-bootstrap/Modal';
+import { useFormik } from "formik"
+import { deleteProductoHook, getProductosHook } from "../../../hooks/inventarios"
+import { deleteConfirm } from "../../common/sweetalert"
+import { formatearNumero } from "../../../hooks/helpers.hook"
 
 export const ListaProductos = () => {
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const navigate = useNavigate()
+  const [show, setShow] = useState(false)
+  const [productos, setProductos] = useState({})
+
+  const handleClose = () => setShow(false)
+  const handleShow = () => setShow(true)
+
+  useEffect(() => {
+    getProductosHook().then(result => setProductos(result))
+  }, [])
+
+  const formik = useFormik({
+    initialValues: {
+      query: ""
+    },
+    onSubmit: values => {
+      getProductosHook(values.query).then(result => setProductos(result))
+    }
+  })
+
+  const handleDelete = (id) => {
+    deleteConfirm().then(result => {
+      if (result.isConfirmed) {
+        deleteProductoHook(id).then(() => {
+          const results = productos.results.filter(item => item.id !== id)
+          setProductos({ ...productos, results })
+        })
+      }
+    })
+  }
 
   return (
     <MainContainer>
       <h5>Productos</h5>
       <Card >
         <Card.Body>
-          <Form className="row row-cols-auto g-2">
+          <Form onSubmit={formik.handleSubmit} className="row row-cols-auto g-2">
             <div className="col-auto">
               <InputGroup className="mb-3">
                 <InputGroup.Text>
                   <FontAwesomeIcon icon={faMagnifyingGlass} className="mx-2" />
                 </InputGroup.Text>
                 <Form.Control
+                  name="query"
+                  value={formik.values.query}
+                  onChange={formik.handleChange}
                   placeholder="Nombre"
                 />
               </InputGroup>
@@ -137,17 +171,41 @@ export const ListaProductos = () => {
             </div>
           </Form>
           <div className="table-responsive">
-            <table className="table">
+            <table className="table mb-0">
               <thead>
                 <tr className="text-uppercase">
                   <th>Nombre</th>
                   <th>Categoría</th>
                   <th>Precio</th>
-                  <th>Estado</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
-
+                {
+                  productos && productos.results?.map((item, index) => (
+                    <tr key={item.id} className="text-uppercase">
+                      <td>
+                        <Link to={`/inventarios/productos/${item.id}/editar`}>
+                          {item.nombre}
+                        </Link>
+                      </td>
+                      <td>{item.categoria}</td>
+                      <td>{formatearNumero(item.precio_unitario)}</td>
+                      <td>
+                        <div className="d-flex justify-content-end">
+                          <Button variant={"secondary"}
+                            onClick={() => navigate(`/inventarios/productos/${item.id}/editar`)}
+                            size={"sm"} className="me-2">
+                            <FontAwesomeIcon icon={faEdit} />
+                          </Button>
+                          <Button variant={"danger"} onClick={() => handleDelete(item.id)} size={"sm"}>
+                            <FontAwesomeIcon icon={faTrash} />
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                }
               </tbody>
             </table>
           </div>

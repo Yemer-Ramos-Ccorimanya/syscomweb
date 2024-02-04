@@ -2,20 +2,21 @@ import { Button, Card, Form, InputGroup } from "react-bootstrap"
 import { MainContainer } from "../../common/MainContainer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCircleXmark, faFloppyDisk, faMagnifyingGlass, faPlus, faTrashAlt } from "@fortawesome/free-solid-svg-icons"
-import { createProductoHook } from "../../../hooks/inventarios"
-import { getCategoriasHook } from "../../../hooks/inventarios"
-import { getSubCategoriaHook } from "../../../hooks/inventarios"
-import { getSubCategoriasByCategoriaHook } from "../../../hooks/inventarios"
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import { cssValidation } from "../../common/css.validation"
 import { useEffect, useState } from "react"
+import { toastSuccess } from "../../common/helpers"
+import { useNavigate, useParams } from "react-router-dom"
+import Select from "react-select"
+import { createProductoHook, getCategoriaHook, getCategoriasSelectHook, getProductoHook, updateProductoHook } from "../../../hooks/inventarios"
+import { getSubCategoriasByCategoriaHook } from "../../../hooks/inventarios"
 
 const ProductoSchema = Yup.object().shape({
   tipo_item: Yup.string().default("PRODUCTO").required("Campo requerido"),
   nombre: Yup.string().required("Campo requerido"),
-  categoria: Yup.string().default('DEFAULT').notOneOf(['DEFAULT'], "Seleccione una Categoría"),
-  sub_categoria: Yup.string(),
+  categoria: Yup.string().required("Campo requerido"),
+  sub_categoria: Yup.string().default(""),
   descripcion: Yup.string().required("Campo requerido"),
   codigo_barra: Yup.string().required("Campo requerido"),
   precio_unitario: Yup.string().required("Campo requerido"),
@@ -24,51 +25,138 @@ const ProductoSchema = Yup.object().shape({
 })
 
 export const ProductoForm = () => {
-  useEffect(() => {
-    getCategoriasHook().then(result => setCategorias(result));
-  }, [])
-
-  const [categorias, setCategorias] = useState([]);
+  const navigate = useNavigate()
+  const { productoId } = useParams()
   const [subcategorias, setSubcategorias] = useState([]);
+
+  const [selectedOptionCategorias, setSelectedOptionCategorias] = useState(null)
+  const [inputValueCategorias, setInputValueCategorias] = useState("")
+  const [categoriasOptions, setCategoriasOptions] = useState([])
+
+  useEffect(() => {
+    getCategoriasSelectHook(inputValueCategorias)
+      .then(result => setCategoriasOptions(result))
+  }, [inputValueCategorias])
+
+  useEffect(() => {
+    console.log(selectedOptionCategorias)
+  }, [selectedOptionCategorias])
+
+  const handleChangeCategorias = (selectedOption) => {
+    formik.setFieldValue("categoria", selectedOption.value)
+    setSelectedOptionCategorias(selectedOption)
+    // cargar subcategorías.
+    getSubCategoriasByCategoriaHook(selectedOption.value).then(result => {
+      setSubcategorias(result)
+    })
+  }
+
+  const handleInputChangeCategorias = (inputValue) => {
+    setInputValueCategorias(inputValue)
+  }
 
   const formik = useFormik({
     initialValues: {
       tipo_item: "PRODUCTO",
       nombre: "",
-      categoria: "DEFAULT",
+      categoria: "",
       sub_categoria: "",
       descripcion: "",
       codigo_barra: "",
       precio_unitario: "",
-      unidad_medida: "",
-      impuesto: "",
+      unidad_medida: "NIU:UNIDAD",
+      impuesto: "GRAVADO_IGV_18%",
     },
     validationSchema: ProductoSchema,
     onSubmit: async (values) => {
-      try {
-        const result = await createProductoHook(values);
-        saveChanges({ data: result, type });
-      } catch (error) {
-        console.error("Error submitting form:", error);
+      console.log(values)
+      if (!productoId) {
+        await createProductoHook(values)
+        toastSuccess("Producto registrado!")
+        navigate("/inventarios/productos")
+      } else {
+        await updateProductoHook(productoId, values)
+        toastSuccess("Producto actualizado!")
+        navigate("/inventarios/productos")
       }
     },
   })
 
   useEffect(() => {
-    getCategoriasHook().then((result) => {
-      setCategorias(result);
-    });
-  }, []);
+    const fetchData = async () => {
+      try {
+        if (productoId) {
+          getProductoHook(productoId)
+            .then(result => {
+              formik.setValues({
+                tipo_item: result.tipo_item,
+                nombre: result.nombre,
+                categoria: result.categoria || "",
+                sub_categoria: result.sub_categoria || "",
+                descripcion: result.descripcion,
+                codigo_barra: result.codigo_barra,
+                precio_unitario: result.precio_unitario,
+                unidad_medida: result.unidad_medida,
+                impuesto: result.impuesto,
+              })
+              if (result.categoria) {
+                getCategoriaHook(result.categoria)
+                  .then(result => {
+                    const item = {
+                      value: result.id,
+                      label: result.nombre
+                    }
+                    setSelectedOptionCategorias(item)
+                  })
+              }
+            })
+        }
 
-
-  useEffect(() => {
-    const { categoria } = formik.values
-    if (categoria && categoria !== "DEFAULT") {
-      getSubCategoriasByCategoriaHook(formik.values.categoria).then(result => {
-        setSubcategorias(result);
-      });
+        // const { categoria } = formik.values
+        // if (categoria && categoria !== "DEFAULT") {
+        //   getSubCategoriasByCategoriaHook(formik.values.categoria).then(result => {
+        //     setSubcategorias(result)
+        //   })
+        // }
+      } catch (error) {
+        console.log("Error fetching data: ", error)
+      }
     }
-  }, [formik.values.categoria]);
+    fetchData()
+  }, [productoId])
+
+
+  // useEffect(() => {
+  //   getCategoriasHook().then(result => setCategorias(result))
+  // }, [])
+
+  // useEffect(() => {
+  //   if (productoId) {
+  //     getProductoHook(productoId)
+  //       .then(result => {
+  //         formik.setValues({
+  //           tipo_item: result.tipo_item,
+  //           nombre: result.nombre,
+  //           categoria: result.categoria,
+  //           sub_categoria: result.sub_categoria,
+  //           descripcion: result.descripcion,
+  //           codigo_barra: result.codigo_barra,
+  //           precio_unitario: result.precio_unitario,
+  //           unidad_medida: result.unidad_medida,
+  //           impuesto: result.impuesto,
+  //         })
+  //       })
+  //   }
+  // }, [productoId])
+
+  // useEffect(() => {
+  //   const { categoria } = formik.values
+  //   if (categoria && categoria !== "DEFAULT") {
+  //     getSubCategoriasByCategoriaHook(formik.values.categoria).then(result => {
+  //       setSubcategorias(result)
+  //     })
+  //   }
+  // }, [formik.values.categoria])
 
   // recuperar las subcategorias de la categoria seleccionada.
   const handleCancel = () => {
@@ -148,17 +236,19 @@ export const ProductoForm = () => {
                 <div className="row mb-3">
                   <div className="col-6">
                     <Form.Label>Categoría</Form.Label>
-                    <Form.Select
-                      name="categoria"
-                      value={formik.values.categoria}
-                      onChange={formik.handleChange}
-                      isInvalid={formik.errors.categoria && formik.touched.categoria}
-                    >
-                      <option value="">Seleccione una Categoría</option>
-                      {categorias && categorias.results?.map((item, index) => (
-                        <option key={item.id} value={item.id}>{item.nombre}</option>
-                      ))}
-                    </Form.Select>
+                    <Select
+                      onChange={handleChangeCategorias}
+                      inputValue={inputValueCategorias}
+                      value={selectedOptionCategorias}
+                      onInputChange={handleInputChangeCategorias}
+                      options={categoriasOptions} placeholder="buscar categoría"
+                      className={formik.errors.categoria ? cssValidation.isInvalid : ""}
+                      styles={{
+                        control: (baseStyles) => ({
+                          ...baseStyles,
+                          borderColor: formik.errors.categoria ? "#dc3545" : "grey",
+                        }),
+                      }} />
                     <Form.Control.Feedback type="invalid">
                       {formik.errors.categoria}
                     </Form.Control.Feedback>
@@ -167,10 +257,10 @@ export const ProductoForm = () => {
                     <Form.Label>SubCategoría</Form.Label>
                     <Form.Select
                       name="sub_categoria"
-                      value={formik.values.sub_categoria}
+                      value={formik.values.sub_categoria || ""}
                       onChange={formik.handleChange}
                     >
-                      {subcategorias && subcategorias.map((item) => (
+                      {subcategorias && subcategorias?.map((item) => (
                         <option key={item.id} value={item.id}>
                           {item.nombre}
                         </option>
@@ -200,9 +290,7 @@ export const ProductoForm = () => {
                       value={formik.values.codigo_barra}
                       onChange={formik.handleChange}
                       className={(formik.errors.codigo_barra && formik.touched.codigo_barra)
-                        && cssValidation.isInvalid}
-                      type="text"
-                    />
+                        && cssValidation.isInvalid} type="text" />
                     <Form.Control.Feedback type="invalid">
                       {formik.errors.codigo_barra}
                     </Form.Control.Feedback>
@@ -231,13 +319,50 @@ export const ProductoForm = () => {
                     <Form.Label>Unidad de Medida</Form.Label>
                     <Form.Select
                       name="unidad_medida"
-                      value={formik.values.unidad_medida}
+                      value={formik.values.unidad_medida || ""}
                       onChange={formik.handleChange}
                       className={(formik.errors.unidad_medida && formik.touched.unidad_medida)
                         && cssValidation.isInvalid}
                     >
-                      <option value="1">Unidad</option>
-                      <option value="2">Kilogramo</option>
+                      <option value="BX:CAJA">CAJA</option>
+                      <option value="NIU:UNIDAD">UNIDAD (BIENES)</option>
+                      <option value="ZZ:UNIDAD">UNIDAD (SERVICIOS)</option>
+                      <option value="4A:BOBINAS">BOBINAS</option>
+                      <option value="BJ:BALDE">BALDE</option>
+                      <option value="BLL:BARRILES">BARRILES</option>
+                      <option value="BG:BOLSA">BOLSA</option>
+                      <option value="BO:BOTELLAS">BOTELLAS</option>
+                      <option value="CT:CARTONES">CARTONES</option>
+                      <option value="CY:CILINDRO">CILINDRO</option>
+                      <option value="CJ:CONOS">CONOS</option>
+                      <option value="DZN:DOCENA">DOCENA</option>
+                      <option value="BE:FARDO">FARDO</option>
+                      <option value="GLI:GALÓN INGLES (4,545956L)">GALÓN INGLES (4,545956L)</option>
+                      <option value="GRM:GRAMO">GRAMO</option>
+                      <option value="LEF:HOJA">HOJA</option>
+                      <option value="SET:JUEGO">JUEGO</option>
+                      <option value="KGM:KILOGRAMO">KILOGRAMO</option>
+                      <option value="KT:KIT">KIT</option>
+                      <option value="CA:LATAS">LATAS</option>
+                      <option value="LBR:LIBRAS">LIBRAS</option>
+                      <option value="LTR:LITRO">LITRO</option>
+                      <option value="MTR:METRO">METRO</option>
+                      <option value="MGM:MILIGRAMOS">MILIGRAMOS</option>
+                      <option value="MLT:MILILITRO">MILILITRO</option>
+                      <option value="MMT:MILIMETRO">MILIMETRO</option>
+                      <option value="MIL:MILLARES">MILLARES</option>
+                      <option value="ONZ:ONZAS">ONZAS</option>
+                      <option value="PF:PALETAS">PALETAS</option>
+                      <option value="PK:PAQUETE">PAQUETE</option>
+                      <option value="PR:PAR">PAR</option>
+                      <option value="C62:PIEZAS">PIEZAS</option>
+                      <option value="PG:PLACAS">PLACAS</option>
+                      <option value="ST:PLIEGO">PLIEGO</option>
+                      <option value="INH:PULGADAS">PULGADAS</option>
+                      <option value="TU:TUBOS">TUBOS</option>
+                      <option value="GLL:US GALON (3,7843 L)">US GALON (3,7843 L)</option>
+                      <option value="YRD:YARDA">YARDA</option>
+                      <option value="YDK:YARDA CUADRADA">YARDA CUADRADA</option>
                     </Form.Select>
                     <Form.Control.Feedback type="invalid">
                       {formik.errors.unidad_medida}
@@ -252,8 +377,11 @@ export const ProductoForm = () => {
                       className={(formik.errors.impuesto && formik.touched.impuesto)
                         && cssValidation.isInvalid}
                     >
-                      <option value="1">IGV</option>
-                      <option value="2">Gravado</option>
+                      <option value="GRAVADO_IGV_18%">Gravado 18% IGV</option>
+                      <option value="EXONERADO">Exonerado</option>
+                      <option value="INAFECTO">Inafecto</option>
+                      <option value="ICBPER_GRAVADO">ICBPER-Gravado</option>
+                      <option value="GRAVADO_IGV_10%">Gravado 10% IGV</option>
                     </Form.Select>
                     <Form.Control.Feedback type="invalid">
                       {formik.errors.impuesto}
@@ -313,7 +441,6 @@ export const ProductoForm = () => {
                     type="radio"
                     label="Producto con variantes"
                     id="producto_con_variantes"
-
                   />
                 </div>
               </Card.Body>
@@ -346,7 +473,6 @@ export const ProductoForm = () => {
                     type="radio"
                     label="Inventario compuesto"
                     id="inventario_compuesto"
-
                   />
                 </div>
               </Card.Body>
@@ -418,6 +544,13 @@ export const ProductoForm = () => {
           </div>
         </div>
       </Form>
+      {/** DEBUG */}
+      <div className="alert alert-warning mt-2">
+        <span className="fw-semibold">Configurar Stock</span>
+        <pre>
+          {JSON.stringify(formik.values, null, 2)}
+        </pre>
+      </div>
     </MainContainer>
   )
 }
