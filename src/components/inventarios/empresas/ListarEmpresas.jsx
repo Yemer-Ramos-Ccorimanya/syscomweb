@@ -1,12 +1,34 @@
 import { Card, Form, Button, InputGroup, Pagination } from "react-bootstrap"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faChevronLeft, faChevronRight, faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons"
+import {faEdit, faMagnifyingGlass, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { Link } from "react-router-dom"
-
-import Modal from 'react-bootstrap/Modal';
+import { getUserEmpresasHook } from "../../../hooks/account"
+import { useEffect, useState } from "react"
+import { useFormik } from "formik"
 import { MainContainer } from "../../common/MainContainer"
 
 export const ListarEmpresas = () => {
+  const [empresas, setEmpresas] = useState([])
+  const [empresaActual, setEmpresaActual] = useState({})
+
+  useEffect(() => {
+    getUserEmpresasHook().then(result => {
+      console.log(result)
+      setEmpresas(result)
+    })
+  }, [])
+
+  const formik = useFormik({
+    initialValues: {
+      query: ""
+    },
+    onSubmit: values => {
+      getUserEmpresasHook(values.query).then(result => setEmpresas(result))
+    }
+  })
+
+  
+
   return (
     <MainContainer>
       <Card>
@@ -22,6 +44,9 @@ export const ListarEmpresas = () => {
                 </InputGroup.Text>
                 <Form.Control
                   placeholder="Busqueda"
+                  name="query"
+                  onChange={formik.handleChange}
+                  value={formik.values.query}
                 />
               </InputGroup>
             </div>
@@ -42,44 +67,32 @@ export const ListarEmpresas = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1234567890</td>
-                  <td>Empresa de gastronomia SAC</td>
-                  <td>Av. Paris NRO. 700 URB HUNTER</td>
-                </tr>
+                {
+                  empresas && empresas?.map(item => {
+                    console.log(item); // Imprimir el objeto item en la consola
+                    return (
+                      <tr key={item.id}>
+                        <td>{item.ruc}</td>
+                        <td>{item.rzn_social}</td>
+                        <td>{item.direccion}</td>
+                        <td>
+                          <div className="d-flex justify-content-end">
+                            <Button variant={"secondary"} size={"sm"} className="me-2">
+                              <FontAwesomeIcon icon={faEdit} />
+                            </Button>
+                            <Button variant={"danger"} size={"sm"}>
+                              <FontAwesomeIcon icon={faTrash} />
+                            </Button>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })
+                }
               </tbody>
             </table>
           </div>
         </Card.Body>
-
-        <Card.Footer>
-          <div className="d-flex justify-content-end">
-            <div className="m-2">
-              <span>Filas por página: </span>
-              <select className="rounded">
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="30">30</option>
-              </select>
-            </div>
-            <div className="m-2">
-              <span>1-10 de 1</span>
-            </div>
-            <nav aria-label="...">
-              <Pagination>
-                <Pagination.Prev disabled>
-                  <FontAwesomeIcon icon={faChevronLeft} />
-                  <span className="visually-hidden">Anterior</span>
-                </Pagination.Prev>
-                <Pagination.Item active>{1}</Pagination.Item>
-                <Pagination.Next>
-                  <FontAwesomeIcon icon={faChevronRight} />
-                  <span className="visually-hidden">Siguiente</span>
-                </Pagination.Next>
-              </Pagination>
-            </nav>
-          </div>
-        </Card.Footer>
       </Card>
     </MainContainer>
   )

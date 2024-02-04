@@ -1,19 +1,86 @@
-import { Button, Card, CardHeader, Form, InputGroup, Pagination } from "react-bootstrap"
-import { MainContainer } from "../../common/MainContainer"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faChevronLeft, faChevronRight, faCircleXmark, faFloppyDisk, faShuffle } from "@fortawesome/free-solid-svg-icons"
-import { useEffect, useState } from "react"
-import { SucursalFormModal } from "./SucursalFormModal"
-import { formTypeModal } from "../../../config"
+import { Button, Card, Form} from "react-bootstrap";
+import { MainContainer } from "../../common/MainContainer";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faFloppyDisk, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
+import { SucursalFormModal } from "./SucursalFormModal";
+import { formTypeModal } from "../../../config";
+import { useFormik } from "formik";
+import { getSucursalesHook, deleteSucursalHook} from "../../../hooks/account";
+import { deleteConfirm } from "../../common/sweetalert";
+
 export const FormEmpresa = () => {
-  const [showModal, setShowModal] = useState(false)
-  const [typeModal, setTypeModal] = useState(formTypeModal.add)
-  const handleCloseModal = () => setShowModal(false)
-  const handleAddModal = () => {
-    setTypeModal(formTypeModal.add)
-    setShowModal(true)
+  const [showModal, setShowModal] = useState(false);
+  const [typeModal, setTypeModal] = useState(formTypeModal.add);
+  const [sucursales, setSucursales] = useState([]);
+  const [sucursalActual, setSucursalActual] = useState({});
+
+const [empresaId, setEmpresaId] = useState("");
+
+useEffect(() => {
+
+  setEmpresaId("2f184d54-d9ca-46a2-a4cb-2253e31c30dd");
+
+  getSucursalesHook(empresaId).then(result => {
+    console.log(result);
+    setSucursales(result);
+  });
+}, [empresaId]);
+
+
+const formik = useFormik({
+  initialValues: {
+    query: ""
+  },
+  onSubmit: async (values) => {
+    try {
+      const result = await getSucursalesHook(values.query);
+      setSucursales(result);
+    } catch (error) {
+      console.error("Error al obtener sucursales:", error);
+    }
   }
-  
+});
+
+
+  const handleCloseModal = () => setShowModal(false);
+
+  const handleAddModal = () => {   
+    console.log("Abriendo modal...");
+    setTypeModal(formTypeModal.add)
+    setShowModal(true);
+  };
+  const handleEditarSucursalModal = (item) => {
+    setTypeModal(formTypeModal.edit);
+    setSucursalActual(item);
+    setShowModal(true);
+  };
+  const saveChanges = ({ data, type }) => {
+    if (type === formTypeModal.add) {
+      const results = [data, ...sucursales.results];
+      setSucursales({ ...sucursales, results });
+      setShowModal(false);
+    }
+    if (type === formTypeModal.edit) {
+      const results = sucursales.results.map(item => {
+        if (item.id === data.id) item = data;
+        return item;
+      });
+      setSucursales({ ...sucursales, results });
+      setShowModal(false);
+    }
+  }
+  const handleDeleteSucursal = (id) => {
+    deleteConfirm().then(result => {
+      if (result.isConfirmed) {
+        deleteSucursalHook(id).then(() => {
+          const results = sucursales.results.filter(item => item.id !== id);
+          setSucursales({ ...sucursales, results });
+        });
+      }
+    });
+  }
+
   return (
     <MainContainer>
       <div className="row">
@@ -26,7 +93,6 @@ export const FormEmpresa = () => {
             <p>Completa la informacion de tu empresa</p>
           </div>
           <div className="col-8">
-            {/* card con nombre de la empresa. ruc  departamento provincia distrito y direccion de facturacion */}
             <Card>
               <Card.Body>
                 <Form>
@@ -73,7 +139,6 @@ export const FormEmpresa = () => {
               </Button>
             </div>
           </div>
-
         </div>
         <div className="row mb-3">
           <div className="col-2 offset-1">
@@ -95,60 +160,50 @@ export const FormEmpresa = () => {
                         <th>Sucursal</th>
                         <th>Dirección</th>
                         <th>Descripción</th>
+                        <th></th>
+                        
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>00000</td>
-                        <td>Av. Andahuaylas</td>
-                        <td>tienda principal</td>
-                      </tr>
+                      {
+                        sucursales && sucursales?.map(item => {
+                          return (
+                            <tr key={item.id}>
+                              <td>{item.nombre}</td>
+                              <td>{item.direccion}</td>
+                              <td>{item.descripcion}</td>
+                              <td>
+                                <div className="d-flex justify-content-end">
+                                  <Button variant={"secondary"}
+                                  onClick={() => handleEditarSucursalModal(item)} 
+                                          size={"sm"} className="me-2">
+                                    <FontAwesomeIcon icon={faEdit} />
+                                  </Button>
+                                  <Button variant={"danger"} size={"sm"}
+                                   onClick={() => handleDeleteSucursal(item.id)}>
+                                    <FontAwesomeIcon icon={faTrash} />
+                                  </Button>
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      }
                     </tbody>
                   </table>
                 </div>
               </Card.Body>
-              <Card.Footer>
-              <div className="d-flex justify-content-end">
-            <div className="m-2">
-              <span>Filas por página: </span>
-              <select className="rounded">
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="30">30</option>
-              </select>
-            </div>
-            <div className="m-2">
-              <span>1-10 de 1</span>
-            </div>
-            <nav aria-label="...">
-              <Pagination>
-                <Pagination.Prev disabled>
-                  <FontAwesomeIcon icon={faChevronLeft} />
-                  <span className="visually-hidden">Anterior</span>
-                </Pagination.Prev>
-                <Pagination.Item active>{1}</Pagination.Item>
-                <Pagination.Next>
-                  <FontAwesomeIcon icon={faChevronRight} />
-                  <span className="visually-hidden">Siguiente</span>
-                </Pagination.Next>
-              </Pagination>
-            </nav>
-          </div>
-              </Card.Footer>
             </Card>
           </div>
-
         </div>
-
       </div>
-      {showModal && (
-        <SucursalFormModal
-          type={typeModal}
-          showModal={showModal}
-          handleCloseModal={handleCloseModal}
-        />
-      )}
+      <SucursalFormModal
+        type={typeModal}
+        showModal={showModal}
+        handleCloseModal={handleCloseModal}
+        sucursal= {sucursalActual}
+        saveChanges={saveChanges}
+      />
     </MainContainer>
-  )
-
-}
+  );
+};
