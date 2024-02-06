@@ -87,7 +87,7 @@ export const Sidebar = () => {
           </Link>
         </MenuItem>
         <MenuItem>
-          <Link to={"/inventarios/empresas"} className={styles.link}>
+          <Link to={"/account/empresas"} className={styles.link}>
             <FontAwesomeIcon icon={faBuilding} className={styles.icon} />
             <MenuItemText>Empresas</MenuItemText>
           </Link>
